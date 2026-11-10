@@ -1,1 +1,26 @@
 command: ['streamlit', 'run', 'app.py']
+
+env:
+  - name: DATABRICKS_WAREHOUSE_ID
+    valueFrom: sql-warehouse
+
+  - name: GENIE_SPACE_ID
+    valueFrom: genie-space
+
+  - name: MAINTENANCE_TABLE
+    valueFrom: table
+
+  - name: CAPEX_TABLE
+    valueFrom: table-2
+
+  - name: MARKET_MONTHLY_TABLE
+    valueFrom: table-3
+
+  - name: PORTFOLIO_KPIS_TABLE
+    valueFrom: table-4
+
+  - name: PROPERTY_PERFORMANCE_TABLE
+    valueFrom: table-5
+
+  - name: PROPERTY_MONTHLY_TABLE
+    valueFrom: table-6
