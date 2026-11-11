@@ -136,6 +136,70 @@ def apply_theme():
     header[data-testid="stHeader"] {
         background: transparent;
     }
+
+    
+/* ===== TEXT CONTRAST FIX ===== */
+
+.stApp,
+.stApp p,
+.stApp label,
+.stApp span,
+.stApp li {
+    color: #263449;
+}
+
+/* Headings */
+.stApp h1,
+.stApp h2,
+.stApp h3,
+.stApp h4 {
+    color: #172b4d !important;
+}
+
+/* Markdown text */
+div[data-testid="stMarkdownContainer"] p {
+    color: #526176 !important;
+}
+
+/* Navigation links */
+div[data-testid="stPageLink"] a {
+    color: #34445c !important;
+    background: #ffffff;
+}
+
+div[data-testid="stPageLink"] a p {
+    color: #34445c !important;
+}
+
+/* Selected navigation */
+div[data-testid="stPageLink"] a[aria-current="page"] {
+    background: #e8f2ef !important;
+    border-color: #b8d9ce !important;
+    color: #087f67 !important;
+}
+
+/* KPI labels */
+div[data-testid="stMetricLabel"],
+div[data-testid="stMetricLabel"] p {
+    color: #64748b !important;
+}
+
+/* Success and information messages */
+div[data-testid="stAlert"] p,
+div[data-testid="stAlert"] span {
+    color: #245b45 !important;
+}
+
+/* Buttons */
+.stButton button {
+    color: #34445c !important;
+}
+
+/* Captions */
+div[data-testid="stCaptionContainer"] p {
+    color: #788397 !important;
+}
+
     </style>
     """, unsafe_allow_html=True)
 
