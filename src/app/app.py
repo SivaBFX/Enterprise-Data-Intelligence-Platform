@@ -15,8 +15,8 @@ st.set_page_config(
 apply_theme()
 render_header("Portfolio")
 
-st.title("Residential Property Intelligence Platform")
-st.caption("Enterprise Data Intelligence Platform")
+#st.title("Residential Property Intelligence Platform")
+#st.caption("Enterprise Data Intelligence Platform")
 
 st.header("Portfolio Overview")
 
