@@ -15,8 +15,8 @@ st.set_page_config(
 apply_theme()
 render_header("Properties")
 
-st.title("Property Analytics")
-st.caption("Property-level performance and investment insights")
+#st.title("Property Analytics")
+#st.caption("Property-level performance and investment insights")
 
 table_name = os.getenv("PROPERTY_PERFORMANCE_TABLE")
 
