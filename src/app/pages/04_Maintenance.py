@@ -14,8 +14,8 @@ st.set_page_config(
 apply_theme()
 render_header("Maintenance")
 
-st.title("🔧 Maintenance Analytics")
-st.caption("Work-order status, maintenance costs and completion performance")
+#st.title("🔧 Maintenance Analytics")
+#st.caption("Work-order status, maintenance costs and completion performance")
 
 TABLE = "workspace.gold.gold_maintenance_summary"
 
