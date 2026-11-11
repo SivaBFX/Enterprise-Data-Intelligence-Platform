@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 
 from utils.database import query_table
-from utils.ui import apply_theme, render_header
+from utils.ui import apply_theme, render_header, render_page_header
 
 st.set_page_config(
     page_title="Property Intelligence Platform",
@@ -13,11 +13,13 @@ st.set_page_config(
 
 apply_theme()
 render_header("Portfolio")
-
-#st.title("Residential Property Intelligence Platform")
-#st.caption("Enterprise Data Intelligence Platform")
-
-st.header("Portfolio Overview")
+render_page_header(
+    title="Portfolio Overview",
+    description="Executive residential property performance, occupancy, and net operating income overview.",
+    domain_label="Portfolio",
+    status_text="Gold Layer Connected",
+    status_tone="success",
+)
 
 table_name = os.getenv("PORTFOLIO_KPIS_TABLE")
 

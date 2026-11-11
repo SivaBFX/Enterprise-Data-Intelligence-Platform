@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 
 from utils.database import query_table
-from utils.ui import apply_theme, render_header
+from utils.ui import apply_theme, render_header, render_page_header
 
 st.set_page_config(
     page_title="Market Analytics",
@@ -14,9 +14,13 @@ st.set_page_config(
 
 apply_theme()
 render_header("Markets")
-
-#st.title("Market Analytics")
-#st.caption("Compare residential property performance across markets")
+render_page_header(
+    title="Market Analytics",
+    description="Compare residential property performance, occupancy, and expense ratios across markets.",
+    domain_label="Markets",
+    status_text="Gold Layer Connected",
+    status_tone="success",
+)
 
 table_name = os.getenv("MARKET_MONTHLY_TABLE")
 

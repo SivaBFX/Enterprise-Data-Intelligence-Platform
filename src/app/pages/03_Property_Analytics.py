@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 
 from utils.database import query_table
-from utils.ui import apply_theme, render_header
+from utils.ui import apply_theme, render_header, render_page_header
 
 st.set_page_config(
     page_title="Property Analytics",
@@ -14,9 +14,13 @@ st.set_page_config(
 
 apply_theme()
 render_header("Properties")
-
-#st.title("Property Analytics")
-#st.caption("Property-level performance and investment insights")
+render_page_header(
+    title="Property Analytics",
+    description="Property-level occupancy, rental revenue, and net operating income insights.",
+    domain_label="Properties",
+    status_text="Gold Layer Connected",
+    status_tone="success",
+)
 
 table_name = os.getenv("PROPERTY_PERFORMANCE_TABLE")
 

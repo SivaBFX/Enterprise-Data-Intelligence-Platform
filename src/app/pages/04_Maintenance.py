@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 
 from utils.database import query_table
-from utils.ui import apply_theme, render_header
+from utils.ui import apply_theme, render_header, render_page_header
 
 st.set_page_config(
     page_title="Maintenance Analytics",
@@ -13,9 +13,13 @@ st.set_page_config(
 
 apply_theme()
 render_header("Maintenance")
-
-#st.title("🔧 Maintenance Analytics")
-#st.caption("Work-order status, maintenance costs and completion performance")
+render_page_header(
+    title="Maintenance Analytics",
+    description="Work-order status, maintenance costs, and completion performance across markets.",
+    domain_label="Maintenance",
+    status_text="Gold Layer Connected",
+    status_tone="success",
+)
 
 TABLE = "workspace.gold.gold_maintenance_summary"
 
