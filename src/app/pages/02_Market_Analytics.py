@@ -15,8 +15,8 @@ st.set_page_config(
 apply_theme()
 render_header("Markets")
 
-st.title("Market Analytics")
-st.caption("Compare residential property performance across markets")
+#st.title("Market Analytics")
+#st.caption("Compare residential property performance across markets")
 
 table_name = os.getenv("MARKET_MONTHLY_TABLE")
 
