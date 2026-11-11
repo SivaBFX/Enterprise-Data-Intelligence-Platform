@@ -4,12 +4,16 @@ import streamlit as st
 import pandas as pd
 
 from utils.database import query_table
+from utils.ui import apply_theme, render_header
 
 st.set_page_config(
     page_title="Property Intelligence Platform",
     page_icon="🏢",
     layout="wide"
 )
+
+apply_theme()
+render_header("Portfolio")
 
 st.title("Residential Property Intelligence Platform")
 st.caption("Enterprise Data Intelligence Platform")
