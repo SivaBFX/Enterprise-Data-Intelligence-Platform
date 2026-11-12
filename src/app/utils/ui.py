@@ -13,39 +13,39 @@ APP_ROOT = Path(__file__).resolve().parent.parent
 # Centralized tone palette for status badges, KPI deltas, and insight cards.
 TONE_STYLES = {
     "success": {
-        "bg": "#e8f5f1",
-        "border": "#a7dccb",
-        "text": "#065f46",
-        "dot": "#087f67",
-        "accent": "#087f67",
+        "bg": "#e7f5ee",
+        "border": "#a7dcc0",
+        "text": "#0b5e42",
+        "dot": "#0c6b53",
+        "accent": "#0c6b53",
     },
     "warning": {
-        "bg": "#fef7e6",
-        "border": "#f5d08a",
-        "text": "#92400e",
+        "bg": "#fef6e5",
+        "border": "#f4ce82",
+        "text": "#8a4b08",
         "dot": "#d97706",
         "accent": "#d97706",
     },
     "danger": {
-        "bg": "#fef2f2",
-        "border": "#fecaca",
-        "text": "#991b1b",
+        "bg": "#fef0f0",
+        "border": "#f8baba",
+        "text": "#9b1c1c",
         "dot": "#dc2626",
         "accent": "#dc2626",
     },
     "info": {
-        "bg": "#eff6ff",
-        "border": "#bfdbfe",
+        "bg": "#eef5ff",
+        "border": "#bfd7fe",
         "text": "#1e40af",
         "dot": "#2563eb",
         "accent": "#2563eb",
     },
     "neutral": {
-        "bg": "#f1f5f9",
-        "border": "#cbd5e1",
-        "text": "#334155",
-        "dot": "#64748b",
-        "accent": "#64748b",
+        "bg": "#f1f3f6",
+        "border": "#d6dbe3",
+        "text": "#374151",
+        "dot": "#6b7280",
+        "accent": "#6b7280",
     },
 }
 
@@ -88,28 +88,28 @@ def _render_html(markup: str) -> None:
 
 
 def apply_theme() -> None:
-    """Inject the AI Studio light theme stylesheet with accessible text contrast."""
+    """Inject the AI Studio light theme stylesheet with zero header overlap."""
     _render_html(
         """
 <style>
 :root {
-    --ai-bg: #f6f8fb;
+    --ai-bg: #f7f8fa;
     --ai-surface: #ffffff;
-    --ai-surface-subtle: #f1f5f9;
-    --ai-border: #e2e8f0;
-    --ai-border-strong: #cbd5e1;
-    --ai-navy: #0f2544;
-    --ai-text: #1e293b;
-    --ai-body: #334155;
-    --ai-muted: #475569;
-    --ai-green: #087f67;
-    --ai-green-hover: #066452;
-    --ai-green-soft: #e8f5f1;
-    --ai-green-border: #9fd4c5;
-    --text-color: #1e293b;
-    --background-color: #f6f8fb;
+    --ai-surface-subtle: #f1f3f6;
+    --ai-border: #e5e7eb;
+    --ai-border-strong: #d1d5db;
+    --ai-navy: #111827;
+    --ai-text: #1f2937;
+    --ai-body: #374151;
+    --ai-muted: #6b7280;
+    --ai-green: #0c6b53;
+    --ai-green-hover: #08523f;
+    --ai-green-soft: #e7f5ee;
+    --ai-green-border: #a7dcc0;
+    --text-color: #1f2937;
+    --background-color: #f7f8fa;
     --secondary-background-color: #ffffff;
-    --primary-color: #087f67;
+    --primary-color: #0c6b53;
 }
 
 /* Base canvas and typography */
@@ -118,31 +118,39 @@ div[data-testid="stAppViewContainer"],
 div[data-testid="stMain"] {
     background-color: var(--ai-bg) !important;
     color: var(--ai-text) !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Arial, sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-.main .block-container {
-    max-width: 1420px;
-    padding-top: 1.15rem;
-    padding-bottom: 3rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-}
-
-/* Hide default sidebar navigation and style top toolbar cleanly */
-section[data-testid="stSidebar"] {
-    display: none !important;
-}
-
+/* Prevent Streamlit top toolbar from overlapping the custom app header */
 header[data-testid="stHeader"] {
-    background: rgba(246, 248, 251, 0.88) !important;
-    color: var(--ai-muted) !important;
+    background: transparent !important;
+    height: 2.25rem !important;
+    pointer-events: none;
+}
+
+header[data-testid="stHeader"] * {
+    pointer-events: auto;
 }
 
 header[data-testid="stHeader"] svg,
 header[data-testid="stHeader"] button,
 header[data-testid="stHeader"] span {
     color: var(--ai-muted) !important;
+}
+
+.main .block-container,
+div[data-testid="stMainBlockContainer"],
+.stMainBlockContainer {
+    max-width: 1380px !important;
+    padding-top: 3.0rem !important;
+    padding-bottom: 3rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+
+/* Hide default sidebar navigation */
+section[data-testid="stSidebar"] {
+    display: none !important;
 }
 
 /* Global accessible text contrast */
@@ -180,6 +188,7 @@ div[data-testid="stMarkdownContainer"] code {
     border: 1px solid var(--ai-border);
     border-radius: 5px;
     padding: 0.1rem 0.35rem;
+    font-size: 0.82em;
 }
 
 div[data-testid="stCaptionContainer"],
@@ -196,70 +205,64 @@ div[data-testid="stWidgetLabel"] label,
 div[data-testid="stWidgetLabel"] span {
     color: var(--ai-text) !important;
     font-weight: 600 !important;
-    font-size: 0.84rem !important;
+    font-size: 0.82rem !important;
 }
 
-/* Top header brand & profile chip */
+/* Top header brand & profile avatar */
 .ai-brand {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 2px 0;
+    gap: 11px;
+    min-height: 40px;
 }
 
 .ai-brand-mark {
-    width: 40px;
-    height: 40px;
-    border-radius: 11px;
-    background: linear-gradient(135deg, #e8f5f1 0%, #d3ede5 100%);
-    border: 1px solid var(--ai-green-border);
-    color: var(--ai-green);
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: var(--ai-green);
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 700;
     flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(8, 127, 103, 0.08);
+    box-shadow: 0 2px 6px rgba(12, 107, 83, 0.22);
 }
 
 .ai-brand-title {
-    font-size: 1.32rem;
-    font-weight: 750;
+    font-size: 1.05rem;
+    font-weight: 700;
     color: var(--ai-navy);
-    line-height: 1.18;
-    letter-spacing: -0.025em;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
 }
 
 .ai-brand-subtitle {
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     font-weight: 500;
     color: var(--ai-muted);
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 .ai-user-chip {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 10px;
-    background: var(--ai-surface);
-    border: 1px solid var(--ai-border);
-    border-radius: 999px;
-    padding: 5px 12px 5px 6px;
-    box-shadow: 0 1px 3px rgba(15, 37, 68, 0.04);
+    gap: 9px;
+    padding: 2px 4px;
     margin-left: auto;
     width: fit-content;
-    max-width: 100%;
 }
 
 .ai-user-avatar {
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
     border-radius: 999px;
     background: var(--ai-navy);
     color: #ffffff;
-    font-size: 0.75rem;
+    font-size: 0.76rem;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -272,46 +275,37 @@ div[data-testid="stWidgetLabel"] span {
     display: flex;
     flex-direction: column;
     line-height: 1.15;
-    min-width: 0;
+    text-align: right;
 }
 
 .ai-user-name {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 650;
     color: var(--ai-navy);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .ai-user-role {
-    font-size: 0.7rem;
+    font-size: 0.69rem;
     color: var(--ai-muted);
-    white-space: nowrap;
 }
 
 .ai-hairline {
     border-top: 1px solid var(--ai-border);
-    margin: 0.65rem 0 0.75rem 0;
+    margin: 0.5rem 0 0.6rem 0;
 }
 
-.ai-domain-row-header {
+.ai-domain-inline-label {
+    color: var(--ai-muted);
+    font-size: 0.76rem;
+    font-weight: 600;
+    min-height: 36px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.45rem;
+    white-space: nowrap;
 }
 
-.ai-domain-label {
-    color: var(--ai-muted);
-    font-size: 0.7rem;
-    font-weight: 750;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-}
-
-/* Navigation links (top workspace & data domain pills) */
-.ai-nav-active-marker {
+/* Anchors for crisp baseline-aligned navigation rows */
+.ai-nav-anchor {
     display: none;
 }
 
@@ -319,21 +313,55 @@ div[data-testid="stPageLink"] {
     width: 100%;
 }
 
+/* Top workspace navigation: sleek minimalist borderless tabs */
+div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a,
+div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a {
+    width: 100% !important;
+    min-height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.35rem 0.75rem !important;
+    background-color: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a p,
+div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a span,
+div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a p,
+div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a span {
+    color: var(--ai-body) !important;
+    font-weight: 550 !important;
+    font-size: 0.86rem !important;
+}
+
+div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a:hover,
+div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a:hover {
+    background-color: var(--ai-surface-subtle) !important;
+}
+
+/* Domain navigation: clean AI Studio segmented pill strip */
+div[data-testid="element-container"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a,
+div[data-testid="stElementContainer"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a,
 div[data-testid="stPageLink"] a {
     width: 100% !important;
-    min-height: 40px;
+    min-height: 36px;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 6px;
-    padding: 0.45rem 0.8rem !important;
+    padding: 0.32rem 0.75rem !important;
     background-color: var(--ai-surface) !important;
     border: 1px solid var(--ai-border) !important;
-    border-radius: 10px !important;
+    border-radius: 9px !important;
     color: var(--ai-text) !important;
     text-decoration: none !important;
-    box-shadow: 0 1px 2px rgba(15, 37, 68, 0.03);
-    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+    transition: all 0.15s ease;
 }
 
 div[data-testid="stPageLink"] a p,
@@ -341,79 +369,66 @@ div[data-testid="stPageLink"] a span,
 div[data-testid="stPageLink"] a div {
     color: var(--ai-text) !important;
     font-weight: 600 !important;
-    font-size: 0.875rem !important;
+    font-size: 0.84rem !important;
+    white-space: nowrap !important;
 }
 
 div[data-testid="stPageLink"] a:hover {
-    background-color: #f0f8f5 !important;
+    background-color: #f0f7f4 !important;
     border-color: var(--ai-green-border) !important;
 }
 
 div[data-testid="stPageLink"] a:hover p,
-div[data-testid="stPageLink"] a:hover span,
-div[data-testid="stPageLink"] a:hover div {
+div[data-testid="stPageLink"] a:hover span {
     color: var(--ai-green-hover) !important;
 }
 
-/* Active state via Streamlit aria-current OR explicit marker */
-div[data-testid="stPageLink"] a[aria-current="page"],
-div[data-testid="element-container"]:has(.ai-nav-active-marker) + div[data-testid="element-container"] div[data-testid="stPageLink"] a,
-div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-testid="stElementContainer"] div[data-testid="stPageLink"] a {
+div[data-testid="stPageLink"] a[aria-current="page"] {
     background-color: var(--ai-green-soft) !important;
     border: 1.5px solid var(--ai-green) !important;
-    box-shadow: 0 2px 6px rgba(8, 127, 103, 0.12) !important;
+    box-shadow: 0 1px 4px rgba(12, 107, 83, 0.12) !important;
 }
 
 div[data-testid="stPageLink"] a[aria-current="page"] p,
 div[data-testid="stPageLink"] a[aria-current="page"] span,
-div[data-testid="stPageLink"] a[aria-current="page"] div,
-div[data-testid="element-container"]:has(.ai-nav-active-marker) + div[data-testid="element-container"] div[data-testid="stPageLink"] a p,
-div[data-testid="element-container"]:has(.ai-nav-active-marker) + div[data-testid="element-container"] div[data-testid="stPageLink"] a span,
-div[data-testid="element-container"]:has(.ai-nav-active-marker) + div[data-testid="element-container"] div[data-testid="stPageLink"] a div,
-div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-testid="stElementContainer"] div[data-testid="stPageLink"] a p,
-div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-testid="stElementContainer"] div[data-testid="stPageLink"] a span,
-div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-testid="stElementContainer"] div[data-testid="stPageLink"] a div {
+div[data-testid="stPageLink"] a[aria-current="page"] div {
     color: var(--ai-green-hover) !important;
     font-weight: 700 !important;
 }
 
-/* Planned navigation pills (until upcoming page file is created) */
+/* Planned navigation pills fallback */
 .ai-nav-pill-planned {
     width: 100%;
-    min-height: 40px;
+    min-height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 7px;
-    padding: 0.45rem 0.75rem;
+    gap: 6px;
+    padding: 0.32rem 0.7rem;
     background-color: #f8fafc;
     border: 1px dashed var(--ai-border-strong);
-    border-radius: 10px;
+    border-radius: 9px;
     color: var(--ai-muted);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
-    cursor: default;
 }
 
 .ai-nav-soon-tag {
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    background: #e2e8f0;
-    color: #334155;
+    background: #e5e7eb;
+    color: #374151;
     border-radius: 999px;
     padding: 1px 6px;
 }
 
 /* Consistent Page Header */
 .ai-page-header {
-    background: var(--ai-surface);
-    border: 1px solid var(--ai-border);
-    border-radius: 14px;
-    padding: 1.15rem 1.35rem;
-    margin: 0.35rem 0 1.15rem 0;
-    box-shadow: 0 2px 8px rgba(15, 37, 68, 0.035);
+    background: transparent;
+    padding: 0.25rem 0 0.85rem 0;
+    margin: 0.15rem 0 0.45rem 0;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -422,54 +437,54 @@ div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-test
 }
 
 .ai-page-header-main {
-    flex: 1 1 420px;
+    flex: 1 1 460px;
     min-width: 0;
 }
 
 .ai-page-eyebrow {
     font-size: 0.72rem;
     font-weight: 750;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     color: var(--ai-green);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
 }
 
 .ai-page-title {
-    font-size: 1.65rem;
+    font-size: 1.75rem;
     font-weight: 750;
     color: var(--ai-navy);
-    letter-spacing: -0.025em;
-    line-height: 1.2;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
     margin: 0;
 }
 
 .ai-page-desc {
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     color: var(--ai-muted);
-    margin: 0.35rem 0 0 0;
+    margin: 0.32rem 0 0 0;
     line-height: 1.45;
 }
 
 .ai-page-meta {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
     flex-wrap: wrap;
     justify-content: flex-end;
-    padding-top: 0.15rem;
+    padding-top: 0.2rem;
 }
 
 .ai-period-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 0.28rem 0.68rem;
+    padding: 0.25rem 0.65rem;
     border-radius: 999px;
-    background: var(--ai-surface-subtle);
+    background: var(--ai-surface);
     border: 1px solid var(--ai-border);
-    color: var(--ai-navy);
-    font-size: 0.78rem;
+    color: var(--ai-body);
+    font-size: 0.75rem;
     font-weight: 600;
 }
 
@@ -477,10 +492,10 @@ div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-test
 .ai-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 0.26rem 0.65rem;
+    gap: 5px;
+    padding: 0.22rem 0.58rem;
     border-radius: 999px;
-    font-size: 0.76rem;
+    font-size: 0.73rem;
     font-weight: 650;
     line-height: 1.2;
     border: 1px solid transparent;
@@ -488,8 +503,8 @@ div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-test
 }
 
 .ai-badge-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 999px;
     flex-shrink: 0;
 }
@@ -497,78 +512,92 @@ div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-test
 /* Section Headers */
 .ai-section-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
-    margin: 0.9rem 0 0.65rem 0;
+    margin: 1rem 0 0.6rem 0;
     flex-wrap: wrap;
 }
 
 .ai-section-header.compact {
-    margin: 0 0 0.65rem 0;
+    margin: 0 0 0.6rem 0;
 }
 
 .ai-section-title {
-    font-size: 1.08rem;
+    font-size: 0.96rem;
     font-weight: 700;
     color: var(--ai-navy);
-    letter-spacing: -0.015em;
+    letter-spacing: -0.01em;
     line-height: 1.25;
 }
 
 .ai-section-subtitle {
-    font-size: 0.84rem;
+    font-size: 0.8rem;
     color: var(--ai-muted);
     margin-top: 2px;
-    line-height: 1.4;
+    line-height: 1.38;
 }
 
-/* Reusable KPI Cards */
+.ai-micro-label {
+    font-size: 0.71rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ai-muted);
+}
+
+/* Reusable KPI Cards (AI Studio style) */
 .ai-kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
     gap: 0.85rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.1rem;
 }
 
 .ai-kpi-card {
     background: var(--ai-surface);
     border: 1px solid var(--ai-border);
     border-radius: 14px;
-    padding: 1rem 1.1rem;
-    box-shadow: 0 2px 8px rgba(15, 37, 68, 0.035);
+    padding: 0.95rem 1.05rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 112px;
+    min-height: 122px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ai-kpi-card:hover {
+    border-color: var(--ai-border-strong);
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
 }
 
 .ai-kpi-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.5rem;
+    gap: 0.45rem;
 }
 
 .ai-kpi-label {
-    font-size: 0.8rem;
-    font-weight: 650;
-    color: var(--ai-muted);
+    font-size: 0.79rem;
+    font-weight: 600;
+    color: var(--ai-body);
 }
 
 .ai-kpi-icon {
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1;
 }
 
 .ai-kpi-value {
-    font-size: 1.65rem;
+    font-size: 1.68rem;
     font-weight: 750;
     color: var(--ai-navy);
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
     font-variant-numeric: tabular-nums;
-    margin: 0.42rem 0 0.35rem 0;
-    line-height: 1.15;
+    margin: 0.35rem 0 0.3rem 0;
+    line-height: 1.12;
 }
 
 .ai-kpi-footer {
@@ -580,8 +609,50 @@ div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-test
 }
 
 .ai-kpi-caption {
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     color: var(--ai-muted);
+    line-height: 1.3;
+}
+
+.ai-kpi-source {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.68rem;
+    color: var(--ai-muted);
+    margin-top: 0.35rem;
+    padding-top: 0.3rem;
+    border-top: 1px solid #f1f3f6;
+}
+
+/* Decision Queue & Sub-tiles */
+.ai-stat-tile {
+    background: var(--ai-surface-subtle);
+    border: 1px solid var(--ai-border);
+    border-radius: 10px;
+    padding: 0.7rem 0.85rem;
+}
+
+.ai-stat-tile.tone-warning {
+    background: #fef6e5;
+    border-color: #f4ce82;
+}
+
+.ai-stat-tile.tone-success {
+    background: #e7f5ee;
+    border-color: #a7dcc0;
+}
+
+.ai-stat-tile-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--ai-muted);
+    margin-bottom: 0.2rem;
+}
+
+.ai-stat-tile-value {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--ai-navy);
+    line-height: 1.3;
 }
 
 /* Insight & Empty State Cards */
@@ -590,9 +661,9 @@ div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-test
     border: 1px solid var(--ai-border);
     border-left-width: 4px;
     border-radius: 12px;
-    padding: 0.9rem 1rem;
-    margin-bottom: 0.65rem;
-    box-shadow: 0 1px 4px rgba(15, 37, 68, 0.03);
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.6rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
 }
 
 .ai-insight-head {
@@ -600,40 +671,40 @@ div[data-testid="stElementContainer"]:has(.ai-nav-active-marker) + div[data-test
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.3rem;
     flex-wrap: wrap;
 }
 
 .ai-insight-title {
-    font-size: 0.92rem;
+    font-size: 0.88rem;
     font-weight: 700;
     color: var(--ai-navy);
 }
 
 .ai-insight-body {
-    font-size: 0.86rem;
+    font-size: 0.83rem;
     color: var(--ai-body);
-    line-height: 1.48;
+    line-height: 1.46;
 }
 
 .ai-empty-state {
     background: var(--ai-surface);
     border: 1px dashed var(--ai-border-strong);
     border-radius: 12px;
-    padding: 1.25rem;
+    padding: 1.2rem;
     text-align: center;
     margin: 0.5rem 0;
 }
 
 .ai-empty-title {
-    font-size: 0.96rem;
+    font-size: 0.94rem;
     font-weight: 700;
     color: var(--ai-navy);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
 }
 
 .ai-empty-msg {
-    font-size: 0.86rem;
+    font-size: 0.84rem;
     color: var(--ai-muted);
 }
 
@@ -642,15 +713,15 @@ div[data-testid="stMetric"] {
     background: var(--ai-surface);
     border: 1px solid var(--ai-border);
     border-radius: 14px;
-    padding: 16px 18px;
-    box-shadow: 0 2px 8px rgba(15, 37, 68, 0.035);
+    padding: 15px 17px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
 }
 
 div[data-testid="stMetricLabel"],
 div[data-testid="stMetricLabel"] p,
 div[data-testid="stMetricLabel"] label {
     color: var(--ai-muted) !important;
-    font-size: 0.82rem !important;
+    font-size: 0.8rem !important;
     font-weight: 600 !important;
 }
 
@@ -666,40 +737,52 @@ div[data-testid="stVerticalBlockBorderWrapper"] {
     background: var(--ai-surface);
     border: 1px solid var(--ai-border) !important;
     border-radius: 14px !important;
-    box-shadow: 0 2px 8px rgba(15, 37, 68, 0.03);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.035);
 }
 
-/* Buttons (secondary + primary with preserved white label) */
+/* Buttons: polished pill/rounded styling with crisp contrast */
 .stButton > button,
 button[data-testid="stBaseButton-secondary"],
 div[data-testid="stDownloadButton"] > button {
     background-color: var(--ai-surface) !important;
     border: 1px solid var(--ai-border-strong) !important;
-    border-radius: 9px !important;
-    color: var(--ai-text) !important;
+    border-radius: 10px !important;
+    color: var(--ai-navy) !important;
     font-weight: 600 !important;
+    font-size: 0.84rem !important;
+    min-height: 38px !important;
+    padding: 0.35rem 0.9rem !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+    transition: all 0.15s ease;
 }
 
 .stButton > button p,
 .stButton > button span,
 button[data-testid="stBaseButton-secondary"] p,
-button[data-testid="stBaseButton-secondary"] span {
-    color: var(--ai-text) !important;
+button[data-testid="stBaseButton-secondary"] span,
+div[data-testid="stDownloadButton"] > button p,
+div[data-testid="stDownloadButton"] > button span {
+    color: var(--ai-navy) !important;
 }
 
 .stButton > button:hover,
-button[data-testid="stBaseButton-secondary"]:hover {
-    background-color: #f0f8f5 !important;
-    border-color: var(--ai-green) !important;
-    color: var(--ai-green-hover) !important;
+button[data-testid="stBaseButton-secondary"]:hover,
+div[data-testid="stDownloadButton"] > button:hover {
+    background-color: #f3f6f9 !important;
+    border-color: #9ca3af !important;
+    color: var(--ai-navy) !important;
 }
 
 .stButton > button[kind="primary"],
 button[data-testid="stBaseButton-primary"],
 div[data-testid="stFormSubmitButton"] button[kind="primary"] {
     background-color: var(--ai-green) !important;
-    border-color: var(--ai-green) !important;
+    border: 1px solid var(--ai-green) !important;
+    border-radius: 10px !important;
     color: #ffffff !important;
+    font-weight: 650 !important;
+    min-height: 38px !important;
+    box-shadow: 0 1px 3px rgba(12, 107, 83, 0.2);
 }
 
 .stButton > button[kind="primary"] p,
@@ -712,7 +795,8 @@ div[data-testid="stFormSubmitButton"] button[kind="primary"] span {
 }
 
 .stButton > button[kind="primary"]:hover,
-button[data-testid="stBaseButton-primary"]:hover {
+button[data-testid="stBaseButton-primary"]:hover,
+div[data-testid="stFormSubmitButton"] button[kind="primary"]:hover {
     background-color: var(--ai-green-hover) !important;
     border-color: var(--ai-green-hover) !important;
 }
@@ -723,7 +807,7 @@ div[data-baseweb="input"] > div,
 div[data-baseweb="textarea"] > div {
     background-color: var(--ai-surface) !important;
     border-color: var(--ai-border-strong) !important;
-    border-radius: 9px !important;
+    border-radius: 10px !important;
     color: var(--ai-navy) !important;
 }
 
@@ -738,8 +822,8 @@ div[data-baseweb="textarea"] textarea {
 
 div[data-baseweb="input"] input::placeholder,
 div[data-baseweb="textarea"] textarea::placeholder {
-    color: #64748b !important;
-    -webkit-text-fill-color: #64748b !important;
+    color: #6b7280 !important;
+    -webkit-text-fill-color: #6b7280 !important;
 }
 
 div[data-baseweb="select"] svg {
@@ -802,6 +886,7 @@ div[data-testid="stAlert"] div {
 button[data-baseweb="tab"] {
     color: var(--ai-muted) !important;
     font-weight: 600 !important;
+    font-size: 0.85rem !important;
 }
 
 button[data-baseweb="tab"][aria-selected="true"] {
@@ -821,35 +906,35 @@ div[data-testid="stArrowVegaLiteChart"] {
     background: var(--ai-surface);
     border: 1px solid var(--ai-border);
     border-radius: 12px;
-    padding: 12px;
+    padding: 10px;
 }
 
 hr {
     border-color: var(--ai-border) !important;
-    margin: 1.1rem 0 !important;
+    margin: 0.9rem 0 !important;
 }
 
 /* Responsive behavior */
 @media (max-width: 992px) {
-    .main .block-container {
-        padding-left: 1.15rem;
-        padding-right: 1.15rem;
+    .main .block-container,
+    div[data-testid="stMainBlockContainer"],
+    .stMainBlockContainer {
+        padding-left: 1.15rem !important;
+        padding-right: 1.15rem !important;
     }
 
     .ai-page-title {
-        font-size: 1.4rem;
+        font-size: 1.45rem;
     }
 }
 
 @media (max-width: 640px) {
-    .main .block-container {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-        padding-top: 0.75rem;
-    }
-
-    .ai-page-header {
-        padding: 0.95rem 1rem;
+    .main .block-container,
+    div[data-testid="stMainBlockContainer"],
+    .stMainBlockContainer {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+        padding-top: 2.3rem !important;
     }
 
     .ai-user-chip {
@@ -885,18 +970,14 @@ def _render_nav_item(
     label: str,
     page_path: Optional[str],
     icon: str,
-    is_active: bool = False,
 ) -> None:
-    """Render a live page link when available, or a safe planned pill otherwise."""
+    """Render a baseline-aligned page link when available, or a planned pill otherwise."""
     if _page_exists(page_path):
-        if is_active:
-            _render_html('<span class="ai-nav-active-marker"></span>')
-        st.page_link(page_path, label=label, icon=icon)
+        st.page_link(page_path, label=label)
         return
 
     _render_html(
-        f'<div class="ai-nav-pill-planned" title="Available in a subsequent milestone">'
-        f'<span>{_escape(icon)}</span>'
+        f'<div class="ai-nav-pill-planned" title="Scheduled in upcoming milestone">'
         f'<span>{_escape(label)}</span>'
         f'<span class="ai-nav-soon-tag">Planned</span>'
         f"</div>"
@@ -910,8 +991,13 @@ def render_header(
     user_role: str = "Portfolio Lead",
     user_initials: str = "ES",
 ) -> None:
-    """Render the AI Studio top navigation bar and data domain selector."""
-    brand_col, nav_col, profile_col = st.columns([2.2, 2.5, 1.3])
+    """Render the AI Studio top navigation bar and inline data domain strip."""
+    # Anchor used purely by CSS so every column in the row contains only 1 element.
+    _render_html('<span id="ai-topnav-anchor" class="ai-nav-anchor"></span>')
+
+    brand_col, nav1_col, nav2_col, nav3_col, spacer_col, profile_col = st.columns(
+        [2.05, 0.78, 1.05, 0.82, 1.5, 1.25]
+    )
 
     with brand_col:
         _render_html(
@@ -919,50 +1005,86 @@ def render_header(
             '<div class="ai-brand-mark">◈</div>'
             "<div>"
             '<div class="ai-brand-title">Property Intelligence</div>'
-            '<div class="ai-brand-subtitle">AI Studio · Enterprise Data Intelligence Platform</div>'
+            '<div class="ai-brand-subtitle">AI Studio · on Databricks</div>'
             "</div>"
             "</div>"
         )
 
-    with nav_col:
-        nav_cols = st.columns(len(TOP_NAV_ITEMS))
-        for col, (label, path, icon) in zip(nav_cols, TOP_NAV_ITEMS):
-            with col:
-                _render_nav_item(
-                    label=label,
-                    page_path=path,
-                    icon=icon,
-                    is_active=(active_section == label),
-                )
+    nav_cols = [nav1_col, nav2_col, nav3_col]
+    for col, (label, path, icon) in zip(nav_cols, TOP_NAV_ITEMS):
+        with col:
+            _render_nav_item(label=label, page_path=path, icon=icon)
+
+    with spacer_col:
+        _render_html('<div style="height:1px;"></div>')
 
     with profile_col:
         _render_html(
             '<div class="ai-user-chip">'
-            f'<div class="ai-user-avatar">{_escape(user_initials)}</div>'
             '<div class="ai-user-meta">'
             f'<span class="ai-user-name">{_escape(user_name)}</span>'
             f'<span class="ai-user-role">{_escape(user_role)}</span>'
             "</div>"
+            f'<div class="ai-user-avatar">{_escape(user_initials)}</div>'
             "</div>"
         )
 
-    _render_html('<div class="ai-hairline"></div>')
-
+    # Highlight the active top workspace link without inserting extra DOM elements inside columns.
+    top_idx_map = {label: idx + 2 for idx, (label, _, _) in enumerate(TOP_NAV_ITEMS)}
+    active_top_col_idx = top_idx_map.get(active_section, 2)
     _render_html(
-        '<div class="ai-domain-row-header">'
-        '<div class="ai-domain-label">DATA DOMAIN</div>'
-        "</div>"
+        f"""
+<style>
+div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a,
+div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a {{
+    background-color: #eceff4 !important;
+    border-color: #dde2ea !important;
+}}
+div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a p,
+div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a p {{
+    color: #111827 !important;
+    font-weight: 700 !important;
+}}
+</style>
+        """
     )
 
-    domain_cols = st.columns(len(DOMAIN_NAV_ITEMS))
+    _render_html('<div class="ai-hairline"></div>')
+
+    # Inline Data Domain row matching AI Studio layout
+    _render_html('<span id="ai-domain-anchor" class="ai-nav-anchor"></span>')
+    label_col, *domain_cols, tail_col = st.columns([0.82, 0.9, 0.9, 0.95, 1.05, 0.85, 2.0])
+    with label_col:
+        _render_html('<div class="ai-domain-inline-label">Data domain</div>')
+
     for col, (label, path, icon) in zip(domain_cols, DOMAIN_NAV_ITEMS):
         with col:
-            _render_nav_item(
-                label=label,
-                page_path=path,
-                icon=icon,
-                is_active=(active_page == label),
-            )
+            _render_nav_item(label=label, page_path=path, icon=icon)
+
+    with tail_col:
+        _render_html('<div style="height:1px;"></div>')
+
+    # Explicitly highlight active_page in domain bar as well as aria-current="page"
+    domain_idx_map = {label: idx + 2 for idx, (label, _, _) in enumerate(DOMAIN_NAV_ITEMS)}
+    if active_page in domain_idx_map:
+        dom_col_idx = domain_idx_map[active_page]
+        _render_html(
+            f"""
+<style>
+div[data-testid="element-container"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a,
+div[data-testid="stElementContainer"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a {{
+    background-color: #e7f5ee !important;
+    border: 1.5px solid #0c6b53 !important;
+    box-shadow: 0 1px 4px rgba(12, 107, 83, 0.14) !important;
+}}
+div[data-testid="element-container"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a p,
+div[data-testid="stElementContainer"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a p {{
+    color: #08523f !important;
+    font-weight: 700 !important;
+}}
+</style>
+            """
+        )
 
     _render_html('<div class="ai-hairline"></div>')
 
@@ -990,7 +1112,7 @@ def render_page_header(
     meta_parts = []
     if reporting_period:
         meta_parts.append(
-            f'<span class="ai-period-pill">Reporting Period: {_escape(reporting_period)}</span>'
+            f'<span class="ai-period-pill">{_escape(reporting_period)}</span>'
         )
     if status_text:
         meta_parts.append(status_badge_html(status_text, tone=status_tone))
@@ -1047,18 +1169,18 @@ def kpi_card_html(
     delta_tone: str = "neutral",
     caption: Optional[str] = None,
     icon: Optional[str] = None,
+    source_table: Optional[str] = None,
 ) -> str:
-    """Build HTML for a single enterprise KPI card."""
-    icon_html = f'<span class="ai-kpi-icon">{_escape(icon)}</span>' if icon else ""
+    """Build HTML for a single enterprise KPI card styled after AI Studio."""
     delta_html = status_badge_html(delta, tone=delta_tone) if delta else ""
+    icon_html = f'<span class="ai-kpi-icon">{_escape(icon)}</span>' if icon else ""
+    top_right = delta_html or icon_html
     caption_html = (
-        f'<span class="ai-kpi-caption">{_escape(caption)}</span>'
-        if caption
-        else ""
+        f'<div class="ai-kpi-caption">{_escape(caption)}</div>' if caption else ""
     )
-    footer_html = (
-        f'<div class="ai-kpi-footer">{delta_html}{caption_html}</div>'
-        if (delta_html or caption_html)
+    source_html = (
+        f'<div class="ai-kpi-source">{_escape(source_table)}</div>'
+        if source_table
         else ""
     )
 
@@ -1066,10 +1188,11 @@ def kpi_card_html(
         '<div class="ai-kpi-card">'
         '<div class="ai-kpi-top">'
         f'<span class="ai-kpi-label">{_escape(label)}</span>'
-        f"{icon_html}"
+        f"{top_right}"
         "</div>"
         f'<div class="ai-kpi-value">{_escape(value)}</div>'
-        f"{footer_html}"
+        f"{caption_html}"
+        f"{source_html}"
         "</div>"
     )
 
@@ -1081,6 +1204,7 @@ def render_kpi_card(
     delta_tone: str = "neutral",
     caption: Optional[str] = None,
     icon: Optional[str] = None,
+    source_table: Optional[str] = None,
 ) -> None:
     """Render a single KPI card inside any Streamlit layout container."""
     _render_html(
@@ -1091,6 +1215,7 @@ def render_kpi_card(
             delta_tone=delta_tone,
             caption=caption,
             icon=icon,
+            source_table=source_table,
         )
     )
 
@@ -1105,6 +1230,7 @@ def render_kpi_row(cards: Iterable[Mapping[str, object]]) -> None:
             delta_tone=str(card.get("delta_tone", "neutral")),
             caption=card.get("caption"),
             icon=card.get("icon"),
+            source_table=card.get("source_table"),
         )
         for card in cards
     )
