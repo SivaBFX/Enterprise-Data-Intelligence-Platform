@@ -15,10 +15,10 @@ from utils.monitoring import record_event
 from utils.ui import status_badge_html
 
 SUGGESTED_QUESTIONS = [
-    "Which markets delivered the highest NOI and weighted occupancy?",
-    "Which properties have occupancy below 85% or negative NOI?",
-    "Which properties have the highest maintenance costs and open work orders?",
-    "How have portfolio rental revenue and NOI trended over the last 12 months?",
+    "Top NOI & occupancy markets?",
+    "Low occupancy or negative NOI?",
+    "Highest maintenance & backlog?",
+    "12-month revenue & NOI trend?",
 ]
 
 SUGGESTED_QUESTION_GROUPS: Dict[str, List[str]] = {

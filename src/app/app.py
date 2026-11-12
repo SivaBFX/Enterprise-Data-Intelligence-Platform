@@ -42,7 +42,7 @@ PERSONA_ROLES = [
     ("Portfolio Exec", "All KPIs & decision queues across 5 markets"),
     ("Market Ops", "Regional NOI, occupancy, and OpEx dispersion"),
     ("Asset Manager", "Property-level occupancy & negative NOI watchlist"),
-    ("Maintenance Lead", "Work-order backlogs, SLAs, and CapEx alignment"),
+    ("Maint & CapEx", "Work-order backlogs, SLAs, and CapEx alignment"),
 ]
 
 st.set_page_config(
@@ -492,7 +492,7 @@ def _build_decision_items(
                 "id": "high_maint",
                 "title": f"Triage {len(high_maint)} top-decile maintenance cost properties",
                 "short_sub": f"{summary['active_work_orders']:,} active work orders open/in progress",
-                "owner": "Maintenance Lead · Field Ops",
+                "owner": "Maint & CapEx · Field Ops",
                 "badge_1": "Gold Triggered",
                 "badge_2": "Cost & Backlog",
                 "tone": "warning",
@@ -549,7 +549,7 @@ def _render_hero_and_personas(decision_count: int, summary: Dict[str, Any]) -> s
     st.session_state.setdefault("ai_active_persona", "Portfolio Exec")
     active_role = st.session_state["ai_active_persona"]
 
-    left_col, right_col = st.columns([1.35, 1.15])
+    left_col, right_col = st.columns([1.22, 1.28])
     with left_col:
         headline = (
             f"{decision_count} decision{'s' if decision_count != 1 else ''} need you today"
@@ -579,7 +579,7 @@ def _render_hero_and_personas(decision_count: int, summary: Dict[str, Any]) -> s
 
     with right_col:
         st.caption("View as · focus perspectives mapped to Portfolio")
-        p_cols = st.columns(len(PERSONA_ROLES))
+        p_cols = st.columns([1.15, 0.96, 1.15, 1.14])
         for col, (role_name, _) in zip(p_cols, PERSONA_ROLES):
             with col:
                 is_selected = active_role == role_name

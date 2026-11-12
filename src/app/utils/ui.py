@@ -314,14 +314,13 @@ div[data-testid="stPageLink"] {
 }
 
 /* Top workspace navigation: sleek minimalist borderless tabs */
-div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a,
-div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a {
+div[data-testid="stVerticalBlock"]:has(#ai-topnav-anchor) div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a {
     width: 100% !important;
     min-height: 36px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 0.35rem 0.75rem !important;
+    padding: 0.32rem 0.7rem !important;
     background-color: transparent !important;
     border: 1px solid transparent !important;
     border-radius: 8px !important;
@@ -330,69 +329,65 @@ div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a p,
-div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a span,
-div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a p,
-div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a span {
+div[data-testid="stVerticalBlock"]:has(#ai-topnav-anchor) div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a p,
+div[data-testid="stVerticalBlock"]:has(#ai-topnav-anchor) div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a span {
     color: var(--ai-body) !important;
     font-weight: 550 !important;
     font-size: 0.86rem !important;
 }
 
-div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a:hover,
-div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a:hover {
-    background-color: var(--ai-surface-subtle) !important;
+div[data-testid="stVerticalBlock"]:has(#ai-topnav-anchor) div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a:hover {
+    background-color: #eceff4 !important;
+    border-color: transparent !important;
 }
 
-/* Domain navigation: clean AI Studio segmented pill strip */
-div[data-testid="element-container"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a,
-div[data-testid="stElementContainer"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] div[data-testid="stPageLink"] a,
+/* Domain navigation & general page links: clean borderless pills with elevated active pill */
 div[data-testid="stPageLink"] a {
     width: 100% !important;
-    min-height: 36px;
+    min-height: 34px;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 6px;
-    padding: 0.32rem 0.75rem !important;
-    background-color: var(--ai-surface) !important;
-    border: 1px solid var(--ai-border) !important;
-    border-radius: 9px !important;
-    color: var(--ai-text) !important;
+    padding: 0.3rem 0.72rem !important;
+    background-color: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+    color: var(--ai-body) !important;
     text-decoration: none !important;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+    box-shadow: none !important;
     transition: all 0.15s ease;
 }
 
 div[data-testid="stPageLink"] a p,
 div[data-testid="stPageLink"] a span,
 div[data-testid="stPageLink"] a div {
-    color: var(--ai-text) !important;
+    color: var(--ai-body) !important;
     font-weight: 600 !important;
     font-size: 0.84rem !important;
     white-space: nowrap !important;
 }
 
 div[data-testid="stPageLink"] a:hover {
-    background-color: #f0f7f4 !important;
-    border-color: var(--ai-green-border) !important;
+    background-color: #eceff4 !important;
+    border-color: transparent !important;
 }
 
 div[data-testid="stPageLink"] a:hover p,
 div[data-testid="stPageLink"] a:hover span {
-    color: var(--ai-green-hover) !important;
+    color: var(--ai-navy) !important;
 }
 
 div[data-testid="stPageLink"] a[aria-current="page"] {
-    background-color: var(--ai-green-soft) !important;
-    border: 1.5px solid var(--ai-green) !important;
-    box-shadow: 0 1px 4px rgba(12, 107, 83, 0.12) !important;
+    background-color: var(--ai-surface) !important;
+    border: 1px solid var(--ai-border) !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
 }
 
 div[data-testid="stPageLink"] a[aria-current="page"] p,
 div[data-testid="stPageLink"] a[aria-current="page"] span,
 div[data-testid="stPageLink"] a[aria-current="page"] div {
-    color: var(--ai-green-hover) !important;
+    color: var(--ai-navy) !important;
     font-weight: 700 !important;
 }
 
@@ -732,12 +727,9 @@ div[data-testid="stMetricValue"] div {
     font-variant-numeric: tabular-nums;
 }
 
-/* Native Containers / Chart Cards */
+/* Only round explicit bordered containers without forcing borders onto every column */
 div[data-testid="stVerticalBlockBorderWrapper"] {
-    background: var(--ai-surface);
-    border: 1px solid var(--ai-border) !important;
-    border-radius: 14px !important;
-    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.035);
+    border-radius: 14px;
 }
 
 /* Buttons: polished pill/rounded styling with crisp contrast */
@@ -992,56 +984,53 @@ def render_header(
     user_initials: str = "ES",
 ) -> None:
     """Render the AI Studio top navigation bar and inline data domain strip."""
-    # Anchor used purely by CSS so every column in the row contains only 1 element.
-    _render_html('<span id="ai-topnav-anchor" class="ai-nav-anchor"></span>')
+    with st.container():
+        _render_html('<span id="ai-topnav-anchor" class="ai-nav-anchor"></span>')
 
-    brand_col, nav1_col, nav2_col, nav3_col, spacer_col, profile_col = st.columns(
-        [2.05, 0.78, 1.05, 0.82, 1.5, 1.25]
-    )
-
-    with brand_col:
-        _render_html(
-            '<div class="ai-brand">'
-            '<div class="ai-brand-mark">◈</div>'
-            "<div>"
-            '<div class="ai-brand-title">Property Intelligence</div>'
-            '<div class="ai-brand-subtitle">AI Studio · on Databricks</div>'
-            "</div>"
-            "</div>"
+        brand_col, nav1_col, nav2_col, nav3_col, spacer_col, profile_col = st.columns(
+            [2.05, 0.78, 1.05, 0.82, 1.45, 1.3]
         )
 
-    nav_cols = [nav1_col, nav2_col, nav3_col]
-    for col, (label, path, icon) in zip(nav_cols, TOP_NAV_ITEMS):
-        with col:
-            _render_nav_item(label=label, page_path=path, icon=icon)
+        with brand_col:
+            _render_html(
+                '<div class="ai-brand">'
+                '<div class="ai-brand-mark">◈</div>'
+                "<div>"
+                '<div class="ai-brand-title">Property Intelligence</div>'
+                '<div class="ai-brand-subtitle">AI Studio · on Databricks</div>'
+                "</div>"
+                "</div>"
+            )
 
-    with spacer_col:
-        _render_html('<div style="height:1px;"></div>')
+        nav_cols = [nav1_col, nav2_col, nav3_col]
+        for col, (label, path, icon) in zip(nav_cols, TOP_NAV_ITEMS):
+            with col:
+                _render_nav_item(label=label, page_path=path, icon=icon)
 
-    with profile_col:
-        _render_html(
-            '<div class="ai-user-chip">'
-            '<div class="ai-user-meta">'
-            f'<span class="ai-user-name">{_escape(user_name)}</span>'
-            f'<span class="ai-user-role">{_escape(user_role)}</span>'
-            "</div>"
-            f'<div class="ai-user-avatar">{_escape(user_initials)}</div>'
-            "</div>"
-        )
+        with spacer_col:
+            pass
 
-    # Highlight the active top workspace link without inserting extra DOM elements inside columns.
+        with profile_col:
+            _render_html(
+                '<div class="ai-user-chip">'
+                '<div class="ai-user-meta">'
+                f'<span class="ai-user-name">{_escape(user_name)}</span>'
+                f'<span class="ai-user-role">{_escape(user_role)}</span>'
+                "</div>"
+                f'<div class="ai-user-avatar">{_escape(user_initials)}</div>'
+                "</div>"
+            )
+
     top_idx_map = {label: idx + 2 for idx, (label, _, _) in enumerate(TOP_NAV_ITEMS)}
     active_top_col_idx = top_idx_map.get(active_section, 2)
     _render_html(
         f"""
 <style>
-div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a,
-div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a {{
+div[data-testid="stVerticalBlock"]:has(#ai-topnav-anchor) div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a {{
     background-color: #eceff4 !important;
     border-color: #dde2ea !important;
 }}
-div[data-testid="element-container"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a p,
-div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a p {{
+div[data-testid="stVerticalBlock"]:has(#ai-topnav-anchor) div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a p {{
     color: #111827 !important;
     font-weight: 700 !important;
 }}
@@ -1051,35 +1040,32 @@ div[data-testid="stElementContainer"]:has(#ai-topnav-anchor) + div[data-testid="
 
     _render_html('<div class="ai-hairline"></div>')
 
-    # Inline Data Domain row matching AI Studio layout
-    _render_html('<span id="ai-domain-anchor" class="ai-nav-anchor"></span>')
-    label_col, *domain_cols, tail_col = st.columns([0.82, 0.9, 0.9, 0.95, 1.05, 0.85, 2.0])
-    with label_col:
-        _render_html('<div class="ai-domain-inline-label">Data domain</div>')
+    with st.container():
+        _render_html('<span id="ai-domain-anchor" class="ai-nav-anchor"></span>')
+        label_col, *domain_cols, tail_col = st.columns([0.85, 0.9, 0.9, 0.95, 1.05, 0.85, 1.95])
+        with label_col:
+            _render_html('<div class="ai-domain-inline-label">Data domain</div>')
 
-    for col, (label, path, icon) in zip(domain_cols, DOMAIN_NAV_ITEMS):
-        with col:
-            _render_nav_item(label=label, page_path=path, icon=icon)
+        for col, (label, path, icon) in zip(domain_cols, DOMAIN_NAV_ITEMS):
+            with col:
+                _render_nav_item(label=label, page_path=path, icon=icon)
 
-    with tail_col:
-        _render_html('<div style="height:1px;"></div>')
+        with tail_col:
+            pass
 
-    # Explicitly highlight active_page in domain bar as well as aria-current="page"
     domain_idx_map = {label: idx + 2 for idx, (label, _, _) in enumerate(DOMAIN_NAV_ITEMS)}
     if active_page in domain_idx_map:
         dom_col_idx = domain_idx_map[active_page]
         _render_html(
             f"""
 <style>
-div[data-testid="element-container"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a,
-div[data-testid="stElementContainer"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a {{
-    background-color: #e7f5ee !important;
-    border: 1.5px solid #0c6b53 !important;
-    box-shadow: 0 1px 4px rgba(12, 107, 83, 0.14) !important;
+div[data-testid="stVerticalBlock"]:has(#ai-domain-anchor) div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a {{
+    background-color: #ffffff !important;
+    border: 1px solid #d1d5db !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.07) !important;
 }}
-div[data-testid="element-container"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a p,
-div[data-testid="stElementContainer"]:has(#ai-domain-anchor) + div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a p {{
-    color: #08523f !important;
+div[data-testid="stVerticalBlock"]:has(#ai-domain-anchor) div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a p {{
+    color: #0c6b53 !important;
     font-weight: 700 !important;
 }}
 </style>
