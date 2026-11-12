@@ -4,12 +4,14 @@ from dataclasses import dataclass, field
 from datetime import timedelta
 import html
 import os
+import time
 from typing import Any, Dict, List, Optional
 
 from databricks.sdk import WorkspaceClient
 import pandas as pd
 import streamlit as st
 
+from utils.monitoring import record_event
 from utils.ui import status_badge_html
 
 SUGGESTED_QUESTIONS = [
@@ -157,6 +159,7 @@ def ask_genie(
             error_message="GENIE_SPACE_ID resource is not configured in app.yaml.",
         )
 
+    started = time.perf_counter()
     try:
         client = WorkspaceClient()
         if not hasattr(client, "genie"):
@@ -249,6 +252,13 @@ def ask_genie(
         if not text_answers and not sql_query and fallback_content:
             text_answers.append(str(fallback_content).strip())
 
+        record_event(
+            category="genie",
+            target=resolved_space_id[:12],
+            status="ok",
+            duration_ms=(time.perf_counter() - started) * 1000.0,
+            detail=f"status={status_str} rows={row_count}",
+        )
         return GenieResponse(
             success=True,
             question=cleaned_question,
@@ -265,6 +275,13 @@ def ask_genie(
         )
 
     except Exception as exc:
+        record_event(
+            category="genie",
+            target=resolved_space_id[:12],
+            status="error",
+            duration_ms=(time.perf_counter() - started) * 1000.0,
+            detail=type(exc).__name__,
+        )
         return GenieResponse(
             success=False,
             question=cleaned_question,

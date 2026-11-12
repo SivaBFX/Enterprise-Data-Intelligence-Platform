@@ -2,13 +2,21 @@
 
 import os
 import re
+import time
 from typing import Any, Dict, Iterable, Optional
 
 import pandas as pd
 from databricks import sql
 from databricks.sdk.core import Config
 
+from utils.monitoring import record_event
+
 _VALID_IDENTIFIER_RE = re.compile(r"^[A-Za-z0-9_`.-]+$")
+_READ_ONLY_PREFIX_RE = re.compile(r"^(SELECT|WITH|DESCRIBE|SHOW)\b", re.IGNORECASE)
+_FORBIDDEN_SQL_RE = re.compile(
+    r"\b(DROP|DELETE|INSERT|UPDATE|ALTER|CREATE|TRUNCATE|MERGE|GRANT|REVOKE)\b",
+    re.IGNORECASE,
+)
 
 
 def _validate_table_identifier(table_name: str) -> str:
@@ -16,6 +24,23 @@ def _validate_table_identifier(table_name: str) -> str:
     cleaned = (table_name or "").strip()
     if not cleaned or not _VALID_IDENTIFIER_RE.match(cleaned):
         raise ValueError(f"Invalid Unity Catalog table identifier: {table_name!r}")
+    return cleaned
+
+
+def validate_read_only_sql(sql_query: str) -> str:
+    """Ensure SQL statements executed by the app are single, read-only queries."""
+    cleaned = (sql_query or "").strip()
+    if cleaned.endswith(";"):
+        cleaned = cleaned[:-1].strip()
+
+    if not cleaned:
+        raise ValueError("SQL query must not be empty.")
+    if ";" in cleaned or "--" in cleaned or "/*" in cleaned:
+        raise ValueError("Stacked SQL statements and inline comments are not permitted.")
+    if not _READ_ONLY_PREFIX_RE.match(cleaned):
+        raise ValueError("Only SELECT, WITH, DESCRIBE, and SHOW statements are permitted.")
+    if _FORBIDDEN_SQL_RE.search(cleaned):
+        raise ValueError("Mutating or DDL SQL keywords are not permitted.")
     return cleaned
 
 
@@ -44,23 +69,47 @@ def get_connection():
 
 
 def run_query(sql_query: str) -> pd.DataFrame:
-    """Execute a read-only SQL statement and return results as a DataFrame."""
-    with get_connection() as connection:
-        with connection.cursor() as cursor:
-            cursor.execute(sql_query)
-            rows = cursor.fetchall()
-            columns = (
-                [column[0] for column in cursor.description]
-                if cursor.description
-                else []
-            )
-            return pd.DataFrame(rows, columns=columns)
+    """Execute a validated read-only SQL statement and record latency telemetry."""
+    safe_sql = validate_read_only_sql(sql_query)
+    started = time.perf_counter()
+    target_preview = safe_sql.split()[0].upper()
+    try:
+        with get_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(safe_sql)
+                rows = cursor.fetchall()
+                columns = (
+                    [column[0] for column in cursor.description]
+                    if cursor.description
+                    else []
+                )
+                df = pd.DataFrame(rows, columns=columns)
+        elapsed_ms = (time.perf_counter() - started) * 1000.0
+        record_event(
+            category="sql",
+            target=target_preview,
+            status="ok",
+            duration_ms=elapsed_ms,
+            detail=f"rows={len(df)}",
+        )
+        return df
+    except Exception as exc:
+        elapsed_ms = (time.perf_counter() - started) * 1000.0
+        record_event(
+            category="sql",
+            target=target_preview,
+            status="error",
+            duration_ms=elapsed_ms,
+            detail=type(exc).__name__,
+        )
+        raise
 
 
 def query_table(table_name: str, limit: int = 10) -> pd.DataFrame:
-    """Query rows from a Unity Catalog table up to the requested limit."""
+    """Query rows from a Unity Catalog table up to the requested positive limit."""
     safe_table = _validate_table_identifier(table_name)
-    return run_query(f"SELECT * FROM {safe_table} LIMIT {int(limit)}")
+    safe_limit = max(1, int(limit))
+    return run_query(f"SELECT * FROM {safe_table} LIMIT {safe_limit}")
 
 
 def get_table_row_count(table_name: str) -> Optional[int]:

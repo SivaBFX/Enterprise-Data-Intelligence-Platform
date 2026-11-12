@@ -12,6 +12,7 @@ from utils.database import (
     resolve_table_name,
     run_query,
 )
+from utils.monitoring import get_recent_events
 from utils.ui import (
     apply_theme,
     chart_card,
@@ -227,6 +228,12 @@ def _evaluate_data_quality(
             "tone": "info",
             "detail": f"{row_count:,} rows verified (null check skipped: {type(exc).__name__}).",
         }
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def _load_sample_preview(table_fqn: str) -> pd.DataFrame:
+    """Cache top-5 sample previews per table to avoid repeat SQL queries on filter reruns."""
+    return query_table(table_fqn, limit=5)
 
 
 @st.cache_data(ttl=300, show_spinner=False)
@@ -506,7 +513,7 @@ def main() -> None:
                     with p_col:
                         st.markdown("**Sample Preview (Top 5 Rows)**")
                         try:
-                            sample_df = query_table(item["table_fqn"], limit=5)
+                            sample_df = _load_sample_preview(item["table_fqn"])
                             st.dataframe(
                                 sample_df,
                                 use_container_width=True,
@@ -516,6 +523,17 @@ def main() -> None:
                             st.caption(f"Preview unavailable: {sample_exc}")
 
         _render_glossary_section()
+
+        telemetry_events = get_recent_events()
+        with st.expander(f"Platform Runtime Telemetry & Query Logs ({len(telemetry_events)} events)"):
+            if telemetry_events:
+                st.dataframe(
+                    pd.DataFrame(telemetry_events),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+            else:
+                st.caption("No SQL or Genie runtime telemetry events recorded in this session yet.")
 
     except Exception as exc:
         render_page_header(
