@@ -556,12 +556,15 @@ def _render_hero_and_personas(decision_count: int, summary: Dict[str, Any]) -> s
             if decision_count > 0
             else "All portfolio metrics within baseline"
         )
+        period_badge_text = (
+            f"Gold Layer · {summary['latest_month']} · {summary['history_months']}M"
+        )
         pill_html = (
-            f'<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">'
-            f'<span style="font-size:0.72rem;font-weight:750;letter-spacing:0.08em;'
-            f'text-transform:uppercase;color:#0c6b53;">PORTFOLIO · EXECUTIVE</span>'
-            f'{status_badge_html(f"Gold Layer · {summary["latest_month"]} · {summary["history_months"]}M", tone="neutral")}'
-            f"</div>"
+            '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">'
+            '<span style="font-size:0.72rem;font-weight:750;letter-spacing:0.08em;'
+            'text-transform:uppercase;color:#0c6b53;">PORTFOLIO · EXECUTIVE</span>'
+            f'{status_badge_html(period_badge_text, tone="neutral")}'
+            "</div>"
         )
         st.markdown(pill_html, unsafe_allow_html=True)
         st.markdown(
