@@ -5,6 +5,7 @@ import html
 from pathlib import Path
 from typing import Iterable, Mapping, Optional
 
+import pandas as pd
 import streamlit as st
 
 APP_ROOT = Path(__file__).resolve().parent.parent
@@ -1160,3 +1161,30 @@ def render_empty_state(title: str, message: str, tone: str = "neutral") -> None:
         f'<div class="ai-empty-msg">{_escape(message)}</div>'
         "</div>"
     )
+
+
+def pct_change(current: float, previous: float) -> Optional[float]:
+    """Compute percentage change safely when previous value is non-zero."""
+    if not previous:
+        return None
+    return ((current - previous) / abs(previous)) * 100.0
+
+
+def render_formatted_table(
+    df: pd.DataFrame,
+    column_labels: Mapping[str, str],
+    formats: Mapping[str, str],
+) -> None:
+    """Rename selected columns, apply display formatting, and render a dataframe."""
+    renamed = df[list(column_labels.keys())].rename(columns=column_labels)
+    try:
+        styled = renamed.style.format(formats)
+        st.dataframe(styled, use_container_width=True, hide_index=True)
+    except (AttributeError, ImportError):
+        formatted = renamed.copy()
+        for col, fmt in formats.items():
+            if col in formatted.columns:
+                formatted[col] = formatted[col].map(
+                    lambda val: fmt.format(val) if pd.notna(val) else "—"
+                )
+        st.dataframe(formatted, use_container_width=True, hide_index=True)

@@ -2,7 +2,7 @@
 
 import os
 import re
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Iterable, Optional
 
 import pandas as pd
 from databricks import sql
@@ -103,3 +103,12 @@ def get_table_freshness(table_name: str) -> Dict[str, Any]:
             "table": table_name,
             "reason": str(exc),
         }
+
+
+def coerce_numeric(df: pd.DataFrame, columns: Iterable[str]) -> pd.DataFrame:
+    """Safely convert numeric or Decimal columns to floats on a copy of df."""
+    cleaned = df.copy()
+    for col in columns:
+        if col in cleaned.columns:
+            cleaned[col] = pd.to_numeric(cleaned[col], errors="coerce").fillna(0.0)
+    return cleaned

@@ -8,10 +8,12 @@ import pandas as pd
 import streamlit as st
 
 from utils.database import (
+    coerce_numeric,
     get_table_freshness,
     get_table_row_count,
     query_table,
     resolve_table_name,
+    run_query,
 )
 from utils.genie import (
     SUGGESTED_QUESTIONS,
@@ -22,7 +24,9 @@ from utils.genie import (
 from utils.ui import (
     apply_theme,
     chart_card,
+    pct_change,
     render_empty_state,
+    render_formatted_table,
     render_header,
     render_insight_card,
     render_kpi_row,
@@ -40,15 +44,6 @@ st.set_page_config(
 )
 
 
-def _coerce_numeric(df: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
-    """Safely convert numeric/Decimal columns to floats without mutating input."""
-    cleaned = df.copy()
-    for col in columns:
-        if col in cleaned.columns:
-            cleaned[col] = pd.to_numeric(cleaned[col], errors="coerce").fillna(0.0)
-    return cleaned
-
-
 def _sort_portfolio_months(df: pd.DataFrame) -> pd.DataFrame:
     """Sort monthly portfolio KPI records chronologically."""
     ordered = df.copy()
@@ -59,33 +54,6 @@ def _sort_portfolio_months(df: pd.DataFrame) -> pd.DataFrame:
         ordered["_sort_key"] = ordered["month_year"].astype(str)
     ordered = ordered.sort_values("_sort_key").drop(columns=["_sort_key"]).reset_index(drop=True)
     return ordered
-
-
-def _pct_change(current: float, previous: float) -> Optional[float]:
-    """Compute percentage change safely when previous value is non-zero."""
-    if not previous:
-        return None
-    return ((current - previous) / abs(previous)) * 100.0
-
-
-def _render_formatted_table(
-    df: pd.DataFrame,
-    column_labels: Dict[str, str],
-    formats: Dict[str, str],
-) -> None:
-    """Rename columns, apply number formatting, and render a full-width table."""
-    renamed = df[list(column_labels.keys())].rename(columns=column_labels)
-    try:
-        styled = renamed.style.format(formats)
-        st.dataframe(styled, use_container_width=True, hide_index=True)
-    except (AttributeError, ImportError):
-        formatted = renamed.copy()
-        for col, fmt in formats.items():
-            if col in formatted.columns:
-                formatted[col] = formatted[col].map(
-                    lambda val: fmt.format(val) if pd.notna(val) else "—"
-                )
-        st.dataframe(formatted, use_container_width=True, hide_index=True)
 
 
 @st.cache_data(ttl=300, show_spinner=False)
@@ -113,7 +81,7 @@ def load_dashboard_data() -> Dict[str, Any]:
     maintenance_df = query_table(maintenance_table, limit=1000)
 
     if not portfolio_df.empty:
-        portfolio_df = _coerce_numeric(
+        portfolio_df = coerce_numeric(
             portfolio_df,
             [
                 "total_properties",
@@ -131,7 +99,7 @@ def load_dashboard_data() -> Dict[str, Any]:
         ).fillna(0.0)
 
     if not market_df.empty:
-        market_df = _coerce_numeric(
+        market_df = coerce_numeric(
             market_df,
             [
                 "property_count",
@@ -156,7 +124,7 @@ def load_dashboard_data() -> Dict[str, Any]:
         ).fillna(0.0)
 
     if not property_df.empty:
-        property_df = _coerce_numeric(
+        property_df = coerce_numeric(
             property_df,
             [
                 "bedrooms",
@@ -171,7 +139,7 @@ def load_dashboard_data() -> Dict[str, Any]:
         )
 
     if not maintenance_df.empty:
-        maintenance_df = _coerce_numeric(
+        maintenance_df = coerce_numeric(
             maintenance_df,
             [
                 "total_work_orders",
@@ -194,6 +162,19 @@ def load_dashboard_data() -> Dict[str, Any]:
     }
 
     capex_rows = get_table_row_count(capex_table)
+    capex_totals = {"total_capex_amount": 0.0, "investment_count": 0}
+    try:
+        capex_agg = run_query(
+            f"SELECT COALESCE(SUM(total_capex_amount), 0) AS total_capex_amount, "
+            f"COALESCE(SUM(investment_count), 0) AS investment_count "
+            f"FROM {capex_table}"
+        )
+        if not capex_agg.empty:
+            capex_agg = coerce_numeric(capex_agg, ["total_capex_amount", "investment_count"])
+            capex_totals["total_capex_amount"] = float(capex_agg.iloc[0]["total_capex_amount"])
+            capex_totals["investment_count"] = int(capex_agg.iloc[0]["investment_count"])
+    except Exception:
+        pass
 
     return {
         "tables": {
@@ -208,6 +189,7 @@ def load_dashboard_data() -> Dict[str, Any]:
         "property_df": property_df,
         "maintenance_df": maintenance_df,
         "capex_rows": capex_rows,
+        "capex_totals": capex_totals,
         "freshness": freshness,
     }
 
@@ -215,7 +197,7 @@ def load_dashboard_data() -> Dict[str, Any]:
 def compute_portfolio_summary(
     portfolio_df: pd.DataFrame,
     maintenance_df: pd.DataFrame,
-    capex_rows: Optional[int],
+    capex_totals: Dict[str, Any],
 ) -> Dict[str, Any]:
     """Compute top-level KPI values and period-over-period comparisons."""
     latest = portfolio_df.iloc[-1]
@@ -231,12 +213,12 @@ def compute_portfolio_summary(
 
     occ_delta = (occupancy - float(prev["occupancy_pct"])) if prev is not None else None
     rev_delta = (
-        _pct_change(latest_revenue, float(prev["total_rental_revenue"]))
+        pct_change(latest_revenue, float(prev["total_rental_revenue"]))
         if prev is not None
         else None
     )
     noi_delta = (
-        _pct_change(latest_noi, float(prev["total_noi"]))
+        pct_change(latest_noi, float(prev["total_noi"]))
         if prev is not None
         else None
     )
@@ -306,10 +288,14 @@ def compute_portfolio_summary(
         },
         {
             "label": "CapEx Investment",
-            "value": f"{capex_rows:,} records" if capex_rows is not None else "Pending Schema",
-            "delta": "Schema Check Needed",
-            "delta_tone": "neutral",
-            "caption": "Run DESCRIBE TABLE gold_capex_summary",
+            "value": f"${float(capex_totals.get('total_capex_amount', 0.0)):,.0f}",
+            "delta": f"{int(capex_totals.get('investment_count', 0)):,} investments",
+            "delta_tone": "info",
+            "caption": (
+                f"Avg ${float(capex_totals['total_capex_amount']) / int(capex_totals['investment_count']):,.0f} / investment"
+                if int(capex_totals.get("investment_count", 0)) > 0
+                else "From gold_capex_summary"
+            ),
             "icon": "🏗️",
         },
     ]
@@ -550,7 +536,7 @@ def render_performance_section(
                 badge=f"{len(latest_markets)} Markets",
                 badge_tone="neutral",
             ):
-                _render_formatted_table(
+                render_formatted_table(
                     latest_markets.sort_values("total_noi", ascending=False),
                     column_labels={
                         "market_name": "Market",
@@ -629,7 +615,7 @@ def render_decision_queue_section(queues: Dict[str, Any]) -> None:
                 st.caption(
                     f"Showing properties with overall occupancy below {LOW_OCCUPANCY_THRESHOLD_PCT:.0f}%."
                 )
-                _render_formatted_table(
+                render_formatted_table(
                     low_occ_df,
                     column_labels={
                         "property_id": "Property ID",
@@ -660,7 +646,7 @@ def render_decision_queue_section(queues: Dict[str, Any]) -> None:
                     st.caption(
                         "No properties have negative total NOI; showing the 10 lowest-NOI properties for margin review."
                     )
-                _render_formatted_table(
+                render_formatted_table(
                     low_noi_df,
                     column_labels={
                         "property_id": "Property ID",
@@ -690,7 +676,7 @@ def render_decision_queue_section(queues: Dict[str, Any]) -> None:
                 st.caption(
                     f"Showing top-decile maintenance spend properties (>= ${queues['maint_threshold']:,.0f})."
                 )
-                _render_formatted_table(
+                render_formatted_table(
                     high_maint_df,
                     column_labels={
                         "property_id": "Property ID",
@@ -722,7 +708,7 @@ def render_decision_queue_section(queues: Dict[str, Any]) -> None:
                 st.caption(
                     "Markets trailing portfolio weighted occupancy or exceeding average operating expense ratio in the latest month."
                 )
-                _render_formatted_table(
+                render_formatted_table(
                     attention_markets_df,
                     column_labels={
                         "market_name": "Market",
@@ -929,7 +915,7 @@ def main() -> None:
         summary = compute_portfolio_summary(
             portfolio_df=portfolio_df,
             maintenance_df=data["maintenance_df"],
-            capex_rows=data["capex_rows"],
+            capex_totals=data["capex_totals"],
         )
 
         # Freshness text from primary portfolio table if Delta history is accessible
