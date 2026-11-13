@@ -2,7 +2,7 @@
 
 from datetime import datetime, timezone
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import streamlit as st
 
@@ -66,11 +66,14 @@ def record_event(
         pass
 
 
-def get_recent_events() -> List[Dict[str, Any]]:
-    """Return recent session telemetry events newest-first."""
+def get_recent_events(limit: Optional[int] = None) -> List[Dict[str, Any]]:
+    """Return recent session telemetry events newest-first, optionally bounded by limit."""
     try:
         events = list(st.session_state.get("app_telemetry_events", []))
-        return list(reversed(events))
+        rev = list(reversed(events))
+        if limit is not None and limit > 0:
+            return rev[:limit]
+        return rev
     except Exception:
         return []
 

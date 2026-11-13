@@ -46,8 +46,8 @@ PERSONA_ROLES = [
 ]
 
 st.set_page_config(
-    page_title="Property Intelligence · AI Studio",
-    page_icon="🏢",
+    page_title="Executive Overview · Property Intelligence",
+    page_icon=":material/dashboard:",
     layout="wide",
 )
 
@@ -440,7 +440,7 @@ def _build_decision_items(
                 "threshold": f"< {LOW_OCCUPANCY_THRESHOLD_PCT:.0f}% occupancy",
                 "guardrail": "Prioritize rent concessions & renewal outreach",
                 "genie_prompt": "Which properties have occupancy below 85% and what is their NOI?",
-                "page_path": "pages/03_Property_Analytics.py",
+                "page_path": "pages/02_Property_Intelligence.py",
                 "page_label": "Inspect in Properties",
                 "df": low_occ[
                     ["property_id", "market_name", "property_type", "overall_occupancy_pct", "total_noi"]
@@ -476,7 +476,7 @@ def _build_decision_items(
                 "threshold": "NOI <= $0" if is_neg else "Bottom 10 NOI",
                 "guardrail": "Expense & rent-roll variance audit",
                 "genie_prompt": "Which 10 properties have the lowest NOI and highest expense ratio?",
-                "page_path": "pages/03_Property_Analytics.py",
+                "page_path": "pages/02_Property_Intelligence.py",
                 "page_label": "Open Property Watchlist",
                 "df": low_noi[
                     ["property_id", "market_name", "overall_occupancy_pct", "total_rental_revenue", "total_noi"]
@@ -505,7 +505,7 @@ def _build_decision_items(
                 "threshold": f">= ${queues['maint_threshold']:,.0f} (P90)",
                 "guardrail": "Evaluate preventive CapEx vs. repeat repairs",
                 "genie_prompt": "Which properties have the highest maintenance costs and open work orders?",
-                "page_path": "pages/04_Maintenance.py",
+                "page_path": "pages/04_Maintenance_Intelligence.py",
                 "page_label": "Open Maintenance Queue",
                 "df": high_maint[
                     ["property_id", "market_name", "total_maintenance_cost", "open_work_orders", "in_progress_work_orders"]
@@ -533,8 +533,8 @@ def _build_decision_items(
                 "threshold": "Below avg occ / above avg OpEx",
                 "guardrail": "Regional operator check-in",
                 "genie_prompt": "Compare all markets by NOI, occupancy, and operating expense ratio.",
-                "page_path": "pages/02_Market_Analytics.py",
-                "page_label": "Open Market Analytics",
+                "page_path": "pages/03_Market_Intelligence.py",
+                "page_label": "Open Market Intelligence",
                 "df": att_mkts[
                     ["market_name", "region", "property_count", "occupancy_pct", "total_noi", "expense_ratio_pct"]
                 ],
@@ -623,8 +623,8 @@ def render_genie_bar() -> None:
                 st.rerun()
         with full_col:
             st.page_link(
-                "pages/08_Genie_Assistant.py",
-                label="Full Genie Chat",
+                "pages/07_AI_Business_Assistant.py",
+                label="Full AI Assistant",
             )
 
         s_cols = st.columns(len(SUGGESTED_QUESTIONS))
@@ -781,7 +781,7 @@ def _render_decision_orchestration_center(
                 unsafe_allow_html=True,
             )
         with h_right:
-            st.page_link("pages/06_Data_Products.py", label="See all")
+            st.page_link("pages/08_Data_Platform_Health.py", label="See all")
 
         primary_freshness = data["freshness"].get(data["tables"]["portfolio"], {})
         sync_label = (
@@ -814,19 +814,19 @@ def _render_decision_orchestration_center(
                 f'Natural-language Q&A + 4 traceable Gold analysts</div>',
                 unsafe_allow_html=True,
             )
-            st.page_link("pages/07_Agents.py", label="Open Specialist Agents")
+            st.page_link("pages/07_AI_Business_Assistant.py", label="Open Specialist Agents")
 
         with st.container(border=True):
             st.markdown(
                 f'<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">'
-                f'<strong style="font-size:0.86rem;color:#111827;">Data Products Catalog</strong>'
-                f'{status_badge_html("6 Products", tone="neutral")}'
+                f'<strong style="font-size:0.86rem;color:#111827;">Data & Platform Health</strong>'
+                f'{status_badge_html("Platform Active", tone="neutral")}'
                 f"</div>"
                 f'<div style="font-size:0.77rem;color:#6b7280;margin:4px 0 6px 0;">'
-                f'Schemas, row counts, completeness checks, and KPI glossary</div>',
+                f'Schemas, row counts, freshness checks, and telemetry</div>',
                 unsafe_allow_html=True,
             )
-            st.page_link("pages/06_Data_Products.py", label="Inspect Data Products")
+            st.page_link("pages/08_Data_Platform_Health.py", label="Inspect Platform Health")
 
 
 def render_performance_section(
@@ -1042,7 +1042,7 @@ def render_insights_and_operations(
 def main() -> None:
     """Render the Executive Portfolio AI Studio dashboard."""
     apply_theme()
-    render_header(active_page="Portfolio", active_section="Today")
+    render_header(active_page="Executive Overview", active_section="Executive Overview")
 
     try:
         with st.spinner("Loading executive portfolio intelligence from Databricks Gold layer..."):
@@ -1124,7 +1124,19 @@ def main() -> None:
             status_tone="danger",
         )
         st.error("Unable to load portfolio intelligence data from Databricks.")
-        st.exception(exc)
+        if "SQL Warehouse resource is not configured" in str(exc) or "DATABRICKS_WAREHOUSE_ID" in str(exc):
+            st.info(
+                "**Running on Localhost?**\n\n"
+                "To connect this app to your Databricks workspace from localhost:\n\n"
+                "1. Copy `src/app/.streamlit/secrets.toml.example` to `src/app/.streamlit/secrets.toml` (or `.streamlit/secrets.toml`).\n"
+                "2. Add your Databricks workspace credentials:\n"
+                "   - `DATABRICKS_HOST = \"https://<your-workspace>.cloud.databricks.com\"`\n"
+                "   - `DATABRICKS_TOKEN = \"dapi...\"` (from User Settings → Developer → Access Tokens)\n"
+                "   - `DATABRICKS_WAREHOUSE_ID = \"...\"` (from Compute → SQL Warehouses)\n"
+                "3. Click **Refresh** in the top navigation bar."
+            )
+        else:
+            st.exception(exc)
 
 
 if __name__ == "__main__":

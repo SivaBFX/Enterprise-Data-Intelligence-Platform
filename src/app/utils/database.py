@@ -44,20 +44,41 @@ def validate_read_only_sql(sql_query: str) -> str:
     return cleaned
 
 
+def _get_config_value(key: str, default: str = "") -> str:
+    """Read configuration value from OS environment or Streamlit secrets."""
+    val = os.getenv(key, "").strip()
+    if not val:
+        try:
+            import streamlit as st
+            val = str(st.secrets.get(key, "")).strip()
+        except Exception:
+            val = ""
+    return val or default
+
+
 def resolve_table_name(env_var: str, default_table: str) -> str:
     """Resolve a configured table name from environment with a verified fallback."""
-    configured = os.getenv(env_var, "").strip()
+    configured = _get_config_value(env_var)
     return _validate_table_identifier(configured or default_table)
 
 
 def get_connection():
     """Create a Databricks SQL Warehouse connection using Databricks SDK auth."""
+    # Ensure Databricks host/token in st.secrets are propagated to os.environ for Databricks SDK
+    for secret_key in ("DATABRICKS_HOST", "DATABRICKS_TOKEN"):
+        s_val = _get_config_value(secret_key)
+        if s_val and secret_key not in os.environ:
+            os.environ[secret_key] = s_val
+
     cfg = Config()
 
-    warehouse_id = os.getenv("DATABRICKS_WAREHOUSE_ID")
+    warehouse_id = _get_config_value("DATABRICKS_WAREHOUSE_ID")
 
     if not warehouse_id:
-        raise ValueError("SQL Warehouse resource is not configured.")
+        raise ValueError(
+            "SQL Warehouse resource is not configured.\n"
+            "If running locally, set DATABRICKS_WAREHOUSE_ID in .streamlit/secrets.toml or your environment."
+        )
 
     server_hostname = cfg.host.replace("https://", "").replace("http://", "")
 

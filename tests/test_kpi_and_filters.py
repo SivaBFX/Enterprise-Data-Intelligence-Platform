@@ -11,10 +11,10 @@ install_test_stubs()
 import utils.database as db  # noqa: E402
 
 app_mod = load_app_module("app.py", "test_app_mod")
-market_mod = load_app_module("pages/02_Market_Analytics.py", "test_market_mod")
-prop_mod = load_app_module("pages/03_Property_Analytics.py", "test_prop_mod")
-maint_mod = load_app_module("pages/04_Maintenance.py", "test_maint_mod")
-capex_mod = load_app_module("pages/05_CapEx.py", "test_capex_mod")
+market_mod = load_app_module("pages/03_Market_Intelligence.py", "test_market_mod")
+prop_mod = load_app_module("pages/02_Property_Intelligence.py", "test_prop_mod")
+maint_mod = load_app_module("pages/04_Maintenance_Intelligence.py", "test_maint_mod")
+capex_mod = load_app_module("pages/05_Investment_CapEx.py", "test_capex_mod")
 
 
 class TestKPIReconciliationAndFilters(unittest.TestCase):
