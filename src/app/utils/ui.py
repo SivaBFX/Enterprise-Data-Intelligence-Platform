@@ -44,39 +44,39 @@ APP_ROOT = Path(__file__).resolve().parent.parent
 # Centralized tone palette for status badges, KPI deltas, and insight cards.
 TONE_STYLES = {
     "success": {
-        "bg": "#e7f5ee",
-        "border": "#a7dcc0",
-        "text": "#0b5e42",
-        "dot": "#0c6b53",
-        "accent": "#0c6b53",
+        "bg": "#EBF8F0",
+        "border": "#B4E3C7",
+        "text": "#15803D",
+        "dot": "#15803D",
+        "accent": "#15803D",
     },
     "warning": {
-        "bg": "#fef6e5",
-        "border": "#f4ce82",
-        "text": "#8a4b08",
-        "dot": "#d97706",
-        "accent": "#d97706",
+        "bg": "#FEF7EA",
+        "border": "#F8D8A0",
+        "text": "#B45309",
+        "dot": "#D97706",
+        "accent": "#D97706",
     },
     "danger": {
-        "bg": "#fef0f0",
-        "border": "#f8baba",
-        "text": "#9b1c1c",
-        "dot": "#dc2626",
-        "accent": "#dc2626",
+        "bg": "#FEF2F2",
+        "border": "#FECACA",
+        "text": "#DC2626",
+        "dot": "#DC2626",
+        "accent": "#DC2626",
     },
     "info": {
-        "bg": "#eef5ff",
-        "border": "#bfd7fe",
-        "text": "#1e40af",
-        "dot": "#2563eb",
-        "accent": "#2563eb",
+        "bg": "#EFF6FF",
+        "border": "#BFDBFE",
+        "text": "#1D4ED8",
+        "dot": "#3478C8",
+        "accent": "#3478C8",
     },
     "neutral": {
-        "bg": "#f1f3f6",
-        "border": "#d6dbe3",
-        "text": "#374151",
-        "dot": "#6b7280",
-        "accent": "#6b7280",
+        "bg": "#F1F5F9",
+        "border": "#E2E8F0",
+        "text": "#475569",
+        "dot": "#64748B",
+        "accent": "#64748B",
     },
 }
 
@@ -152,45 +152,48 @@ def _render_html(markup: str) -> None:
 
 
 def apply_theme() -> None:
-    """Inject the AI Studio light theme stylesheet with zero header overlap."""
+    """Inject the Enterprise SaaS light theme stylesheet with zero header overlap."""
     _render_html(
         """
 <style>
 :root {
-    --saas-sidebar: #172433;
+    --saas-sidebar: #172536;
     --saas-sidebar-border: #223348;
     --saas-sidebar-hover: #1E2F42;
     --saas-sidebar-active: #1E2F42;
     --saas-sidebar-text: #8C9BAE;
     --saas-sidebar-text-hover: #FFFFFF;
-    --saas-bg: #F5F7FA;
+    --saas-bg: #F7F9FC;
     --saas-card: #FFFFFF;
-    --saas-border: #E5EAF0;
-    --saas-border-strong: #D1D9E2;
-    --saas-text-primary: #202B38;
-    --saas-text-secondary: #758294;
-    --saas-green: #119B78;
-    --saas-green-hover: #0E8264;
-    --saas-blue: #3478D4;
-    --saas-warning: #E9A23B;
-    --saas-critical: #DC5656;
-    --ai-bg: #F5F7FA;
+    --saas-border: #E2E8F0;
+    --saas-border-strong: #CBD5E1;
+    --saas-text-primary: #172B4D;
+    --saas-text-secondary: #64748B;
+    --saas-text-muted: #94A3B8;
+    --saas-green: #0F9D83;
+    --saas-green-hover: #0C806A;
+    --saas-green-soft: #E6F7F3;
+    --saas-green-border: #A3E4D7;
+    --saas-blue: #3478C8;
+    --saas-warning: #D97706;
+    --saas-critical: #DC2626;
+    --ai-bg: #F7F9FC;
     --ai-surface: #FFFFFF;
-    --ai-surface-subtle: #F1F4F8;
-    --ai-border: #E5EAF0;
-    --ai-border-strong: #D1D9E2;
-    --ai-navy: #202B38;
-    --ai-text: #202B38;
-    --ai-body: #374151;
-    --ai-muted: #758294;
-    --ai-green: #119B78;
-    --ai-green-hover: #0E8264;
-    --ai-green-soft: #E7F5EE;
-    --ai-green-border: #A7DCC0;
-    --text-color: #202B38;
-    --background-color: #F5F7FA;
+    --ai-surface-subtle: #F8FAFC;
+    --ai-border: #E2E8F0;
+    --ai-border-strong: #CBD5E1;
+    --ai-navy: #172B4D;
+    --ai-text: #172B4D;
+    --ai-body: #334155;
+    --ai-muted: #64748B;
+    --ai-green: #0F9D83;
+    --ai-green-hover: #0C806A;
+    --ai-green-soft: #E6F7F3;
+    --ai-green-border: #A3E4D7;
+    --text-color: #172B4D;
+    --background-color: #F7F9FC;
     --secondary-background-color: #FFFFFF;
-    --primary-color: #119B78;
+    --primary-color: #0F9D83;
 }
 
 /* Base canvas and typography */
@@ -225,15 +228,21 @@ div[data-testid="stMainBlockContainer"],
 .stMainBlockContainer {
     max-width: 1440px !important;
     padding-top: 4.5rem !important;
-    padding-bottom: 3rem !important;
-    padding-left: 1.85rem !important;
-    padding-right: 1.85rem !important;
+    padding-bottom: 2.5rem !important;
+    padding-left: 1.75rem !important;
+    padding-right: 1.75rem !important;
 }
 
-/* Dark Navy Enterprise SaaS Sidebar */
+/* Dark Navy Enterprise SaaS Sidebar (~250px width) */
 section[data-testid="stSidebar"] {
-    background-color: #172433 !important;
+    background-color: #172536 !important;
     border-right: 1px solid #223348 !important;
+}
+
+section[data-testid="stSidebar"]:not([aria-expanded="false"]) {
+    min-width: 250px !important;
+    max-width: 260px !important;
+    width: 250px !important;
 }
 
 /* Eliminate the empty gap at the top of the sidebar */
@@ -250,7 +259,7 @@ div[data-testid="stSidebarHeader"] {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-end !important;
-    background-color: #172433 !important;
+    background-color: #172536 !important;
     height: 1.75rem !important;
     min-height: 1.75rem !important;
     padding: 0.2rem 0.65rem 0 0.65rem !important;
@@ -259,7 +268,7 @@ div[data-testid="stSidebarHeader"] {
 
 section[data-testid="stSidebar"] > div:first-child,
 section[data-testid="stSidebar"] div[data-testid="stSidebarContent"] {
-    background-color: #172433 !important;
+    background-color: #172536 !important;
     padding-left: 0.85rem !important;
     padding-right: 0.85rem !important;
 }
@@ -282,19 +291,19 @@ section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] butt
     width: 32px;
     height: 32px;
     border-radius: 8px;
-    background: #119B78;
+    background: #0F9D83;
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 6px rgba(17, 155, 120, 0.3);
+    box-shadow: 0 2px 6px rgba(15, 157, 131, 0.3);
     flex-shrink: 0;
 }
 
 .saas-brand-title {
     color: #FFFFFF;
     font-size: 0.92rem;
-    font-weight: 750;
+    font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.01em;
 }
@@ -336,8 +345,8 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a p,
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a span {
     color: #94A3B8 !important;
-    font-weight: 550 !important;
-    font-size: 0.83rem !important;
+    font-weight: 500 !important;
+    font-size: 0.82rem !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
@@ -354,13 +363,13 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover span {
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
     background-color: #1E2F42 !important;
     border: 1px solid #2B3F56 !important;
-    border-left: 3px solid #119B78 !important;
+    border-left: 3px solid #0F9D83 !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] p,
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] span {
     color: #FFFFFF !important;
-    font-weight: 700 !important;
+    font-weight: 650 !important;
 }
 
 /* Bottom user profile */
@@ -368,6 +377,49 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     display: flex;
     align-items: center;
     gap: 9px;
+    padding: 0.65rem 0.6rem;
+    background: #101B27;
+    border: 1px solid #223348;
+    border-radius: 10px;
+    margin-top: 1.25rem;
+}
+
+.saas-profile-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: #243548;
+    color: #FFFFFF;
+    font-size: 0.74rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.saas-profile-name {
+    color: #FFFFFF;
+    font-size: 0.78rem;
+    font-weight: 650;
+    line-height: 1.2;
+}
+
+.saas-profile-role {
+    color: #758294;
+    font-size: 0.68rem;
+    line-height: 1.2;
+}
+
+.saas-profile-badge {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #0F9D83;
+    background: rgba(15, 157, 131, 0.15);
+    padding: 2px 6px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
     padding: 0.65rem 0.6rem;
     background: #101B27;
     border: 1px solid #223348;
@@ -801,43 +853,46 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     padding-left: 2px;
 }
 
-/* Reusable KPI Cards (AI Studio style) */
+/* Reusable KPI Cards (Enterprise SaaS style) */
 .ai-kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
-    gap: 0.85rem;
-    margin-bottom: 1.1rem;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    align-items: stretch;
 }
 
 .ai-kpi-card {
     background: var(--ai-surface);
     border: 1px solid var(--ai-border);
-    border-radius: 14px;
-    padding: 0.95rem 1.05rem;
+    border-radius: 12px;
+    padding: 1rem 1.15rem;
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 122px;
+    min-height: 124px;
+    height: 100%;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .ai-kpi-card:hover {
     border-color: var(--ai-border-strong);
-    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
 }
 
 .ai-kpi-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.45rem;
+    gap: 0.5rem;
 }
 
 .ai-kpi-label {
-    font-size: 0.79rem;
+    font-size: 0.81rem;
     font-weight: 600;
-    color: var(--ai-body);
+    color: var(--ai-muted);
+    letter-spacing: -0.01em;
 }
 
 .ai-kpi-icon {
@@ -846,8 +901,8 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
 }
 
 .ai-kpi-value {
-    font-size: clamp(1.22rem, 2vw, 1.62rem);
-    font-weight: 750;
+    font-size: clamp(1.35rem, 2vw, 1.72rem);
+    font-weight: 700;
     color: var(--ai-navy);
     letter-spacing: -0.03em;
     font-variant-numeric: tabular-nums;
@@ -866,9 +921,9 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
 }
 
 .ai-kpi-caption {
-    font-size: 0.74rem;
+    font-size: 0.76rem;
     color: var(--ai-muted);
-    line-height: 1.3;
+    line-height: 1.35;
 }
 
 .ai-kpi-source {
@@ -1114,6 +1169,34 @@ div[data-testid="stFormSubmitButton"] button[kind="primary"]:hover {
     border-color: var(--ai-green-hover) !important;
 }
 
+/* Suggested question buttons: equal height, centered text, readable font */
+div.stButton > button[key*="suggest"],
+div.stButton > button[key*="genie_suggest"],
+div.stButton > button[key*="genie_btn_"],
+div.stButton > button[key*="followup_"] {
+    min-height: 48px !important;
+    height: 100% !important;
+    font-size: 0.81rem !important;
+    line-height: 1.35 !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.45rem 0.65rem !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    border-radius: 9px !important;
+}
+
+/* Perspective toggle buttons on Executive Overview */
+div.stButton > button[key*="persona_btn_"] {
+    min-height: 38px !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    padding: 0.35rem 0.6rem !important;
+}
+
 /* Selectboxes, Inputs, Textareas, and Dropdown Popovers */
 div[data-baseweb="select"] > div,
 div[data-baseweb="input"] > div,
@@ -1349,8 +1432,8 @@ def render_top_navigation(
     """Render the crisp SaaS top navigation bar with breadcrumbs and utility controls."""
     crumbs = breadcrumbs or ["Residential Property Intelligence", current_page]
     crumbs_html = " <span style='color:#94A3B8;margin:0 6px;'>/</span> ".join(
-        f"<span style='color:#202B38;font-weight:700;'>{_escape(c)}</span>" if i == len(crumbs) - 1
-        else f"<span style='color:#758294;'>{_escape(c)}</span>"
+        f"<span style='color:#172B4D;font-weight:650;'>{_escape(c)}</span>" if i == len(crumbs) - 1
+        else f"<span style='color:#64748B;'>{_escape(c)}</span>"
         for i, c in enumerate(crumbs)
     )
 

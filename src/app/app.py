@@ -617,9 +617,10 @@ def render_genie_bar() -> None:
             if st.button("Ask Genie", type="primary", use_container_width=True):
                 triggered_question = question_text
         with clear_col:
-            if st.button("New Topic", use_container_width=True):
+            if st.button("New Topic", key="home_clear_topic_btn", use_container_width=True):
                 st.session_state["genie_conversation_id"] = None
                 st.session_state["genie_last_response"] = None
+                st.session_state["genie_question_input"] = ""
                 st.rerun()
         with full_col:
             st.page_link(
@@ -691,9 +692,9 @@ def _render_decision_orchestration_center(
                         f"{status_badge_html(item['badge_2'], tone=item['tone'])}"
                     )
                     st.markdown(
-                        f'<div style="font-size:0.86rem;font-weight:700;color:#111827;'
+                        f'<div style="font-size:0.86rem;font-weight:700;color:#172B4D;'
                         f'line-height:1.3;margin-bottom:3px;">{html.escape(item["title"])}</div>'
-                        f'<div style="font-size:0.76rem;color:#6b7280;margin-bottom:6px;">'
+                        f'<div style="font-size:0.76rem;color:#64748B;margin-bottom:6px;">'
                         f'{html.escape(item["short_sub"])}</div>'
                         f'<div style="margin-bottom:6px;">{badges_html}</div>',
                         unsafe_allow_html=True,
@@ -717,7 +718,7 @@ def _render_decision_orchestration_center(
             with st.container(border=True):
                 st.caption(f"Computed from Unity Catalog Gold · Owner: {active_item['owner']}")
                 st.markdown(
-                    f'<h3 style="margin:2px 0 6px 0;font-size:1.22rem;color:#111827;">'
+                    f'<h3 style="margin:2px 0 6px 0;font-size:1.22rem;color:#172B4D;font-weight:700;">'
                     f'{html.escape(active_item["title"])}</h3>',
                     unsafe_allow_html=True,
                 )
@@ -793,12 +794,12 @@ def _render_decision_orchestration_center(
         with st.container(border=True):
             st.markdown(
                 f'<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">'
-                f'<strong style="font-size:0.86rem;color:#111827;">Gold Layer Sync</strong>'
+                f'<strong style="font-size:0.86rem;color:#172B4D;">Gold Layer Sync</strong>'
                 f'{status_badge_html(sync_label, tone="success")}'
                 f"</div>"
-                f'<div style="font-size:0.77rem;color:#6b7280;margin:4px 0 6px 0;">'
+                f'<div style="font-size:0.77rem;color:#64748B;margin:4px 0 6px 0;">'
                 f'Latest period {summary["latest_month"]} across 6 Unity Catalog tables</div>'
-                f'<div style="font-size:0.72rem;color:#0c6b53;font-weight:600;">SQL Warehouse · Connected</div>',
+                f'<div style="font-size:0.72rem;color:#0F9D83;font-weight:600;">SQL Warehouse · Connected</div>',
                 unsafe_allow_html=True,
             )
             st.page_link("pages/08_Data_Platform_Health.py", label="View Table Catalog")
@@ -808,10 +809,10 @@ def _render_decision_orchestration_center(
             genie_tone = "info" if is_genie_configured() else "warning"
             st.markdown(
                 f'<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">'
-                f'<strong style="font-size:0.86rem;color:#111827;">Genie & Specialist Agents</strong>'
+                f'<strong style="font-size:0.86rem;color:#172B4D;">Genie & Specialist Agents</strong>'
                 f'{status_badge_html(genie_badge, tone=genie_tone)}'
                 f"</div>"
-                f'<div style="font-size:0.77rem;color:#6b7280;margin:4px 0 6px 0;">'
+                f'<div style="font-size:0.77rem;color:#64748B;margin:4px 0 6px 0;">'
                 f'Natural-language Q&A + 4 traceable Gold analysts</div>',
                 unsafe_allow_html=True,
             )
@@ -820,10 +821,10 @@ def _render_decision_orchestration_center(
         with st.container(border=True):
             st.markdown(
                 f'<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">'
-                f'<strong style="font-size:0.86rem;color:#111827;">Data & Platform Health</strong>'
+                f'<strong style="font-size:0.86rem;color:#172B4D;">Data & Platform Health</strong>'
                 f'{status_badge_html("Platform Active", tone="neutral")}'
                 f"</div>"
-                f'<div style="font-size:0.77rem;color:#6b7280;margin:4px 0 6px 0;">'
+                f'<div style="font-size:0.77rem;color:#64748B;margin:4px 0 6px 0;">'
                 f'Schemas, row counts, freshness checks, and telemetry</div>',
                 unsafe_allow_html=True,
             )

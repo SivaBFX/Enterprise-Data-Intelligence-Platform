@@ -177,21 +177,29 @@ def main() -> None:
             else "Gold Layer Connected"
         )
 
+        render_page_header(
+            title="Investment & CapEx",
+            description="Capital allocation command center: project distribution, category allocations, and asset value additions.",
+            domain_label="Portfolio Intelligence",
+            reporting_period=f"{len(df):,} Total Projects Base",
+            status_text=freshness_badge,
+            status_tone="success",
+        )
+
         with st.container(border=True):
-            f1, f2, f3, f4 = st.columns([1.8, 1.4, 1.4, 0.9])
+            f1, f2, f3 = st.columns([1.6, 1.2, 1.2])
             with f1:
-                search_prop = st.text_input("Search Property ID", placeholder="e.g. PROP-025...")
+                search_prop = st.text_input(
+                    "Search Property ID",
+                    placeholder="Search Property ID, e.g. PROP-025...",
+                    label_visibility="collapsed",
+                )
             with f2:
                 mkts = ["All Markets"] + sorted(df["market_name"].dropna().unique().tolist())
-                selected_market = st.selectbox("Market Filter", mkts)
+                selected_market = st.selectbox("Market Filter", mkts, label_visibility="collapsed")
             with f3:
                 cats = ["All Categories"] + sorted(df["category"].dropna().unique().tolist())
-                selected_category = st.selectbox("CapEx Category", cats)
-            with f4:
-                st.markdown("<div style='height:26px'></div>", unsafe_allow_html=True)
-                if st.button("Refresh Data", key="capex_refresh_btn", use_container_width=True):
-                    load_capex_data.clear()
-                    st.rerun()
+                selected_category = st.selectbox("CapEx Category", cats, label_visibility="collapsed")
 
         filtered = df.copy()
         if selected_market != "All Markets":
@@ -201,29 +209,39 @@ def main() -> None:
         if search_prop.strip():
             filtered = filtered[filtered["property_id"].astype(str).str.contains(search_prop.strip(), case=False, regex=False)]
 
-        render_page_header(
-            title="Investment & CapEx",
-            description="Capital allocation command center: project distribution, category allocations, and asset value additions.",
-            domain_label="Portfolio Intelligence",
-            reporting_period=f"{len(filtered):,} Investment Line Items",
-            status_text=freshness_badge,
-            status_tone="success",
-        )
-
         render_section_header(
             title="Capital Investment Summary",
-            subtitle=f"Aggregated CapEx for {selected_market} · {selected_category}.",
+            subtitle=f"Aggregated CapEx for {selected_market} · {selected_category} ({len(filtered):,} records).",
             badge=selected_category,
             badge_tone="neutral",
         )
         render_kpi_row(_compute_capex_kpis(filtered))
 
-        with chart_card(
-            title="CapEx Investment by Category",
-            subtitle="Capital allocation breakdown across major repair and upgrade categories",
-        ):
-            cat_spend = filtered.groupby("category")["total_capex_amount"].sum().sort_values(ascending=False)
-            st.bar_chart(cat_spend, color="#119B78")
+        render_section_header(
+            title="Capital Deployment Comparisons",
+            subtitle="Breakdown of capital expenditures across asset categories and geographic markets.",
+        )
+
+        cx1, cx2 = st.columns(2)
+        with cx1:
+            with chart_card(
+                title="CapEx Investment by Category",
+                subtitle="Capital allocation breakdown across repair categories ($)",
+                badge="Category Allocation",
+                badge_tone="success",
+            ):
+                cat_spend = filtered.groupby("category")["total_capex_amount"].sum().sort_values(ascending=False)
+                st.bar_chart(cat_spend, color="#0F9D83")
+
+        with cx2:
+            with chart_card(
+                title="CapEx Investment by Market",
+                subtitle="Capital deployment across regional markets ($)",
+                badge="Regional Allocation",
+                badge_tone="info",
+            ):
+                mkt_capex = filtered.groupby("market_name")["total_capex_amount"].sum().sort_values(ascending=False)
+                st.bar_chart(mkt_capex, color="#3478C8")
 
         with st.expander(f"View Detailed CapEx Records ({len(filtered):,} records)"):
             render_formatted_table(

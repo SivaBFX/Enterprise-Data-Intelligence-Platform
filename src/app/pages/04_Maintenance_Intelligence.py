@@ -139,7 +139,7 @@ def _build_maintenance_kpi_cards(summary: Dict[str, Any]) -> List[Dict[str, Any]
         },
         {
             "label": "Avg Work Order Cost",
-            "value": f"${summary['avg_cost']:,.2f}",
+            "value": f"${summary['avg_cost']:,.0f}",
             "delta": "Per work order",
             "delta_tone": "neutral",
             "caption": "Mean expenditure per ticket",
@@ -186,18 +186,26 @@ def main() -> None:
             else "Gold Layer Connected"
         )
 
+        render_page_header(
+            title="Maintenance Intelligence",
+            description="Operational maintenance command center: work-order backlogs, completion SLAs, and cost drivers.",
+            domain_label="Portfolio Intelligence",
+            reporting_period=f"{len(df):,} Properties Tracked",
+            status_text=freshness_badge,
+            status_tone="success",
+        )
+
         with st.container(border=True):
-            f1, f2, f3 = st.columns([2.0, 1.6, 0.9])
+            f1, f2 = st.columns([1.6, 1.4])
             with f1:
-                search_prop = st.text_input("Search Property ID", placeholder="e.g. PROP-010...")
+                search_prop = st.text_input(
+                    "Search Property ID",
+                    placeholder="Search Property ID, e.g. PROP-010...",
+                    label_visibility="collapsed",
+                )
             with f2:
                 mkts = ["All Markets"] + sorted(df["market_name"].dropna().unique().tolist())
-                selected_market = st.selectbox("Market Filter", mkts)
-            with f3:
-                st.markdown("<div style='height:26px'></div>", unsafe_allow_html=True)
-                if st.button("Refresh Data", key="maint_refresh_btn", use_container_width=True):
-                    load_maintenance_data.clear()
-                    st.rerun()
+                selected_market = st.selectbox("Market Filter", mkts, label_visibility="collapsed")
 
         filtered = df.copy()
         if selected_market != "All Markets":
@@ -205,30 +213,46 @@ def main() -> None:
         if search_prop.strip():
             filtered = filtered[filtered["property_id"].astype(str).str.contains(search_prop.strip(), case=False, regex=False)]
 
-        render_page_header(
-            title="Maintenance Intelligence",
-            description="Operational maintenance command center: work-order backlogs, completion SLAs, and cost drivers.",
-            domain_label="Portfolio Intelligence",
-            reporting_period=f"{len(filtered):,} of {len(df):,} Properties",
-            status_text=freshness_badge,
-            status_tone="success",
-        )
-
         summary = _compute_maintenance_summary(filtered)
         render_section_header(
             title="Operational Maintenance KPIs",
-            subtitle=f"Aggregated metrics for {selected_market}.",
+            subtitle=f"Aggregated metrics for {selected_market} ({len(filtered):,} properties).",
             badge=f"{summary['active_backlog']:,} Active Tickets",
             badge_tone="warning" if summary['active_backlog'] > 0 else "success",
         )
         render_kpi_row(_build_maintenance_kpi_cards(summary))
 
-        with chart_card(
-            title="Maintenance Expenditure by Market",
-            subtitle="Comparing total repair expenditure across markets",
-        ):
-            mkt_spend = filtered.groupby("market_name")["total_maintenance_cost"].sum().sort_values(ascending=False)
-            st.bar_chart(mkt_spend, color="#3478D4")
+        render_section_header(
+            title="Maintenance Distribution & Work Order Backlog",
+            subtitle="Comparing total maintenance expenditure and active order backlog across markets.",
+        )
+
+        m_ch1, m_ch2 = st.columns(2)
+        with m_ch1:
+            with chart_card(
+                title="Maintenance Expenditure by Market",
+                subtitle="Total repair expenditure across markets ($)",
+                badge="Spend Ranking",
+                badge_tone="neutral",
+            ):
+                mkt_spend = filtered.groupby("market_name")["total_maintenance_cost"].sum().sort_values(ascending=False)
+                st.bar_chart(mkt_spend, color="#0F9D83")
+
+        with m_ch2:
+            with chart_card(
+                title="Active Work Order Backlog by Market",
+                subtitle="Open and in-progress work orders by market",
+                badge=f"{summary['active_backlog']:,} Backlog",
+                badge_tone="warning" if summary['active_backlog'] > 0 else "success",
+            ):
+                if not filtered.empty:
+                    mkt_backlog = (
+                        filtered.assign(active_orders=filtered["open_work_orders"] + filtered["in_progress_work_orders"])
+                        .groupby("market_name")["active_orders"]
+                        .sum()
+                        .sort_values(ascending=False)
+                    )
+                    st.bar_chart(mkt_backlog, color="#3478C8")
 
         with st.expander(f"View Detailed Property Maintenance Records ({len(filtered):,} records)"):
             render_formatted_table(

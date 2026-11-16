@@ -87,6 +87,21 @@ class TestNavigationAndAgents(unittest.TestCase):
         self.assertIn("div[data-testid=\"stHorizontalBlock\"]", full_css)
         self.assertIn("align-items: stretch !important", full_css)
 
+    def test_design_tokens_and_sidebar_spec(self) -> None:
+        """Verify global enterprise design tokens and sidebar dimensions."""
+        st_stub.captured_markdown.clear()
+        ui.apply_theme()
+        full_css = "\n".join(st_stub.captured_markdown)
+        self.assertIn("--saas-bg: #F7F9FC", full_css)
+        self.assertIn("--saas-sidebar: #172536", full_css)
+        self.assertIn("--saas-green: #0F9D83", full_css)
+        self.assertIn("--saas-text-primary: #172B4D", full_css)
+        self.assertIn("--saas-text-secondary: #64748B", full_css)
+        self.assertIn("--saas-text-muted: #94A3B8", full_css)
+        self.assertIn("--saas-border: #E2E8F0", full_css)
+        self.assertIn("min-width: 250px !important", full_css)
+        self.assertIn("key*=\"genie_suggest\"", full_css)
+
 
 if __name__ == "__main__":
     unittest.main()

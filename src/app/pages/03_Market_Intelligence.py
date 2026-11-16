@@ -258,8 +258,17 @@ def main() -> None:
         )
         market_names = ["All Markets"] + sorted(df["market_name"].dropna().unique().tolist())
 
+        render_page_header(
+            title="Market Intelligence",
+            description="Regional benchmarking across occupancy, rental revenue, operating expenses, and net operating income.",
+            domain_label="Portfolio Intelligence",
+            reporting_period=f"{months[0].strftime('%B %Y')} Cohort",
+            status_text=freshness_badge,
+            status_tone="success",
+        )
+
         with st.container(border=True):
-            f_col1, f_col2, f_col3 = st.columns([2.2, 2.2, 0.9])
+            f_col1, f_col2 = st.columns([1.5, 1.5])
             with f_col1:
                 selected_month = st.selectbox(
                     "Reporting Month",
@@ -268,22 +277,8 @@ def main() -> None:
                 )
             with f_col2:
                 selected_market = st.selectbox("Market Filter", market_names)
-            with f_col3:
-                st.markdown("<div style='height:26px'></div>", unsafe_allow_html=True)
-                if st.button("Refresh Data", key="market_refresh_btn", use_container_width=True):
-                    load_market_data.clear()
-                    st.rerun()
 
         period_label = pd.Timestamp(selected_month).strftime("%B %Y")
-
-        render_page_header(
-            title="Market Intelligence",
-            description="Regional benchmarking across occupancy, rental revenue, operating expenses, and net operating income.",
-            domain_label="Portfolio Intelligence",
-            reporting_period=f"{period_label} · {selected_market}",
-            status_text=freshness_badge,
-            status_tone="success",
-        )
 
         monthly = df[df["month"] == selected_month].copy()
         if selected_market != "All Markets":
@@ -307,9 +302,37 @@ def main() -> None:
             )
         )
 
+        render_section_header(
+            title="Regional Market Benchmarks",
+            subtitle=f"Visual comparisons of net operating income and occupancy across markets in {period_label}.",
+        )
+
+        ch1, ch2 = st.columns(2)
+        with ch1:
+            with chart_card(
+                title="Net Operating Income by Market",
+                subtitle=f"Contribution to portfolio NOI in {period_label} ($)",
+                badge="NOI Ranking",
+                badge_tone="success",
+            ):
+                mkt_noi = monthly.set_index("market_name")["total_noi"].sort_values(ascending=False)
+                st.bar_chart(mkt_noi, color="#0F9D83")
+
+        with ch2:
+            with chart_card(
+                title="Weighted Occupancy by Market",
+                subtitle=f"Occupied days as % of service days in {period_label}",
+                badge="Target >= 90%",
+                badge_tone="info",
+            ):
+                mkt_occ = monthly.set_index("market_name")["occupancy_pct"].sort_values(ascending=False)
+                st.bar_chart(mkt_occ, color="#3478C8")
+
         with chart_card(
-            title="Market Comparison & Rankings",
-            subtitle=f"Comparing all markets for {period_label}",
+            title="Market Comparison & Rankings Table",
+            subtitle=f"Complete financial and operational performance matrix for {period_label}",
+            badge=f"{len(monthly)} Markets",
+            badge_tone="neutral",
         ):
             render_formatted_table(
                 monthly.sort_values("total_noi", ascending=False),
@@ -331,13 +354,6 @@ def main() -> None:
                     "noi_margin_pct": "{:.2f}%",
                 },
             )
-
-        with chart_card(
-            title="Net Operating Income by Market",
-            subtitle=f"Contribution to portfolio NOI in {period_label}",
-        ):
-            mkt_noi = monthly.set_index("market_name")["total_noi"].sort_values(ascending=False)
-            st.bar_chart(mkt_noi, color="#119B78")
 
     except Exception as exc:
         render_page_header(

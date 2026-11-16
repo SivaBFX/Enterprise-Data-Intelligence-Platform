@@ -211,16 +211,27 @@ def main() -> None:
             with chart_card(
                 title="Revenue, NOI & OpEx Trajectory",
                 subtitle="Historical progression of gross rental revenue, NOI, and operating expenses",
+                badge=f"{len(port_df)} Periods",
+                badge_tone="neutral",
             ):
                 chart_cols = [c for c in ["total_rental_revenue", "total_noi", "calculated_opex"] if c in sorted_port.columns]
-                st.line_chart(sorted_port[chart_cols])
+                display_chart = sorted_port[chart_cols].rename(columns={
+                    "total_rental_revenue": "Revenue ($)",
+                    "total_noi": "NOI ($)",
+                    "calculated_opex": "OpEx ($)",
+                })
+                st.line_chart(display_chart)
 
         with c_right:
+            avg_occ = float(sorted_port["occupancy_pct"].mean()) if "occupancy_pct" in sorted_port.columns else 0.0
             with chart_card(
                 title="Weighted Occupancy Rate Trend (%)",
                 subtitle="Monthly occupancy percentage benchmarked against portfolio target (90%)",
+                badge=f"Avg {avg_occ:.1f}%",
+                badge_tone="success" if avg_occ >= 90 else "warning",
             ):
-                st.line_chart(sorted_port["occupancy_pct"], color="#119B78")
+                occ_chart = sorted_port[["occupancy_pct"]].rename(columns={"occupancy_pct": "Occupancy (%)"})
+                st.line_chart(occ_chart, color="#0F9D83")
 
         if not mkt_df.empty:
             render_section_header(
@@ -232,17 +243,21 @@ def main() -> None:
                 with chart_card(
                     title="Rental Revenue by Market ($)",
                     subtitle="Aggregate market revenue contribution across all active periods",
+                    badge="Total Spend",
+                    badge_tone="info",
                 ):
                     mkt_rev = mkt_df.groupby("market_name")["total_rental_revenue"].sum().sort_values(ascending=False)
-                    st.bar_chart(mkt_rev, color="#3478D4")
+                    st.bar_chart(mkt_rev, color="#3478C8")
 
             with col_m2:
                 with chart_card(
                     title="Average NOI Margin by Market (%)",
                     subtitle="Mean operating efficiency across residential market clusters",
+                    badge="Margin Ranking",
+                    badge_tone="success",
                 ):
                     mkt_noi = mkt_df.groupby("market_name")["noi_margin_pct"].mean().sort_values(ascending=False)
-                    st.bar_chart(mkt_noi, color="#119B78")
+                    st.bar_chart(mkt_noi, color="#0F9D83")
 
         render_section_header(
             title="Portfolio Performance Insights",

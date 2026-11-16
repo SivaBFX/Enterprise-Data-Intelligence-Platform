@@ -80,9 +80,10 @@ def _render_genie_chat_tab() -> None:
         with ask_col:
             ask_pressed = st.button("Ask Genie", type="primary", use_container_width=True)
         with clear_col:
-            if st.button("New Topic", use_container_width=True):
+            if st.button("New Topic", key="assistant_clear_topic_btn", use_container_width=True):
                 st.session_state["genie_ws_conversation_id"] = None
                 st.session_state["genie_ws_history"] = []
+                st.session_state["genie_ws_active_q"] = None
                 st.rerun()
 
     query_to_run = user_question if ask_pressed and user_question.strip() else active_q
@@ -101,9 +102,21 @@ def _render_genie_chat_tab() -> None:
     history = st.session_state.get("genie_ws_history", [])
     if history:
         for idx, resp in enumerate(reversed(history)):
-            st.markdown(f"### Q: {resp.question}")
-            render_genie_response(resp)
-            st.divider()
+            with st.container(border=True):
+                st.markdown(
+                    f'<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #E2E8F0;">'
+                    f'<div style="width:28px;height:28px;border-radius:999px;background:#172B4D;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">Q</div>'
+                    f'<div style="font-size:0.95rem;font-weight:700;color:#172B4D;line-height:1.35;">{resp.question}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+                render_genie_response(resp, key_prefix=f"ws_genie_{idx}")
+    else:
+        render_empty_state(
+            "Conversational Workspace Ready",
+            "Ask any question above or select an executive suggested prompt to query the Unity Catalog Gold layer with Genie.",
+            tone="neutral",
+        )
 
 
 def _render_specialist_agents_tab() -> None:
@@ -115,24 +128,37 @@ def _render_specialist_agents_tab() -> None:
         badge_tone="info",
     )
 
+    selected_key = st.session_state.get("selected_agent_key", "portfolio")
+
     agent_cols = st.columns(4)
     for col, spec in zip(agent_cols, AGENT_SPECS):
+        is_active = selected_key == spec.key
         with col:
             with st.container(border=True):
                 st.markdown(
-                    f'<div style="font-weight:700;font-size:0.92rem;color:#202B38;margin-bottom:4px;">{spec.name}</div>'
+                    f'<div style="font-weight:700;font-size:0.92rem;color:#172B4D;margin-bottom:4px;">{spec.name}</div>'
                     f'<div style="margin-bottom:6px;">{status_badge_html("Approved Specialist", tone="info")}</div>'
-                    f'<div style="font-size:0.77rem;color:#758294;min-height:48px;line-height:1.35;">{spec.role}</div>',
+                    f'<div style="font-size:0.77rem;color:#64748B;min-height:48px;line-height:1.35;">{spec.role}</div>',
                     unsafe_allow_html=True,
                 )
-                if st.button(f"Consult {spec.name.split()[0]}", key=f"agent_sel_{spec.key}", use_container_width=True):
+                if st.button(
+                    f"Selected" if is_active else f"Consult {spec.name.split()[0]}",
+                    key=f"agent_sel_{spec.key}",
+                    type="primary" if is_active else "secondary",
+                    use_container_width=True,
+                ):
                     st.session_state["selected_agent_key"] = spec.key
+                    st.rerun()
 
-    selected_key = st.session_state.get("selected_agent_key", "portfolio")
     spec = AGENT_SPEC_MAP.get(selected_key, AGENT_SPECS[0])
 
     with st.container(border=True):
-        st.markdown(f"#### Running Diagnostic: {spec.name}")
+        st.markdown(
+            f'<div style="font-size:1.1rem;font-weight:700;color:#172B4D;margin-bottom:4px;">'
+            f'Diagnostic Workspace: {spec.name}</div>'
+            f'<div style="font-size:0.8rem;color:#64748B;margin-bottom:12px;">{spec.role}</div>',
+            unsafe_allow_html=True,
+        )
         sample_q = st.selectbox("Select Diagnostic Question", spec.sample_questions)
         if st.button(f"Execute Analysis via {spec.name}", type="primary"):
             with st.spinner("Executing deterministic SQL against Unity Catalog Gold views..."):

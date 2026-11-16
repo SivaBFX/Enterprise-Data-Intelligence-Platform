@@ -180,7 +180,7 @@ def _render_top_and_underperforming(filtered: pd.DataFrame) -> None:
         top10 = filtered.nlargest(10, "total_noi")[
             ["property_id", "market_name", "property_type", "total_noi", "overall_occupancy_pct"]
         ].set_index("property_id")
-        st.bar_chart(top10["total_noi"], color="#119B78")
+        st.bar_chart(top10["total_noi"], color="#0F9D83")
 
     watchlist = filtered[
         (filtered["overall_occupancy_pct"] < LOW_OCCUPANCY_THRESHOLD_PCT)
@@ -241,9 +241,9 @@ def _render_property_drilldown_and_insights(filtered: pd.DataFrame) -> None:
         p_head_col, p_badge_col = st.columns([3, 1])
         with p_head_col:
             st.markdown(
-                f'<h2 style="font-size:1.35rem;font-weight:750;color:#202B38;margin:0 0 4px 0;">'
+                f'<h2 style="font-size:1.35rem;font-weight:700;color:#172B4D;margin:0 0 4px 0;">'
                 f'Property {prop_row["property_id"]} — {prop_row["market_name"]}</h2>'
-                f'<div style="font-size:0.83rem;color:#758294;">'
+                f'<div style="font-size:0.83rem;color:#64748B;">'
                 f'{prop_row["property_type"]} · {int(prop_row["bedrooms"])} Bedrooms · Region {prop_row.get("region", "N/A")}</div>',
                 unsafe_allow_html=True,
             )
@@ -252,11 +252,7 @@ def _render_property_drilldown_and_insights(filtered: pd.DataFrame) -> None:
             occ_status = "Healthy Occupancy" if occ_val >= 90 else ("Attention Required" if occ_val < 85 else "Standard Tier")
             occ_tone = "success" if occ_val >= 90 else ("danger" if occ_val < 85 else "warning")
             st.markdown(
-                f'<div style="text-align:right;">'
-                f'<span style="background:{"#E7F5EE" if occ_tone == "success" else "#FEF0F0"};'
-                f'color:{"#0B5E42" if occ_tone == "success" else "#9B1C1C"};'
-                f'padding:4px 10px;border-radius:999px;font-size:0.75rem;font-weight:700;">'
-                f'{occ_status}</span></div>',
+                f'<div style="text-align:right;padding-top:4px;">{status_badge_html(occ_status, tone=occ_tone)}</div>',
                 unsafe_allow_html=True,
             )
 
@@ -307,65 +303,73 @@ def main() -> None:
             else "Gold Layer Connected"
         )
 
+        render_page_header(
+            title="Property Intelligence",
+            description="Property portfolio directory, unit economics, occupancy tiers, and asset drill-downs.",
+            domain_label="Portfolio Intelligence",
+            reporting_period=f"{len(df):,} Properties Total",
+            status_text=freshness_badge,
+            status_tone="success",
+        )
+
         with st.container(border=True):
-            f1, f2, f3, f4, f5 = st.columns([2.0, 1.4, 1.4, 1.2, 0.9])
+            f1, f2, f3, f4 = st.columns([2.6, 1.4, 1.4, 1.2])
             with f1:
-                search_query = st.text_input(
-                    "Search Property / Market / Type",
-                    placeholder="e.g., PROP-001 or Austin...",
-                )
+                with st.form(key="property_search_form", border=False):
+                    s_input_col, s_btn_col = st.columns([4.0, 1.3])
+                    with s_input_col:
+                        search_input = st.text_input(
+                            "Search Property ID, Market, or Type",
+                            value=st.session_state.get("prop_search_term", ""),
+                            placeholder="Search Property ID, e.g. PROP-001...",
+                            label_visibility="collapsed",
+                        )
+                    with s_btn_col:
+                        search_submitted = st.form_submit_button(
+                            "Search", type="primary", use_container_width=True
+                        )
+                    if search_submitted:
+                        st.session_state["prop_search_term"] = search_input
             with f2:
                 markets = ["All Markets"] + sorted(df["market_name"].dropna().unique().tolist())
-                selected_market = st.selectbox("Market", markets)
+                selected_market = st.selectbox("Market", markets, label_visibility="collapsed")
             with f3:
                 types = ["All Types"] + sorted(df["property_type"].dropna().unique().tolist())
-                selected_type = st.selectbox("Property Type", types)
+                selected_type = st.selectbox("Property Type", types, label_visibility="collapsed")
             with f4:
                 bedrooms = ["All"] + sorted(df["bedrooms"].dropna().unique().tolist())
                 selected_bedrooms = st.selectbox(
                     "Bedrooms",
                     bedrooms,
+                    label_visibility="collapsed",
                     format_func=lambda x: (
-                        "All"
+                        "All Bedrooms"
                         if x == "All"
                         else f"{int(x)} BR" if float(x).is_integer() else str(x)
                     ),
                 )
-            with f5:
-                st.markdown("<div style='height:26px'></div>", unsafe_allow_html=True)
-                if st.button("Refresh Data", key="prop_refresh_btn", use_container_width=True):
-                    load_property_data.clear()
-                    st.rerun()
 
+        active_query = search_input or st.session_state.get("prop_search_term", "")
         filtered = _apply_property_filters(
             df=df,
-            search_query=search_query,
+            search_query=active_query,
             selected_market=selected_market,
             selected_type=selected_type,
             selected_bedrooms=selected_bedrooms,
         )
 
-        render_page_header(
-            title="Property Intelligence",
-            description="Property portfolio directory, unit economics, occupancy tiers, and asset drill-downs.",
-            domain_label="Portfolio Intelligence",
-            reporting_period=f"{len(filtered):,} of {len(df):,} Properties",
-            status_text=freshness_badge,
-            status_tone="success",
-        )
-
         if filtered.empty:
             render_empty_state(
                 "No Properties Match Selected Filters",
-                "Adjust search query, market, property type, or bedroom filters to view results.",
+                f"No properties found matching '{active_query}'. Adjust search query, market, property type, or bedroom filters to view results.",
                 tone="warning",
             )
             st.stop()
 
         render_section_header(
             title="Property Performance Summary",
-            subtitle="Aggregated metrics for the currently filtered property cohort.",
-            badge=f"{selected_market} · {selected_type}",
+            subtitle=f"Aggregated metrics for {len(filtered):,} properties ({selected_market} · {selected_type}).",
+            badge=f"{len(filtered):,} Matches",
             badge_tone="neutral",
         )
         render_kpi_row(_compute_property_kpis(filtered, total_portfolio_count=len(df)))
