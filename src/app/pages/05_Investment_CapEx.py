@@ -116,7 +116,7 @@ def _compute_capex_kpis(filtered: pd.DataFrame) -> List[Dict[str, Any]]:
     return [
         {
             "label": "Total CapEx Invested",
-            "value": f"${total_spend:,.2f}",
+            "value": f"${total_spend:,.0f}",
             "delta": f"{total_projects:,} projects",
             "delta_tone": "neutral",
             "caption": "Cumulative capital expenditure",
@@ -130,7 +130,7 @@ def _compute_capex_kpis(filtered: pd.DataFrame) -> List[Dict[str, Any]]:
         },
         {
             "label": "Avg Project Size",
-            "value": f"${avg_per_proj:,.2f}",
+            "value": f"${avg_per_proj:,.0f}",
             "delta": "Capitalized Spend",
             "delta_tone": "neutral",
             "caption": "Mean investment per project",
@@ -238,8 +238,8 @@ def main() -> None:
                     "capex_month": "Month",
                 },
                 formats={
-                    "total_capex_amount": "${:,.2f}",
-                    "avg_capex_amount": "${:,.2f}",
+                    "total_capex_amount": "${:,.0f}",
+                    "avg_capex_amount": "${:,.0f}",
                 },
             )
 

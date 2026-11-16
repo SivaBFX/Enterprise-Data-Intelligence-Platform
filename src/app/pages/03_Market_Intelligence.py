@@ -181,7 +181,7 @@ def _build_kpi_cards(
         },
         {
             "label": "Total Rental Revenue",
-            "value": f"${current['total_rental_revenue']:,.2f}",
+            "value": f"${current['total_rental_revenue']:,.0f}",
             "delta": (
                 f"{rev_delta:+.1f}% MoM" if rev_delta is not None else "Current Month"
             ),
@@ -194,14 +194,14 @@ def _build_kpi_cards(
         },
         {
             "label": "Total OpEx",
-            "value": f"${current['total_opex']:,.2f}",
+            "value": f"${current['total_opex']:,.0f}",
             "delta": f"{current['opex_ratio_pct']:.1f}% of revenue",
             "delta_tone": "neutral",
             "caption": "Operating expenditures",
         },
         {
             "label": "Net Operating Income",
-            "value": f"${current['total_noi']:,.2f}",
+            "value": f"${current['total_noi']:,.0f}",
             "delta": (
                 f"{noi_delta:+.1f}% MoM" if noi_delta is not None else "Current Month"
             ),
@@ -325,9 +325,9 @@ def main() -> None:
                 },
                 formats={
                     "occupancy_pct": "{:.2f}%",
-                    "total_rental_revenue": "${:,.2f}",
-                    "total_opex": "${:,.2f}",
-                    "total_noi": "${:,.2f}",
+                    "total_rental_revenue": "${:,.0f}",
+                    "total_opex": "${:,.0f}",
+                    "total_noi": "${:,.0f}",
                     "noi_margin_pct": "{:.2f}%",
                 },
             )

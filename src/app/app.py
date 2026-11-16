@@ -579,7 +579,7 @@ def _render_hero_and_personas(decision_count: int, summary: Dict[str, Any]) -> s
 
     with right_col:
         st.caption("View as · focus perspectives mapped to Portfolio")
-        p_cols = st.columns([1.15, 0.96, 1.15, 1.14])
+        p_cols = st.columns([1.1, 1.0, 1.15, 1.1])
         for col, (role_name, _) in zip(p_cols, PERSONA_ROLES):
             with col:
                 is_selected = active_role == role_name
@@ -801,6 +801,7 @@ def _render_decision_orchestration_center(
                 f'<div style="font-size:0.72rem;color:#0c6b53;font-weight:600;">SQL Warehouse · Connected</div>',
                 unsafe_allow_html=True,
             )
+            st.page_link("pages/08_Data_Platform_Health.py", label="View Table Catalog")
 
         with st.container(border=True):
             genie_badge = "Ready" if is_genie_configured() else "Check Env"
@@ -858,6 +859,16 @@ def render_performance_section(
                 }
             )
             st.line_chart(fin_chart)
+            latest_row = portfolio_df.iloc[-1]
+            margin_pct = (
+                (latest_row["total_noi"] / latest_row["total_rental_revenue"] * 100.0)
+                if latest_row["total_rental_revenue"]
+                else 0.0
+            )
+            st.caption(
+                f"Latest ({latest_row['month_year']}): ${latest_row['total_rental_revenue']:,.0f} Rev · "
+                f"${latest_row['total_noi']:,.0f} NOI · Margin {margin_pct:.1f}%"
+            )
 
     with col_right:
         avg_occ = float(portfolio_df["occupancy_pct"].mean())
@@ -880,7 +891,7 @@ def render_performance_section(
             )
 
     if not latest_markets.empty:
-        m_left, m_right = st.columns([1.45, 1.0])
+        m_left, m_right = st.columns([1.6, 1.0])
         with m_left:
             with chart_card(
                 title="Market Performance Snapshot",
@@ -893,20 +904,20 @@ def render_performance_section(
                     column_labels={
                         "market_name": "Market",
                         "region": "Region",
-                        "property_count": "Properties",
-                        "occupancy_pct": "Occupancy %",
-                        "total_rental_revenue": "Rental Revenue",
+                        "property_count": "Units",
+                        "occupancy_pct": "Occupancy",
+                        "total_rental_revenue": "Revenue",
                         "total_opex": "OpEx",
                         "total_noi": "NOI",
-                        "expense_ratio_pct": "Expense Ratio %",
+                        "expense_ratio_pct": "OpEx %",
                     },
                     formats={
-                        "Properties": "{:,.0f}",
-                        "Occupancy %": "{:.2f}%",
-                        "Rental Revenue": "${:,.0f}",
+                        "Units": "{:,.0f}",
+                        "Occupancy": "{:.2f}%",
+                        "Revenue": "${:,.0f}",
                         "OpEx": "${:,.0f}",
                         "NOI": "${:,.0f}",
-                        "Expense Ratio %": "{:.1f}%",
+                        "OpEx %": "{:.1f}%",
                     },
                 )
 
@@ -936,7 +947,7 @@ def render_insights_and_operations(
         subtitle="Deterministic Gold-data calculations paired with live Unity Catalog freshness.",
     )
 
-    left_col, right_col = st.columns([1.2, 1.0])
+    left_col, right_col = st.columns([1.1, 1.0])
     latest_markets = queues["latest_markets"]
     maintenance_df = data["maintenance_df"]
 
@@ -1015,7 +1026,7 @@ def render_insights_and_operations(
             for label, table_fqn, row_cnt in dataset_labels:
                 meta = data["freshness"].get(table_fqn, {})
                 freshness_str = (
-                    f"v{meta.get('version')} · {meta.get('timestamp')}"
+                    f"v{meta.get('version')} ({str(meta.get('timestamp', ''))[:10]})"
                     if meta.get("status") == "available"
                     else "Live SQL Connected"
                 )
@@ -1033,6 +1044,7 @@ def render_insights_and_operations(
                 use_container_width=True,
                 hide_index=True,
             )
+            st.caption("Verified Delta Lake ACID commits across Unity Catalog Gold schema.")
 
             if st.button("Refresh Gold Data", use_container_width=True):
                 load_dashboard_data.clear()

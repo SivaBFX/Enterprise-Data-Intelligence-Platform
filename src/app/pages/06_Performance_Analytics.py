@@ -113,14 +113,14 @@ def _build_performance_kpi_cards(port_df: pd.DataFrame) -> List[Dict[str, Any]]:
     return [
         {
             "label": "Cumulative Rental Revenue",
-            "value": f"${total_rev:,.2f}",
+            "value": f"${total_rev:,.0f}",
             "delta": f"{len(port_df):,} Reporting Months",
             "delta_tone": "info",
             "caption": "Aggregate rental income across cohort",
         },
         {
             "label": "Cumulative Net Operating Income",
-            "value": f"${total_noi:,.2f}",
+            "value": f"${total_noi:,.0f}",
             "delta": f"{overall_margin:.1f}% Margin",
             "delta_tone": "success" if overall_margin >= 60 else "neutral",
             "caption": "Gross revenue minus operating expenses",
@@ -254,7 +254,7 @@ def main() -> None:
             best_rev = float(sorted_port["total_rental_revenue"].max())
             render_insight_card(
                 title=f"Peak Revenue Period: {best_month}",
-                body=f"Portfolio achieved peak gross rental revenue of ${best_rev:,.2f} with strong collection efficiency across residential assets.",
+                body=f"Portfolio achieved peak gross rental revenue of ${best_rev:,.0f} with strong collection efficiency across residential assets.",
                 tone="success",
                 tag="Growth Milestone",
             )
@@ -280,8 +280,8 @@ def main() -> None:
                 },
                 formats={
                     "occupancy_pct": "{:.2f}%",
-                    "total_rental_revenue": "${:,.2f}",
-                    "total_noi": "${:,.2f}",
+                    "total_rental_revenue": "${:,.0f}",
+                    "total_noi": "${:,.0f}",
                     "noi_margin_pct": "{:.2f}%",
                 },
             )

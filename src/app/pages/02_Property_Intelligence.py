@@ -135,21 +135,21 @@ def _compute_property_kpis(filtered: pd.DataFrame, total_portfolio_count: int) -
         },
         {
             "label": "Total Rental Revenue",
-            "value": f"${total_revenue:,.2f}",
+            "value": f"${total_revenue:,.0f}",
             "delta": f"${(total_revenue / total_properties if total_properties else 0):,.0f} / prop",
             "delta_tone": "info",
             "caption": "Cumulative rental revenue",
         },
         {
             "label": "Total NOI",
-            "value": f"${total_noi:,.2f}",
+            "value": f"${total_noi:,.0f}",
             "delta": f"{noi_margin:.1f}% margin",
             "delta_tone": "success" if total_noi > 0 else "danger",
             "caption": "Net operating income",
         },
         {
             "label": "Avg Monthly NOI",
-            "value": f"${avg_monthly_noi:,.2f}",
+            "value": f"${avg_monthly_noi:,.0f}",
             "delta": f"{avg_exp_ratio:.1f}% avg OpEx ratio",
             "delta_tone": "neutral",
             "caption": "Mean monthly NOI per asset",
@@ -214,8 +214,8 @@ def _render_top_and_underperforming(filtered: pd.DataFrame) -> None:
                 },
                 formats={
                     "overall_occupancy_pct": "{:.2f}%",
-                    "total_rental_revenue": "${:,.2f}",
-                    "total_noi": "${:,.2f}",
+                    "total_rental_revenue": "${:,.0f}",
+                    "total_noi": "${:,.0f}",
                     "operating_expense_ratio_pct": "{:.2f}%",
                 },
             )
@@ -266,11 +266,11 @@ def _render_property_drilldown_and_insights(filtered: pd.DataFrame) -> None:
         with k1:
             st.metric("Overall Occupancy", f"{prop_row['overall_occupancy_pct']:.2f}%")
         with k2:
-            st.metric("Total Rental Revenue", f"${prop_row['total_rental_revenue']:,.2f}")
+            st.metric("Total Rental Revenue", f"${prop_row['total_rental_revenue']:,.0f}")
         with k3:
-            st.metric("Total NOI", f"${prop_row['total_noi']:,.2f}")
+            st.metric("Total NOI", f"${prop_row['total_noi']:,.0f}")
         with k4:
-            st.metric("Avg Monthly NOI", f"${prop_row['avg_monthly_noi']:,.2f}")
+            st.metric("Avg Monthly NOI", f"${prop_row['avg_monthly_noi']:,.0f}")
         with k5:
             st.metric("OpEx Ratio", f"{prop_row['operating_expense_ratio_pct']:.2f}%")
 
@@ -389,9 +389,9 @@ def main() -> None:
                 },
                 formats={
                     "overall_occupancy_pct": "{:.2f}%",
-                    "total_rental_revenue": "${:,.2f}",
-                    "total_noi": "${:,.2f}",
-                    "avg_monthly_noi": "${:,.2f}",
+                    "total_rental_revenue": "${:,.0f}",
+                    "total_noi": "${:,.0f}",
+                    "avg_monthly_noi": "${:,.0f}",
                     "operating_expense_ratio_pct": "{:.2f}%",
                 },
             )

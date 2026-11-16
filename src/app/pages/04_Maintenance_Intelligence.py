@@ -132,7 +132,7 @@ def _build_maintenance_kpi_cards(summary: Dict[str, Any]) -> List[Dict[str, Any]
         },
         {
             "label": "Total Maintenance Cost",
-            "value": f"${summary['total_cost']:,.2f}",
+            "value": f"${summary['total_cost']:,.0f}",
             "delta": f"${(summary['total_cost'] / summary['total_properties'] if summary['total_properties'] else 0):,.0f} / asset",
             "delta_tone": "neutral",
             "caption": "Cumulative repair spend",
@@ -245,8 +245,8 @@ def main() -> None:
                     "avg_completion_days": "Avg Days",
                 },
                 formats={
-                    "total_maintenance_cost": "${:,.2f}",
-                    "avg_work_order_cost": "${:,.2f}",
+                    "total_maintenance_cost": "${:,.0f}",
+                    "avg_work_order_cost": "${:,.0f}",
                     "avg_completion_days": "{:.1f}",
                 },
             )

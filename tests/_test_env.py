@@ -49,6 +49,7 @@ def install_test_stubs() -> types.ModuleType:
     st_stub.form_submit_button = lambda *a, **kw: False
     st_stub.line_chart = lambda *a, **kw: None
     st_stub.bar_chart = lambda *a, **kw: None
+    st_stub.metric = lambda *a, **kw: None
     st_stub.dataframe = lambda *a, **kw: None
     st_stub.code = lambda *a, **kw: None
     st_stub.info = lambda *a, **kw: None

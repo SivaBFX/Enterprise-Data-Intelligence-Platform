@@ -202,11 +202,12 @@ div[data-testid="stMain"] {
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-/* Prevent Streamlit top toolbar from overlapping the custom app header */
+/* Prevent Streamlit / Databricks Apps top toolbar from overlapping the custom app header */
 header[data-testid="stHeader"] {
     background: transparent !important;
-    height: 2.25rem !important;
+    height: 3.25rem !important;
     pointer-events: none;
+    z-index: 100 !important;
 }
 
 header[data-testid="stHeader"] * {
@@ -223,10 +224,10 @@ header[data-testid="stHeader"] span {
 div[data-testid="stMainBlockContainer"],
 .stMainBlockContainer {
     max-width: 1440px !important;
-    padding-top: 3.75rem !important;
+    padding-top: 4.5rem !important;
     padding-bottom: 3rem !important;
-    padding-left: 1.75rem !important;
-    padding-right: 1.75rem !important;
+    padding-left: 1.85rem !important;
+    padding-right: 1.85rem !important;
 }
 
 /* Dark Navy Enterprise SaaS Sidebar */
@@ -272,7 +273,7 @@ section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] butt
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 0.2rem 0.35rem 0.85rem 0.35rem;
+    padding: 0.65rem 0.45rem 0.95rem 0.45rem;
     border-bottom: 1px solid #243548;
     margin-bottom: 0.75rem;
 }
@@ -797,6 +798,7 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ai-muted);
+    padding-left: 2px;
 }
 
 /* Reusable KPI Cards (AI Studio style) */
@@ -844,13 +846,15 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
 }
 
 .ai-kpi-value {
-    font-size: 1.68rem;
+    font-size: clamp(1.22rem, 2vw, 1.62rem);
     font-weight: 750;
     color: var(--ai-navy);
     letter-spacing: -0.03em;
     font-variant-numeric: tabular-nums;
     margin: 0.35rem 0 0.3rem 0;
-    line-height: 1.12;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: visible;
 }
 
 .ai-kpi-footer {
@@ -881,7 +885,11 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     background: var(--ai-surface-subtle);
     border: 1px solid var(--ai-border);
     border-radius: 10px;
-    padding: 0.7rem 0.85rem;
+    padding: 0.65rem 0.8rem;
+    min-height: 68px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .ai-stat-tile.tone-warning {
@@ -913,10 +921,10 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     background: var(--ai-surface);
     border: 1px solid var(--ai-border);
     border-left-width: 4px;
-    border-radius: 12px;
-    padding: 0.85rem 1rem;
-    margin-bottom: 0.6rem;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+    border-radius: 10px;
+    padding: 0.65rem 0.85rem;
+    margin-bottom: 0.45rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
 }
 
 .ai-insight-head {
@@ -924,20 +932,20 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.25rem;
     flex-wrap: wrap;
 }
 
 .ai-insight-title {
-    font-size: 0.88rem;
+    font-size: 0.87rem;
     font-weight: 700;
     color: var(--ai-navy);
 }
 
 .ai-insight-body {
-    font-size: 0.83rem;
+    font-size: 0.82rem;
     color: var(--ai-body);
-    line-height: 1.46;
+    line-height: 1.44;
 }
 
 .ai-empty-state {
@@ -961,12 +969,12 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     color: var(--ai-muted);
 }
 
-/* Native Streamlit Metric Cards */
+/* Native Streamlit Metric Cards - Full visibility with zero truncation */
 div[data-testid="stMetric"] {
     background: var(--ai-surface);
     border: 1px solid var(--ai-border);
-    border-radius: 14px;
-    padding: 15px 17px;
+    border-radius: 12px;
+    padding: 10px 14px !important;
     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
 }
 
@@ -974,15 +982,70 @@ div[data-testid="stMetricLabel"],
 div[data-testid="stMetricLabel"] p,
 div[data-testid="stMetricLabel"] label {
     color: var(--ai-muted) !important;
-    font-size: 0.8rem !important;
+    font-size: 0.77rem !important;
     font-weight: 600 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
 div[data-testid="stMetricValue"],
-div[data-testid="stMetricValue"] div {
+div[data-testid="stMetricValue"] > div,
+div[data-testid="stMetricValue"] span {
     color: var(--ai-navy) !important;
+    font-size: clamp(1.1rem, 1.6vw, 1.35rem) !important;
     font-weight: 750 !important;
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: tabular-nums !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    line-height: 1.25 !important;
+}
+
+/* Equal-height column cards across horizontal grid blocks */
+div[data-testid="stHorizontalBlock"] {
+    align-items: stretch !important;
+}
+
+div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] > div[data-testid="stVerticalBlock"] {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] > div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+}
+
+/* Style action page links inside columns to look like cohesive secondary action buttons */
+div[data-testid="stColumn"] > div[data-testid="stPageLink"] a {
+    background-color: var(--ai-surface) !important;
+    border: 1px solid var(--ai-border-strong) !important;
+    border-radius: 10px !important;
+    min-height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--ai-navy) !important;
+    font-weight: 600 !important;
+    font-size: 0.84rem !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+    text-decoration: none !important;
+    transition: all 0.15s ease;
+}
+
+div[data-testid="stColumn"] > div[data-testid="stPageLink"] a:hover {
+    background-color: #f3f6f9 !important;
+    border-color: #9ca3af !important;
+    color: var(--ai-navy) !important;
 }
 
 /* Only round explicit bordered containers without forcing borders onto every column */

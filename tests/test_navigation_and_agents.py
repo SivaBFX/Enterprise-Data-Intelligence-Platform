@@ -76,6 +76,17 @@ class TestNavigationAndAgents(unittest.TestCase):
         finally:
             ui._orig_st_button = original_btn
 
+    def test_metric_css_and_kpi_visibility_rules(self) -> None:
+        """Verify CSS contains anti-truncation and equal-height flex rules."""
+        st_stub.captured_markdown.clear()
+        ui.apply_theme()
+        full_css = "\n".join(st_stub.captured_markdown)
+        self.assertIn("div[data-testid=\"stMetricValue\"]", full_css)
+        self.assertIn("overflow: visible !important", full_css)
+        self.assertIn("padding-top: 4.5rem !important", full_css)
+        self.assertIn("div[data-testid=\"stHorizontalBlock\"]", full_css)
+        self.assertIn("align-items: stretch !important", full_css)
+
 
 if __name__ == "__main__":
     unittest.main()

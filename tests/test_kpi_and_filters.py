@@ -112,9 +112,11 @@ class TestKPIReconciliationAndFilters(unittest.TestCase):
         self.assertEqual(len(matched), 1)
         empty = prop_mod._apply_property_filters(df, "nonexistent", "All Markets", "All Types", "All")
         self.assertTrue(empty.empty)
-        # Zero-denominator KPI calculation must not raise
+        # Zero-denominator KPI calculation must not raise and formats currency cleanly
         cards = prop_mod._compute_property_kpis(df.iloc[[1]], total_portfolio_count=2)
         self.assertEqual(cards[1]["value"], "0.00%")
+        self.assertEqual(cards[2]["value"], "$0")
+        self.assertEqual(cards[3]["value"], "$-500")
 
     def test_maintenance_weighted_completion_zero_safe(self) -> None:
         df = pd.DataFrame(
