@@ -125,7 +125,7 @@ def _render_specialist_agents_tab() -> None:
                     f'<div style="font-size:0.77rem;color:#758294;min-height:48px;line-height:1.35;">{spec.role}</div>',
                     unsafe_allow_html=True,
                 )
-                if st.button(f"Consult {spec.name.split()[0]}", key=f"agent_sel_{spec.key}", icon=":material/arrow_forward:", use_container_width=True):
+                if st.button(f"Consult {spec.name.split()[0]}", key=f"agent_sel_{spec.key}", use_container_width=True):
                     st.session_state["selected_agent_key"] = spec.key
 
     selected_key = st.session_state.get("selected_agent_key", "portfolio")
@@ -134,7 +134,7 @@ def _render_specialist_agents_tab() -> None:
     with st.container(border=True):
         st.markdown(f"#### Running Diagnostic: {spec.name}")
         sample_q = st.selectbox("Select Diagnostic Question", spec.sample_questions)
-        if st.button(f"Execute Analysis via {spec.name}", icon=":material/query_stats:", type="primary"):
+        if st.button(f"Execute Analysis via {spec.name}", type="primary"):
             with st.spinner("Executing deterministic SQL against Unity Catalog Gold views..."):
                 res = run_agent_analysis(spec.key, sample_q)
             st.success(res.summary)

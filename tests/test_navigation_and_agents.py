@@ -57,6 +57,26 @@ class TestNavigationAndAgents(unittest.TestCase):
             agents.query_table = original_query
 
 
+    def test_button_backward_compatibility_with_older_streamlit(self) -> None:
+        """Simulate older Streamlit runtime rejecting 'icon' and ensure safe wrapper degrades gracefully."""
+        called_without_icon = []
+        original_btn = ui._orig_st_button
+
+        def legacy_button(label, *args, **kwargs):
+            if "icon" in kwargs:
+                raise TypeError("ButtonMixin.button() got an unexpected keyword argument 'icon'")
+            called_without_icon.append(label)
+            return True
+
+        try:
+            ui._orig_st_button = legacy_button
+            res = ui._safe_st_button("Test Button", icon=":material/refresh:")
+            self.assertTrue(res)
+            self.assertEqual(called_without_icon, ["Test Button"])
+        finally:
+            ui._orig_st_button = original_btn
+
+
 if __name__ == "__main__":
     unittest.main()
 
