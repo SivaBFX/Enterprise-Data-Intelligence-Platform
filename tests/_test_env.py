@@ -32,7 +32,9 @@ def install_test_stubs() -> types.ModuleType:
     st_stub.captured_links = []
     st_stub.captured_markdown = []
     st_stub.set_page_config = lambda **kw: None
-    st_stub.cache_data = lambda **kw: (lambda fn: fn)
+    cache_fn = lambda **kw: (lambda fn: fn)  # noqa: E731
+    cache_fn.clear = lambda: None
+    st_stub.cache_data = cache_fn
     st_stub.markdown = lambda body, **kw: st_stub.captured_markdown.append(body)
     st_stub.caption = lambda *a, **kw: None
     st_stub.divider = lambda: None
@@ -49,6 +51,8 @@ def install_test_stubs() -> types.ModuleType:
     st_stub.bar_chart = lambda *a, **kw: None
     st_stub.dataframe = lambda *a, **kw: None
     st_stub.code = lambda *a, **kw: None
+    st_stub.info = lambda *a, **kw: None
+    st_stub.success = lambda *a, **kw: None
     st_stub.warning = lambda *a, **kw: None
     st_stub.error = lambda *a, **kw: None
     st_stub.exception = lambda *a, **kw: None
