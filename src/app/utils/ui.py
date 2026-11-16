@@ -282,44 +282,45 @@ section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] butt
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 0.65rem 0.45rem 0.95rem 0.45rem;
-    border-bottom: 1px solid #243548;
+    padding: 0.75rem 0.45rem 1rem 0.45rem;
+    border-bottom: 1px solid #223348;
     margin-bottom: 0.75rem;
 }
 
 .saas-brand-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: #0F9D83;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: #0E7C66;
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 6px rgba(15, 157, 131, 0.3);
+    box-shadow: 0 2px 6px rgba(14, 124, 102, 0.35);
     flex-shrink: 0;
 }
 
 .saas-brand-title {
     color: #FFFFFF;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.01em;
 }
 
 .saas-brand-subtitle {
-    color: #8C9BAE;
-    font-size: 0.67rem;
-    font-weight: 600;
+    color: #2DD4BF;
+    font-size: 0.65rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
+    margin-top: 1px;
 }
 
 /* Nav group labels */
 .saas-nav-group-label {
     color: #64748B;
-    font-size: 0.66rem;
+    font-size: 0.68rem;
     font-weight: 750;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -331,8 +332,8 @@ section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] butt
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
     background-color: transparent !important;
     border: 1px solid transparent !important;
-    border-radius: 8px !important;
-    padding: 0.42rem 0.75rem !important;
+    border-radius: 9px !important;
+    padding: 0.45rem 0.75rem !important;
     min-height: 36px !important;
     color: #94A3B8 !important;
     text-decoration: none !important;
@@ -346,7 +347,7 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a p,
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a span {
     color: #94A3B8 !important;
     font-weight: 500 !important;
-    font-size: 0.82rem !important;
+    font-size: 0.83rem !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
@@ -359,109 +360,79 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover span {
     color: #FFFFFF !important;
 }
 
-/* Active page link in sidebar */
+/* Active page link in sidebar: emerald green highlight */
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
-    background-color: #1E2F42 !important;
-    border: 1px solid #2B3F56 !important;
-    border-left: 3px solid #0F9D83 !important;
+    background-color: #0E7C66 !important;
+    border: 1px solid #0E7C66 !important;
+    box-shadow: 0 2px 6px rgba(14, 124, 102, 0.3) !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] p,
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] span {
     color: #FFFFFF !important;
-    font-weight: 650 !important;
+    font-weight: 700 !important;
 }
 
-/* Bottom user profile */
-.saas-sidebar-profile {
+/* Sidebar bottom graphic and tagline */
+.saas-sidebar-footer {
+    padding: 1.25rem 0.5rem 0.5rem 0.5rem;
+    margin-top: 1.75rem;
+    border-top: 1px solid #1C2E46;
     display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 0.65rem 0.6rem;
-    background: #101B27;
-    border: 1px solid #223348;
-    border-radius: 10px;
-    margin-top: 1.25rem;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.saas-profile-avatar {
+.saas-sidebar-tagline {
+    color: #FFFFFF;
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+}
+
+/* Top bar avatar badge and live sync button */
+.top-nav-avatar {
     width: 32px;
     height: 32px;
     border-radius: 999px;
-    background: #243548;
+    background: #172536;
     color: #FFFFFF;
     font-size: 0.74rem;
     font-weight: 700;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    border: 1px solid #2B3D52;
+    cursor: default;
+    gap: 2px;
 }
 
-.saas-profile-name {
-    color: #FFFFFF;
-    font-size: 0.78rem;
-    font-weight: 650;
-    line-height: 1.2;
+.top-nav-avatar-chevron {
+    font-size: 0.55rem;
+    color: #94A3B8;
+    margin-left: 2px;
 }
 
-.saas-profile-role {
-    color: #758294;
-    font-size: 0.68rem;
-    line-height: 1.2;
+div.stButton > button[key*="top_sync_"] {
+    background-color: #FFFFFF !important;
+    color: #0E7C66 !important;
+    border: 1px solid #D1D5DB !important;
+    border-radius: 999px !important;
+    font-size: 0.76rem !important;
+    font-weight: 600 !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0.25rem 0.85rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
 }
 
-.saas-profile-badge {
-    font-size: 0.62rem;
-    font-weight: 700;
-    color: #0F9D83;
-    background: rgba(15, 157, 131, 0.15);
-    padding: 2px 6px;
-    border-radius: 999px;
-    text-transform: uppercase;
-}
-    padding: 0.65rem 0.6rem;
-    background: #101B27;
-    border: 1px solid #223348;
-    border-radius: 10px;
-    margin-top: 1.25rem;
-}
-
-.saas-profile-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 999px;
-    background: #243548;
-    color: #FFFFFF;
-    font-size: 0.74rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.saas-profile-name {
-    color: #FFFFFF;
-    font-size: 0.78rem;
-    font-weight: 650;
-    line-height: 1.2;
-}
-
-.saas-profile-role {
-    color: #758294;
-    font-size: 0.68rem;
-    line-height: 1.2;
-}
-
-.saas-profile-badge {
-    font-size: 0.62rem;
-    font-weight: 700;
-    color: #119B78;
-    background: rgba(17, 155, 120, 0.15);
-    padding: 2px 6px;
-    border-radius: 999px;
-    text-transform: uppercase;
+div.stButton > button[key*="top_sync_"]:hover {
+    border-color: #0E7C66 !important;
+    background-color: #F0FDF4 !important;
 }
 
 /* Global accessible text contrast */
@@ -917,13 +888,30 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     align-items: center;
     justify-content: space-between;
     gap: 0.4rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    margin-top: auto;
 }
 
 .ai-kpi-caption {
     font-size: 0.76rem;
     color: var(--ai-muted);
     line-height: 1.35;
+    flex: 1;
+    min-width: 0;
+}
+
+.ai-kpi-circle-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: #E6F7F5;
+    color: #0E7C66;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.92rem;
+    flex-shrink: 0;
+    margin-left: 8px;
 }
 
 .ai-kpi-source {
@@ -933,6 +921,76 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     margin-top: 0.35rem;
     padding-top: 0.3rem;
     border-top: 1px solid #f1f3f6;
+}
+
+/* Three-column Decision Brief cards */
+.ai-decision-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 1.15rem 1.25rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 136px;
+    height: 100%;
+    position: relative;
+    border-left-width: 4px !important;
+}
+
+.ai-decision-card.tone-emerald {
+    border-left-color: #0E7C66 !important;
+}
+
+.ai-decision-card.tone-orange {
+    border-left-color: #E58A13 !important;
+}
+
+.ai-decision-card.tone-blue {
+    border-left-color: #2563EB !important;
+}
+
+.ai-decision-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.ai-decision-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #172B4D;
+}
+
+.ai-decision-desc {
+    font-size: 0.82rem;
+    color: #64748B;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.ai-decision-pill {
+    background-color: #E6F7F5;
+    color: #0E7C66 !important;
+    border: 1px solid #C8F0E9;
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    transition: all 0.15s ease;
+}
+
+.ai-decision-pill:hover {
+    background-color: #D3F3EE;
+    color: #0A5C4C !important;
+    border-color: #0E7C66;
 }
 
 /* Decision Queue & Sub-tiles */
@@ -1169,32 +1227,77 @@ div[data-testid="stFormSubmitButton"] button[kind="primary"]:hover {
     border-color: var(--ai-green-hover) !important;
 }
 
-/* Suggested question buttons: equal height, centered text, readable font */
+/* Suggested question buttons: capsule pills matching reference image */
 div.stButton > button[key*="suggest"],
 div.stButton > button[key*="genie_suggest"],
 div.stButton > button[key*="genie_btn_"],
 div.stButton > button[key*="followup_"] {
-    min-height: 48px !important;
-    height: 100% !important;
-    font-size: 0.81rem !important;
-    line-height: 1.35 !important;
+    background-color: #E6F7F5 !important;
+    color: #0E7C66 !important;
+    border: 1px solid #C8F0E9 !important;
+    border-radius: 999px !important;
+    min-height: 36px !important;
+    height: 36px !important;
+    font-size: 0.77rem !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
     text-align: center !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 0.45rem 0.65rem !important;
-    white-space: normal !important;
-    word-break: break-word !important;
-    border-radius: 9px !important;
+    padding: 0.25rem 0.75rem !important;
+    white-space: nowrap !important;
+    transition: all 0.15s ease !important;
+    box-shadow: none !important;
 }
 
-/* Perspective toggle buttons on Executive Overview */
+div.stButton > button[key*="suggest"]:hover,
+div.stButton > button[key*="genie_suggest"]:hover,
+div.stButton > button[key*="genie_btn_"]:hover,
+div.stButton > button[key*="followup_"]:hover {
+    background-color: #D3F3EE !important;
+    border-color: #0E7C66 !important;
+    color: #0A5C4C !important;
+}
+
+/* Perspective toggle cards on Executive Overview */
 div.stButton > button[key*="persona_btn_"] {
-    min-height: 38px !important;
-    font-size: 0.82rem !important;
+    min-height: 72px !important;
+    height: 72px !important;
+    border-radius: 10px !important;
+    padding: 0.45rem 0.25rem !important;
+    font-size: 0.78rem !important;
     font-weight: 600 !important;
-    white-space: nowrap !important;
-    padding: 0.35rem 0.6rem !important;
+    line-height: 1.25 !important;
+    white-space: pre-line !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.15s ease !important;
+}
+
+div.stButton > button[key*="persona_btn_"][kind="secondary"],
+div.stButton > button[key*="persona_btn_"]:not([kind="primary"]) {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    color: #172B4D !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+div.stButton > button[key*="persona_btn_"][kind="secondary"]:hover,
+div.stButton > button[key*="persona_btn_"]:not([kind="primary"]):hover {
+    border-color: #0E7C66 !important;
+    color: #0E7C66 !important;
+    background-color: #F8FAFC !important;
+}
+
+div.stButton > button[key*="persona_btn_"][kind="primary"] {
+    background-color: #0E7C66 !important;
+    border: 1px solid #0E7C66 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 2px 6px rgba(14, 124, 102, 0.25) !important;
 }
 
 /* Selectboxes, Inputs, Textareas, and Dropdown Popovers */
@@ -1412,13 +1515,40 @@ def render_sidebar(active_page: str = "Executive Overview") -> None:
                     )
 
         _render_html(
-            '<div class="saas-sidebar-profile">'
-            '<div class="saas-profile-avatar">ES</div>'
-            '<div style="flex:1;min-width:0;">'
-            '<div class="saas-profile-name">Executive Studio</div>'
-            '<div class="saas-profile-role">Portfolio Lead · Databricks</div>'
+            '<div class="saas-sidebar-footer">'
+            '<svg width="100%" height="48" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">'
+            '<defs>'
+            '<linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="48" gradientUnits="userSpaceOnUse">'
+            '<stop offset="0%" stop-color="#0E7C66" stop-opacity="0.5"/>'
+            '<stop offset="100%" stop-color="#172536" stop-opacity="0.05"/>'
+            '</linearGradient>'
+            '</defs>'
+            '<rect x="8" y="22" width="14" height="26" rx="1" fill="#0E7C66" fill-opacity="0.3" stroke="#2DD4BF" stroke-opacity="0.4" stroke-width="1"/>'
+            '<rect x="26" y="12" width="20" height="36" rx="1" fill="#0E7C66" fill-opacity="0.4" stroke="#2DD4BF" stroke-opacity="0.5" stroke-width="1"/>'
+            '<rect x="50" y="18" width="16" height="30" rx="1" fill="#0E7C66" fill-opacity="0.3" stroke="#2DD4BF" stroke-opacity="0.35" stroke-width="1"/>'
+            '<rect x="70" y="6" width="24" height="42" rx="1.5" fill="#0E7C66" fill-opacity="0.5" stroke="#2DD4BF" stroke-opacity="0.6" stroke-width="1"/>'
+            '<path d="M82 2 L82 6" stroke="#2DD4BF" stroke-width="1.5"/>'
+            '<rect x="98" y="16" width="18" height="32" rx="1" fill="#0E7C66" fill-opacity="0.35" stroke="#2DD4BF" stroke-opacity="0.45" stroke-width="1"/>'
+            '<rect x="120" y="10" width="22" height="38" rx="1" fill="#0E7C66" fill-opacity="0.45" stroke="#2DD4BF" stroke-opacity="0.55" stroke-width="1"/>'
+            '<rect x="146" y="20" width="16" height="28" rx="1" fill="#0E7C66" fill-opacity="0.3" stroke="#2DD4BF" stroke-opacity="0.4" stroke-width="1"/>'
+            '<circle cx="36" cy="18" r="1.2" fill="#5EEAD4" fill-opacity="0.8"/>'
+            '<circle cx="36" cy="25" r="1.2" fill="#5EEAD4" fill-opacity="0.8"/>'
+            '<circle cx="36" cy="32" r="1.2" fill="#5EEAD4" fill-opacity="0.8"/>'
+            '<circle cx="78" cy="14" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
+            '<circle cx="86" cy="14" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
+            '<circle cx="78" cy="22" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
+            '<circle cx="86" cy="22" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
+            '<circle cx="78" cy="30" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
+            '<circle cx="86" cy="30" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
+            '<circle cx="127" cy="18" r="1.2" fill="#5EEAD4" fill-opacity="0.85"/>'
+            '<circle cx="135" cy="18" r="1.2" fill="#5EEAD4" fill-opacity="0.85"/>'
+            '<circle cx="127" cy="26" r="1.2" fill="#5EEAD4" fill-opacity="0.85"/>'
+            '<circle cx="135" cy="26" r="1.2" fill="#5EEAD4" fill-opacity="0.85"/>'
+            '</svg>'
+            '<div class="saas-sidebar-tagline">'
+            '<div>Smarter Insights.</div>'
+            '<div>Greater Impact.</div>'
             '</div>'
-            '<span class="saas-profile-badge">Live</span>'
             '</div>'
         )
 
@@ -1431,23 +1561,23 @@ def render_top_navigation(
 ) -> None:
     """Render the crisp SaaS top navigation bar with breadcrumbs and utility controls."""
     crumbs = breadcrumbs or ["Residential Property Intelligence", current_page]
-    crumbs_html = " <span style='color:#94A3B8;margin:0 6px;'>/</span> ".join(
-        f"<span style='color:#172B4D;font-weight:650;'>{_escape(c)}</span>" if i == len(crumbs) - 1
-        else f"<span style='color:#64748B;'>{_escape(c)}</span>"
+    crumbs_html = " <span style='color:#94A3B8;margin:0 7px;font-size:0.85rem;'>›</span> ".join(
+        f"<span style='color:#172B4D;font-weight:700;'>{_escape(c)}</span>" if i == len(crumbs) - 1
+        else f"<span style='color:#64748B;font-weight:500;'>{_escape(c)}</span>"
         for i, c in enumerate(crumbs)
     )
 
     home_svg = (
-        '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748B" '
-        'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" '
-        'style="margin-right:6px;vertical-align:-2px;">'
+        '<svg width="15" height="15" viewBox="0 0 24 24" fill="#3B82F6" stroke="#3B82F6" '
+        'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" '
+        'style="margin-right:7px;vertical-align:-2px;">'
         '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>'
-        '<polyline points="9 22 9 12 15 12 15 22"></polyline>'
+        '<polyline points="9 22 9 12 15 12 15 22" fill="#FFFFFF" stroke="#3B82F6"></polyline>'
         '</svg>'
     )
 
     with st.container():
-        left_col, right_col = st.columns([2.5, 1.5])
+        left_col, right_col = st.columns([2.55, 1.45])
         with left_col:
             _render_html(
                 f'<div style="display:flex;align-items:center;min-height:36px;font-size:0.84rem;">'
@@ -1455,22 +1585,22 @@ def render_top_navigation(
                 f'</div>'
             )
         with right_col:
-            r1, r2 = st.columns([1.5, 1.1])
+            r1, r2 = st.columns([2.3, 0.7])
             with r1:
-                if status_text:
-                    _render_html(
-                        f'<div style="display:flex;align-items:center;justify-content:flex-end;min-height:36px;">'
-                        f'{status_badge_html(status_text, tone=status_tone)}'
-                        f'</div>'
-                    )
-            with r2:
                 safe_key = "".join(ch if ch.isalnum() else "_" for ch in current_page)
-                if st.button("Refresh", key=f"top_refresh_{safe_key}", use_container_width=True):
+                sync_label = f"● {status_text} 🔄" if status_text else "● Live Sync 🔄"
+                if st.button(sync_label, key=f"top_sync_{safe_key}", use_container_width=True):
                     if hasattr(st, "cache_data") and hasattr(st.cache_data, "clear"):
                         st.cache_data.clear()
                     st.rerun()
+            with r2:
+                _render_html(
+                    '<div style="display:flex;align-items:center;justify-content:flex-end;height:36px;">'
+                    '<div class="top-nav-avatar">SM <span class="top-nav-avatar-chevron">▼</span></div>'
+                    '</div>'
+                )
 
-    _render_html('<div class="ai-hairline" style="margin:0.25rem 0 0.85rem 0;"></div>')
+    _render_html('<div style="height:4px;"></div>')
 
 
 def render_alert_panel(
@@ -1637,25 +1767,26 @@ def kpi_card_html(
 ) -> str:
     """Build HTML for a single enterprise KPI card styled after AI Studio."""
     delta_html = status_badge_html(delta, tone=delta_tone) if delta else ""
-    icon_html = f'<span class="ai-kpi-icon">{_escape(icon)}</span>' if icon else ""
-    top_right = delta_html or icon_html
-    caption_html = (
-        f'<div class="ai-kpi-caption">{_escape(caption)}</div>' if caption else ""
-    )
+    icon_chip = f'<span class="ai-kpi-circle-icon">{_escape(icon)}</span>' if icon else ""
+    caption_text = f'<span class="ai-kpi-caption">{_escape(caption)}</span>' if caption else ""
     source_html = (
         f'<div class="ai-kpi-source">{_escape(source_table)}</div>'
         if source_table
         else ""
     )
 
+    footer_content = ""
+    if caption_text or icon_chip:
+        footer_content = f'<div class="ai-kpi-footer">{caption_text}{icon_chip}</div>'
+
     return (
         '<div class="ai-kpi-card">'
         '<div class="ai-kpi-top">'
         f'<span class="ai-kpi-label">{_escape(label)}</span>'
-        f"{top_right}"
+        f"{delta_html}"
         "</div>"
         f'<div class="ai-kpi-value">{_escape(value)}</div>'
-        f"{caption_html}"
+        f"{footer_content}"
         f"{source_html}"
         "</div>"
     )

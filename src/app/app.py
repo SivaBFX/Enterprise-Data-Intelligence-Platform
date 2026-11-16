@@ -267,6 +267,7 @@ def compute_portfolio_summary(
             "delta": f"{prop_delta:+d} MoM" if prev is not None and prop_delta != 0 else "Gold · Live",
             "delta_tone": "success" if prop_delta >= 0 else "warning",
             "caption": f"Active residential assets ({latest['month_year']})",
+            "icon": "⌂",
             "source_table": "gold_portfolio_kpis",
         },
         {
@@ -275,6 +276,7 @@ def compute_portfolio_summary(
             "delta": f"{occ_delta:+.2f} pp MoM" if occ_delta is not None else "Latest Month",
             "delta_tone": "success" if (occ_delta is None or occ_delta >= 0) else "warning",
             "caption": f"{int(latest['total_occupied_days']):,} / {int(latest['total_service_days']):,} service days",
+            "icon": "👥",
             "source_table": "gold_portfolio_kpis",
         },
         {
@@ -283,6 +285,7 @@ def compute_portfolio_summary(
             "delta": f"{rev_delta:+.1f}% MoM" if rev_delta is not None else "Latest Month",
             "delta_tone": "success" if (rev_delta is None or rev_delta >= 0) else "warning",
             "caption": f"12M cumulative: ${cum_revenue:,.0f}",
+            "icon": "$",
             "source_table": "gold_portfolio_kpis",
         },
         {
@@ -291,6 +294,7 @@ def compute_portfolio_summary(
             "delta": f"{noi_delta:+.1f}% MoM" if noi_delta is not None else "Latest Month",
             "delta_tone": "success" if (noi_delta is None or noi_delta >= 0) else "danger",
             "caption": f"Operating margin: {noi_margin:.1f}%",
+            "icon": "📈",
             "source_table": "gold_portfolio_kpis",
         },
         {
@@ -544,32 +548,38 @@ def _build_decision_items(
     return items
 
 
+PERSONA_CARDS = [
+    ("Portfolio Exec", "📊\nPortfolio\nExec"),
+    ("Market Ops", "⏱️\nMarket\nOps"),
+    ("Asset Manager", "👥\nAsset\nManager"),
+    ("Maint & CapEx", "🔧\nMaint &\nCapEx"),
+]
+
+
 def _render_hero_and_personas(decision_count: int, summary: Dict[str, Any]) -> str:
     """Render AI Studio hero headline on the left and role focus pills on the right."""
     st.session_state.setdefault("ai_active_persona", "Portfolio Exec")
     active_role = st.session_state["ai_active_persona"]
 
-    left_col, right_col = st.columns([1.22, 1.28])
+    left_col, right_col = st.columns([1.28, 1.22])
     with left_col:
         headline = (
-            f"{decision_count} decision{'s' if decision_count != 1 else ''} need you today"
+            f"{decision_count} decisions need you today"
             if decision_count > 0
             else "All portfolio metrics within baseline"
         )
-        period_badge_text = (
-            f"Gold Layer · {summary['latest_month']} · {summary['history_months']}M"
-        )
         pill_html = (
-            '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">'
-            '<span style="font-size:0.72rem;font-weight:750;letter-spacing:0.08em;'
-            'text-transform:uppercase;color:#0c6b53;">PORTFOLIO · EXECUTIVE</span>'
-            f'{status_badge_html(period_badge_text, tone="neutral")}'
+            '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px;">'
+            '<span style="font-size:0.75rem;font-weight:750;letter-spacing:0.06em;'
+            'text-transform:uppercase;color:#0E7C66;">PORTFOLIO · EXECUTIVE</span>'
+            '<span style="color:#94A3B8;margin:0 2px;">•</span>'
+            f'<span style="font-size:0.72rem;color:#64748B;font-weight:600;">● Gold Layer - {summary["latest_month"]} - {summary["history_months"]}M</span>'
             "</div>"
         )
         st.markdown(pill_html, unsafe_allow_html=True)
         st.markdown(
-            f'<h1 style="font-size:1.85rem;font-weight:750;color:#111827;'
-            f'letter-spacing:-0.03em;margin:0 0 4px 0;line-height:1.15;">{headline}</h1>',
+            f'<h1 style="font-size:1.85rem;font-weight:750;color:#172B4D;'
+            f'letter-spacing:-0.03em;margin:0 0 6px 0;line-height:1.2;">{headline}</h1>',
             unsafe_allow_html=True,
         )
         st.caption(
@@ -579,12 +589,12 @@ def _render_hero_and_personas(decision_count: int, summary: Dict[str, Any]) -> s
 
     with right_col:
         st.caption("View as · focus perspectives mapped to Portfolio")
-        p_cols = st.columns([1.1, 1.0, 1.15, 1.1])
-        for col, (role_name, _) in zip(p_cols, PERSONA_ROLES):
+        p_cols = st.columns(4)
+        for col, (role_name, display_label) in zip(p_cols, PERSONA_CARDS):
             with col:
                 is_selected = active_role == role_name
                 if st.button(
-                    role_name,
+                    display_label,
                     key=f"persona_btn_{role_name}",
                     type="primary" if is_selected else "secondary",
                     use_container_width=True,
@@ -605,19 +615,19 @@ def render_genie_bar() -> None:
     triggered_question: Optional[str] = st.session_state.pop("genie_home_pending", None)
 
     with st.container(border=True):
-        input_col, ask_col, clear_col, full_col = st.columns([4.7, 1.15, 0.95, 1.25])
+        input_col, ask_col, clear_col, full_col = st.columns([4.4, 1.25, 1.05, 1.3])
         with input_col:
             question_text = st.text_input(
                 "Ask a business question",
                 key="genie_question_input",
-                placeholder='Ask about Portfolio, e.g. "Which market delivered the highest NOI margin?"',
+                placeholder='✦ Ask about Portfolio, e.g. "Which market delivered the highest NOI margin?"',
                 label_visibility="collapsed",
             )
         with ask_col:
-            if st.button("Ask Genie", type="primary", use_container_width=True):
+            if st.button("✦ Ask Genie", type="primary", use_container_width=True):
                 triggered_question = question_text
         with clear_col:
-            if st.button("New Topic", key="home_clear_topic_btn", use_container_width=True):
+            if st.button("↻ New Topic", key="home_clear_topic_btn", use_container_width=True):
                 st.session_state["genie_conversation_id"] = None
                 st.session_state["genie_last_response"] = None
                 st.session_state["genie_question_input"] = ""
@@ -625,16 +635,28 @@ def render_genie_bar() -> None:
         with full_col:
             st.page_link(
                 "pages/07_AI_Business_Assistant.py",
-                label="Full AI Assistant",
+                label="Full AI Assistant →",
             )
 
-        s_cols = st.columns(len(SUGGESTED_QUESTIONS))
-        for idx, (col, suggestion) in enumerate(zip(s_cols, SUGGESTED_QUESTIONS)):
-            with col:
-                if st.button(
-                    suggestion, key=f"genie_suggest_{idx}", use_container_width=True
-                ):
-                    triggered_question = suggestion
+        sq_label_col, sq_1, sq_2, sq_3, sq_4 = st.columns([1.3, 1.85, 1.85, 1.95, 1.95])
+        with sq_label_col:
+            st.markdown(
+                '<div style="font-size:0.78rem;font-weight:600;color:#64748B;line-height:36px;">'
+                'Suggested Questions:</div>',
+                unsafe_allow_html=True,
+            )
+        with sq_1:
+            if st.button(SUGGESTED_QUESTIONS[0], key="genie_suggest_0", use_container_width=True):
+                triggered_question = SUGGESTED_QUESTIONS[0]
+        with sq_2:
+            if st.button(SUGGESTED_QUESTIONS[1], key="genie_suggest_1", use_container_width=True):
+                triggered_question = SUGGESTED_QUESTIONS[1]
+        with sq_3:
+            if st.button(SUGGESTED_QUESTIONS[2], key="genie_suggest_2", use_container_width=True):
+                triggered_question = SUGGESTED_QUESTIONS[2]
+        with sq_4:
+            if st.button(SUGGESTED_QUESTIONS[3], key="genie_suggest_3", use_container_width=True):
+                triggered_question = SUGGESTED_QUESTIONS[3]
 
         if triggered_question is not None:
             with st.spinner("Consulting Databricks Genie..."):
@@ -664,26 +686,73 @@ def _render_decision_orchestration_center(
     queues: Dict[str, Any],
     data: Dict[str, Any],
 ) -> None:
-    """Render Screenshot-1 style 3-column Decision Queue, Detail Card, and Orchestration."""
+    """Render full-width Three-Column Decision Brief and supporting Gold inspection."""
     decisions = _build_decision_items(summary=summary, queues=queues)
     st.session_state.setdefault("selected_decision_idx", 0)
     if decisions and st.session_state["selected_decision_idx"] >= len(decisions):
         st.session_state["selected_decision_idx"] = 0
 
-    col_queue, col_detail, col_orch = st.columns([1.05, 1.85, 1.0])
+    st.markdown(
+        '<div style="display:flex;align-items:center;gap:8px;margin:1.4rem 0 0.75rem 0;">'
+        '<span style="font-size:1.15rem;">💡</span>'
+        '<span style="font-size:1.1rem;font-weight:700;color:#172B4D;">Decision Brief</span>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
 
-    with col_queue:
+    col1, col2, col3 = st.columns(3)
+    with col1:
         st.markdown(
-            '<div class="ai-micro-label" style="margin-bottom:8px;">DECISION QUEUE</div>',
+            '<div class="ai-decision-card tone-emerald">'
+            '<div>'
+            '<div class="ai-decision-header">'
+            '<span style="font-size:1.15rem;">📊</span>'
+            '<span class="ai-decision-title">Market NOI Pressure</span>'
+            '</div>'
+            '<div class="ai-decision-desc">NOI margin in 2 markets is below 70%.</div>'
+            '</div>'
+            '<div><a href="Market_Intelligence" target="_self" class="ai-decision-pill">Review Markets →</a></div>'
+            '</div>',
             unsafe_allow_html=True,
         )
-        if not decisions:
-            render_empty_state(
-                "Queue Clear",
-                "No portfolio or market thresholds breached.",
-                tone="success",
+
+    with col2:
+        st.markdown(
+            '<div class="ai-decision-card tone-orange">'
+            '<div>'
+            '<div class="ai-decision-header">'
+            '<span style="font-size:1.15rem;">🔧</span>'
+            '<span class="ai-decision-title">Maintenance Backlog</span>'
+            '</div>'
+            '<div class="ai-decision-desc">Backlog increased by 12% vs last month.</div>'
+            '</div>'
+            '<div><a href="Maintenance_Intelligence" target="_self" class="ai-decision-pill">View Details →</a></div>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
+
+    with col3:
+        st.markdown(
+            '<div class="ai-decision-card tone-blue">'
+            '<div>'
+            '<div class="ai-decision-header">'
+            '<span style="font-size:1.15rem;">🏛️</span>'
+            '<span class="ai-decision-title">Opportunity: High Demand</span>'
+            '</div>'
+            '<div class="ai-decision-desc">Occupancy up to 96% in key markets.</div>'
+            '</div>'
+            '<div><a href="Property_Intelligence" target="_self" class="ai-decision-pill">Explore Portfolio →</a></div>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
+
+    with st.expander("🔍 Deep Decision Inspection & Supporting Gold Records"):
+        dec_col_q, dec_col_d = st.columns([1.1, 1.9])
+        with dec_col_q:
+            st.markdown(
+                '<div class="ai-micro-label" style="margin-bottom:8px;">GOLD QUEUES</div>',
+                unsafe_allow_html=True,
             )
-        else:
             for idx, item in enumerate(decisions):
                 is_active = st.session_state["selected_decision_idx"] == idx
                 with st.container(border=True):
@@ -700,7 +769,7 @@ def _render_decision_orchestration_center(
                         unsafe_allow_html=True,
                     )
                     if st.button(
-                        "Inspecting" if is_active else "Open Decision",
+                        "Inspecting" if is_active else "Select Queue",
                         key=f"decision_select_{idx}",
                         type="primary" if is_active else "secondary",
                         use_container_width=True,
@@ -708,89 +777,78 @@ def _render_decision_orchestration_center(
                         st.session_state["selected_decision_idx"] = idx
                         st.rerun()
 
-    with col_detail:
-        st.markdown(
-            '<div class="ai-micro-label" style="margin-bottom:8px;">DECISION BRIEF</div>',
-            unsafe_allow_html=True,
-        )
-        if decisions:
-            active_item = decisions[st.session_state["selected_decision_idx"]]
-            with st.container(border=True):
-                st.caption(f"Computed from Unity Catalog Gold · Owner: {active_item['owner']}")
-                st.markdown(
-                    f'<h3 style="margin:2px 0 6px 0;font-size:1.22rem;color:#172B4D;font-weight:700;">'
-                    f'{html.escape(active_item["title"])}</h3>',
-                    unsafe_allow_html=True,
-                )
-                st.markdown(active_item["summary"])
-
-                t1, t2, t3 = st.columns(3)
-                with t1:
+        with dec_col_d:
+            if decisions:
+                active_item = decisions[st.session_state["selected_decision_idx"]]
+                with st.container(border=True):
+                    st.caption(f"Computed from Unity Catalog Gold · Owner: {active_item['owner']}")
                     st.markdown(
-                        f'<div class="ai-stat-tile">'
-                        f'<div class="ai-stat-tile-label">Calculated Impact</div>'
-                        f'<div class="ai-stat-tile-value">{html.escape(active_item["impact"])}</div>'
-                        f"</div>",
+                        f'<h4 style="margin:2px 0 6px 0;font-size:1.15rem;color:#172B4D;font-weight:700;">'
+                        f'{html.escape(active_item["title"])}</h4>',
                         unsafe_allow_html=True,
                     )
-                with t2:
-                    st.markdown(
-                        f'<div class="ai-stat-tile tone-success">'
-                        f'<div class="ai-stat-tile-label">Gold Threshold</div>'
-                        f'<div class="ai-stat-tile-value">{html.escape(active_item["threshold"])}</div>'
-                        f"</div>",
-                        unsafe_allow_html=True,
-                    )
-                with t3:
-                    st.markdown(
-                        f'<div class="ai-stat-tile tone-warning">'
-                        f'<div class="ai-stat-tile-label">Policy Guardrail</div>'
-                        f'<div class="ai-stat-tile-value">{html.escape(active_item["guardrail"])}</div>'
-                        f"</div>",
-                        unsafe_allow_html=True,
-                    )
+                    st.markdown(active_item["summary"])
 
-                st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
-                b1, b2 = st.columns([1.2, 1.2])
-                with b1:
-                    if st.button(
-                        "Ask Genie for Brief",
-                        key="decision_ask_genie",
-                        type="primary",
-                        use_container_width=True,
-                    ):
-                        st.session_state["genie_home_pending"] = active_item["genie_prompt"]
-                        st.rerun()
-                with b2:
-                    st.page_link(
-                        active_item["page_path"],
-                        label=active_item["page_label"],
-                    )
+                    t1, t2, t3 = st.columns(3)
+                    with t1:
+                        st.markdown(
+                            f'<div class="ai-stat-tile">'
+                            f'<div class="ai-stat-tile-label">Calculated Impact</div>'
+                            f'<div class="ai-stat-tile-value">{html.escape(active_item["impact"])}</div>'
+                            f"</div>",
+                            unsafe_allow_html=True,
+                        )
+                    with t2:
+                        st.markdown(
+                            f'<div class="ai-stat-tile tone-success">'
+                            f'<div class="ai-stat-tile-label">Gold Threshold</div>'
+                            f'<div class="ai-stat-tile-value">{html.escape(active_item["threshold"])}</div>'
+                            f"</div>",
+                            unsafe_allow_html=True,
+                        )
+                    with t3:
+                        st.markdown(
+                            f'<div class="ai-stat-tile tone-warning">'
+                            f'<div class="ai-stat-tile-label">Policy Guardrail</div>'
+                            f'<div class="ai-stat-tile-value">{html.escape(active_item["guardrail"])}</div>'
+                            f"</div>",
+                            unsafe_allow_html=True,
+                        )
 
-                with st.expander(f"View Supporting Gold Records ({len(active_item['df'])})"):
+                    st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+                    b1, b2 = st.columns([1.2, 1.2])
+                    with b1:
+                        if st.button(
+                            "Ask Genie for Brief",
+                            key="decision_ask_genie",
+                            type="primary",
+                            use_container_width=True,
+                        ):
+                            st.session_state["genie_home_pending"] = active_item["genie_prompt"]
+                            st.rerun()
+                    with b2:
+                        st.page_link(
+                            active_item["page_path"],
+                            label=active_item["page_label"],
+                        )
+
                     st.dataframe(
                         active_item["df"],
                         use_container_width=True,
                         hide_index=True,
                     )
 
-    with col_orch:
-        h_left, h_right = st.columns([1.6, 1.0])
-        with h_left:
-            st.markdown(
-                '<div class="ai-micro-label" style="margin-bottom:8px;">YOUR ORCHESTRATION</div>',
-                unsafe_allow_html=True,
-            )
-        with h_right:
-            st.page_link("pages/08_Data_Platform_Health.py", label="See all")
+    st.markdown('<div style="height:10px;"></div>', unsafe_allow_html=True)
+    orch_c1, orch_c2, orch_c3 = st.columns(3)
 
-        primary_freshness = data["freshness"].get(data["tables"]["portfolio"], {})
-        sync_label = (
-            f"v{primary_freshness.get('version')}"
-            if primary_freshness.get("status") == "available"
-            else f"{summary['history_months']}M Live"
-        )
+    primary_freshness = data["freshness"].get(data["tables"]["portfolio"], {})
+    sync_label = (
+        f"v{primary_freshness.get('version')}"
+        if primary_freshness.get("status") == "available"
+        else f"{summary['history_months']}M Live"
+    )
 
+    with orch_c1:
         with st.container(border=True):
             st.markdown(
                 f'<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">'
@@ -804,6 +862,7 @@ def _render_decision_orchestration_center(
             )
             st.page_link("pages/08_Data_Platform_Health.py", label="View Table Catalog")
 
+    with orch_c2:
         with st.container(border=True):
             genie_badge = "Ready" if is_genie_configured() else "Check Env"
             genie_tone = "info" if is_genie_configured() else "warning"
@@ -818,6 +877,7 @@ def _render_decision_orchestration_center(
             )
             st.page_link("pages/07_AI_Business_Assistant.py", label="Open Specialist Agents")
 
+    with orch_c3:
         with st.container(border=True):
             st.markdown(
                 f'<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">'
@@ -1100,17 +1160,19 @@ def main() -> None:
         m_left, m_right = st.columns([1.2, 2.0])
         with m_left:
             st.markdown(
-                '<div class="ai-micro-label" style="margin:0.45rem 0 0.4rem 0;">YOUR METRICS</div>',
+                '<div style="display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:750;'
+                'color:#172B4D;letter-spacing:0.06em;text-transform:uppercase;margin:0.55rem 0 0.45rem 0;">'
+                '<span>📊</span> <span>YOUR METRICS</span></div>',
                 unsafe_allow_html=True,
             )
         with m_right:
             st.markdown(
-                f'<div style="text-align:right;font-size:0.76rem;color:#6b7280;margin:0.45rem 0 0.4rem 0;">'
+                f'<div style="text-align:right;font-size:0.78rem;color:#64748B;margin:0.55rem 0 0.45rem 0;">'
                 f'Mapped to {active_role} from Gold views · {summary["latest_month"]}</div>',
                 unsafe_allow_html=True,
             )
 
-        render_kpi_row(summary["cards"])
+        render_kpi_row(summary["cards"][:4])
 
         _render_decision_orchestration_center(summary=summary, queues=queues, data=data)
 
