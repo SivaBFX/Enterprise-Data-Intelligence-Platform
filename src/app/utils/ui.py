@@ -8,6 +8,37 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional
 import pandas as pd
 import streamlit as st
 
+# Backward compatibility wrappers for older Streamlit runtimes (e.g., Databricks Apps)
+# where st.button() does not accept the 'icon' keyword argument (added in Streamlit 1.38).
+_orig_st_button = st.button
+
+
+def _safe_st_button(label: str, *args: Any, **kwargs: Any) -> bool:
+    try:
+        return _orig_st_button(label, *args, **kwargs)
+    except TypeError as err:
+        if "icon" in kwargs and "unexpected keyword argument 'icon'" in str(err):
+            kwargs.pop("icon", None)
+            return _orig_st_button(label, *args, **kwargs)
+        raise
+
+
+st.button = _safe_st_button
+
+_orig_st_page_link = getattr(st, "page_link", None)
+if _orig_st_page_link is not None:
+
+    def _safe_st_page_link(page: Any, *args: Any, **kwargs: Any) -> Any:
+        try:
+            return _orig_st_page_link(page, *args, **kwargs)
+        except TypeError as err:
+            if "icon" in kwargs and "unexpected keyword argument 'icon'" in str(err):
+                kwargs.pop("icon", None)
+                return _orig_st_page_link(page, *args, **kwargs)
+            raise
+
+    st.page_link = _safe_st_page_link
+
 APP_ROOT = Path(__file__).resolve().parent.parent
 
 # Centralized tone palette for status badges, KPI deltas, and insight cards.
@@ -1288,8 +1319,9 @@ def render_top_navigation(
                     )
             with r2:
                 safe_key = "".join(ch if ch.isalnum() else "_" for ch in current_page)
-                if st.button("Refresh", key=f"top_refresh_{safe_key}", icon=":material/refresh:", use_container_width=True):
-                    st.cache_data.clear()
+                if st.button("Refresh", key=f"top_refresh_{safe_key}", use_container_width=True):
+                    if hasattr(st, "cache_data") and hasattr(st.cache_data, "clear"):
+                        st.cache_data.clear()
                     st.rerun()
 
     _render_html('<div class="ai-hairline" style="margin:0.25rem 0 0.85rem 0;"></div>')
