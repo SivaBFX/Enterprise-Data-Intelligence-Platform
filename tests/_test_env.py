@@ -58,6 +58,7 @@ def install_test_stubs() -> types.ModuleType:
     st_stub.spinner = lambda *a, **kw: _DummyContext()
     st_stub.expander = lambda *a, **kw: _DummyContext()
     st_stub.container = lambda **kw: _DummyContext()
+    st_stub.sidebar = _DummyContext()
     st_stub.columns = lambda spec: [
         _DummyContext() for _ in range(spec if isinstance(spec, int) else len(spec))
     ]

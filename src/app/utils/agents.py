@@ -42,7 +42,7 @@ AGENT_SPECS: List[AgentSpec] = [
     AgentSpec(
         key="portfolio",
         name="Portfolio Performance Analyst",
-        icon="📊",
+        icon=":material/query_stats:",
         role="Evaluates revenue momentum, NOI margins, occupancy health, and asset-level outliers.",
         implementation_label="Implemented · Gold Data + Optional Genie",
         approved_tables=[
@@ -63,7 +63,7 @@ AGENT_SPECS: List[AgentSpec] = [
     AgentSpec(
         key="market",
         name="Market Intelligence Assistant",
-        icon="🌎",
+        icon=":material/public:",
         role="Benchmarks regional markets on NOI, occupancy dispersion, and operating expense efficiency.",
         implementation_label="Implemented · Gold Data + Optional Genie",
         approved_tables=["workspace.gold.gold_market_monthly"],
@@ -81,7 +81,7 @@ AGENT_SPECS: List[AgentSpec] = [
     AgentSpec(
         key="maintenance",
         name="Maintenance Analyst",
-        icon="🔧",
+        icon=":material/build:",
         role="Identifies high-cost assets, active work-order backlogs, and completion SLA bottlenecks.",
         implementation_label="Implemented · Gold Data + Optional Genie",
         approved_tables=["workspace.gold.gold_maintenance_summary"],
@@ -99,7 +99,7 @@ AGENT_SPECS: List[AgentSpec] = [
     AgentSpec(
         key="capex",
         name="CapEx Analyst",
-        icon="🏗️",
+        icon=":material/account_balance:",
         role="Tracks capital investment allocation across markets, categories, and high-intensity properties.",
         implementation_label="Implemented · Gold Data + Optional Genie",
         approved_tables=["workspace.gold.gold_capex_summary"],

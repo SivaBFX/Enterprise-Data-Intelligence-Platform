@@ -10,7 +10,7 @@ st_stub = install_test_stubs()
 import utils.agents as agents  # noqa: E402
 import utils.ui as ui  # noqa: E402
 
-dp_mod = load_app_module("pages/06_Data_Products.py", "test_dp_mod")
+dp_mod = load_app_module("pages/08_Data_Platform_Health.py", "test_dp_mod")
 
 
 class TestNavigationAndAgents(unittest.TestCase):
@@ -22,9 +22,7 @@ class TestNavigationAndAgents(unittest.TestCase):
 
     def test_all_configured_page_files_exist(self) -> None:
         expected_paths = (
-            [path for _, path, _ in ui.TOP_NAV_ITEMS]
-            + [path for _, path, _ in ui.DOMAIN_NAV_ITEMS]
-            + ["pages/08_Genie_Assistant.py"]
+            [path for _, path, _ in ui.ALL_SAAS_PAGES]
             + [item["page_path"] for item in dp_mod.DATA_PRODUCTS]
         )
         for rel_path in expected_paths:
@@ -35,9 +33,9 @@ class TestNavigationAndAgents(unittest.TestCase):
 
     def test_render_header_links_all_top_and_domain_pages(self) -> None:
         ui.apply_theme()
-        ui.render_header("Portfolio")
+        ui.render_header("Executive Overview")
 
-        expected = {path for _, path, _ in ui.TOP_NAV_ITEMS + ui.DOMAIN_NAV_ITEMS}
+        expected = {path for _, path, _ in ui.ALL_SAAS_PAGES}
         self.assertTrue(expected.issubset(set(st_stub.captured_links)))
 
         for html_block in st_stub.captured_markdown:

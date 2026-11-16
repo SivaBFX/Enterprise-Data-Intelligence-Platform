@@ -60,14 +60,27 @@ class GenieResponse:
     error_message: Optional[str] = None
 
 
+def _get_genie_space_id(explicit_id: Optional[str] = None) -> str:
+    """Resolve Genie space ID from parameter, environment, or Streamlit secrets."""
+    if explicit_id:
+        return explicit_id.strip()
+    val = os.getenv("GENIE_SPACE_ID", "").strip()
+    if not val:
+        try:
+            val = str(st.secrets.get("GENIE_SPACE_ID", "")).strip()
+        except Exception:
+            val = ""
+    return val
+
+
 def is_genie_configured(space_id: Optional[str] = None) -> bool:
     """Return True when GENIE_SPACE_ID is available."""
-    return bool((space_id or os.getenv("GENIE_SPACE_ID", "")).strip())
+    return bool(_get_genie_space_id(space_id))
 
 
 def get_genie_space_info(space_id: Optional[str] = None) -> Dict[str, Any]:
     """Retrieve Genie space metadata when supported by the installed SDK."""
-    resolved_space_id = (space_id or os.getenv("GENIE_SPACE_ID", "")).strip()
+    resolved_space_id = _get_genie_space_id(space_id)
     if not resolved_space_id:
         return {
             "configured": False,

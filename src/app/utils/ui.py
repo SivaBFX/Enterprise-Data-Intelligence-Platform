@@ -3,7 +3,7 @@
 from contextlib import contextmanager
 import html
 from pathlib import Path
-from typing import Iterable, Mapping, Optional
+from typing import Any, Dict, Iterable, List, Mapping, Optional
 
 import pandas as pd
 import streamlit as st
@@ -49,18 +49,51 @@ TONE_STYLES = {
     },
 }
 
+SIDEBAR_NAV_GROUPS = [
+    {
+        "group": "OVERVIEW",
+        "items": [
+            ("Executive Overview", "app.py", ":material/dashboard:"),
+        ],
+    },
+    {
+        "group": "PORTFOLIO INTELLIGENCE",
+        "items": [
+            ("Property Intelligence", "pages/02_Property_Intelligence.py", ":material/apartment:"),
+            ("Market Intelligence", "pages/03_Market_Intelligence.py", ":material/public:"),
+            ("Maintenance Intelligence", "pages/04_Maintenance_Intelligence.py", ":material/build:"),
+            ("Investment & CapEx", "pages/05_Investment_CapEx.py", ":material/account_balance:"),
+        ],
+    },
+    {
+        "group": "ANALYTICS & AI",
+        "items": [
+            ("Performance Analytics", "pages/06_Performance_Analytics.py", ":material/insights:"),
+            ("AI Business Assistant", "pages/07_AI_Business_Assistant.py", ":material/auto_awesome:"),
+        ],
+    },
+    {
+        "group": "SYSTEM & HEALTH",
+        "items": [
+            ("Data & Platform Health", "pages/08_Data_Platform_Health.py", ":material/health_and_safety:"),
+        ],
+    },
+]
+
+ALL_SAAS_PAGES = [item for group in SIDEBAR_NAV_GROUPS for item in group["items"]]
+
 TOP_NAV_ITEMS = [
-    ("Today", "app.py", "🏠"),
-    ("Data Products", "pages/06_Data_Products.py", "📦"),
-    ("Agents", "pages/07_Agents.py", "🤖"),
+    ("Executive Overview", "app.py", ":material/dashboard:"),
+    ("Performance Analytics", "pages/06_Performance_Analytics.py", ":material/insights:"),
+    ("Data & Platform Health", "pages/08_Data_Platform_Health.py", ":material/health_and_safety:"),
 ]
 
 DOMAIN_NAV_ITEMS = [
-    ("Portfolio", "app.py", "🏠"),
-    ("Markets", "pages/02_Market_Analytics.py", "🌎"),
-    ("Properties", "pages/03_Property_Analytics.py", "🏢"),
-    ("Maintenance", "pages/04_Maintenance.py", "🔧"),
-    ("CapEx", "pages/05_CapEx.py", "🏗️"),
+    ("Executive Overview", "app.py", ":material/dashboard:"),
+    ("Property Intelligence", "pages/02_Property_Intelligence.py", ":material/apartment:"),
+    ("Market Intelligence", "pages/03_Market_Intelligence.py", ":material/public:"),
+    ("Maintenance Intelligence", "pages/04_Maintenance_Intelligence.py", ":material/build:"),
+    ("Investment & CapEx", "pages/05_Investment_CapEx.py", ":material/account_balance:"),
 ]
 
 
@@ -93,23 +126,40 @@ def apply_theme() -> None:
         """
 <style>
 :root {
-    --ai-bg: #f7f8fa;
-    --ai-surface: #ffffff;
-    --ai-surface-subtle: #f1f3f6;
-    --ai-border: #e5e7eb;
-    --ai-border-strong: #d1d5db;
-    --ai-navy: #111827;
-    --ai-text: #1f2937;
+    --saas-sidebar: #172433;
+    --saas-sidebar-border: #223348;
+    --saas-sidebar-hover: #1E2F42;
+    --saas-sidebar-active: #1E2F42;
+    --saas-sidebar-text: #8C9BAE;
+    --saas-sidebar-text-hover: #FFFFFF;
+    --saas-bg: #F5F7FA;
+    --saas-card: #FFFFFF;
+    --saas-border: #E5EAF0;
+    --saas-border-strong: #D1D9E2;
+    --saas-text-primary: #202B38;
+    --saas-text-secondary: #758294;
+    --saas-green: #119B78;
+    --saas-green-hover: #0E8264;
+    --saas-blue: #3478D4;
+    --saas-warning: #E9A23B;
+    --saas-critical: #DC5656;
+    --ai-bg: #F5F7FA;
+    --ai-surface: #FFFFFF;
+    --ai-surface-subtle: #F1F4F8;
+    --ai-border: #E5EAF0;
+    --ai-border-strong: #D1D9E2;
+    --ai-navy: #202B38;
+    --ai-text: #202B38;
     --ai-body: #374151;
-    --ai-muted: #6b7280;
-    --ai-green: #0c6b53;
-    --ai-green-hover: #08523f;
-    --ai-green-soft: #e7f5ee;
-    --ai-green-border: #a7dcc0;
-    --text-color: #1f2937;
-    --background-color: #f7f8fa;
-    --secondary-background-color: #ffffff;
-    --primary-color: #0c6b53;
+    --ai-muted: #758294;
+    --ai-green: #119B78;
+    --ai-green-hover: #0E8264;
+    --ai-green-soft: #E7F5EE;
+    --ai-green-border: #A7DCC0;
+    --text-color: #202B38;
+    --background-color: #F5F7FA;
+    --secondary-background-color: #FFFFFF;
+    --primary-color: #119B78;
 }
 
 /* Base canvas and typography */
@@ -141,16 +191,193 @@ header[data-testid="stHeader"] span {
 .main .block-container,
 div[data-testid="stMainBlockContainer"],
 .stMainBlockContainer {
-    max-width: 1380px !important;
-    padding-top: 3.0rem !important;
+    max-width: 1440px !important;
+    padding-top: 3.75rem !important;
     padding-bottom: 3rem !important;
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
+    padding-left: 1.75rem !important;
+    padding-right: 1.75rem !important;
 }
 
-/* Hide default sidebar navigation */
+/* Dark Navy Enterprise SaaS Sidebar */
 section[data-testid="stSidebar"] {
-    display: none !important;
+    background-color: #172433 !important;
+    border-right: 1px solid #223348 !important;
+}
+
+/* Eliminate the empty gap at the top of the sidebar */
+section[data-testid="stSidebar"],
+section[data-testid="stSidebar"] > div,
+section[data-testid="stSidebar"] div[data-testid="stSidebarContent"],
+section[data-testid="stSidebar"] div[data-testid="stSidebarUserContent"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+header[data-testid="stSidebarHeader"],
+div[data-testid="stSidebarHeader"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    background-color: #172433 !important;
+    height: 1.75rem !important;
+    min-height: 1.75rem !important;
+    padding: 0.2rem 0.65rem 0 0.65rem !important;
+    margin: 0 !important;
+}
+
+section[data-testid="stSidebar"] > div:first-child,
+section[data-testid="stSidebar"] div[data-testid="stSidebarContent"] {
+    background-color: #172433 !important;
+    padding-left: 0.85rem !important;
+    padding-right: 0.85rem !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] button {
+    color: #8C9BAE !important;
+}
+
+/* Sidebar branding header */
+.saas-sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.2rem 0.35rem 0.85rem 0.35rem;
+    border-bottom: 1px solid #243548;
+    margin-bottom: 0.75rem;
+}
+
+.saas-brand-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #119B78;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(17, 155, 120, 0.3);
+    flex-shrink: 0;
+}
+
+.saas-brand-title {
+    color: #FFFFFF;
+    font-size: 0.92rem;
+    font-weight: 750;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.saas-brand-subtitle {
+    color: #8C9BAE;
+    font-size: 0.67rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Nav group labels */
+.saas-nav-group-label {
+    color: #64748B;
+    font-size: 0.66rem;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.75rem 0.5rem 0.25rem 0.5rem;
+    margin-top: 0.15rem;
+}
+
+/* Sidebar navigation links */
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
+    background-color: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+    padding: 0.42rem 0.75rem !important;
+    min-height: 36px !important;
+    color: #94A3B8 !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    transition: all 0.15s ease !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a p,
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a span {
+    color: #94A3B8 !important;
+    font-weight: 550 !important;
+    font-size: 0.83rem !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
+    background-color: #1E2F42 !important;
+    border-color: #273B52 !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover p,
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover span {
+    color: #FFFFFF !important;
+}
+
+/* Active page link in sidebar */
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
+    background-color: #1E2F42 !important;
+    border: 1px solid #2B3F56 !important;
+    border-left: 3px solid #119B78 !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] p,
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] span {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+}
+
+/* Bottom user profile */
+.saas-sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0.65rem 0.6rem;
+    background: #101B27;
+    border: 1px solid #223348;
+    border-radius: 10px;
+    margin-top: 1.25rem;
+}
+
+.saas-profile-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: #243548;
+    color: #FFFFFF;
+    font-size: 0.74rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.saas-profile-name {
+    color: #FFFFFF;
+    font-size: 0.78rem;
+    font-weight: 650;
+    line-height: 1.2;
+}
+
+.saas-profile-role {
+    color: #758294;
+    font-size: 0.68rem;
+    line-height: 1.2;
+}
+
+.saas-profile-badge {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #119B78;
+    background: rgba(17, 155, 120, 0.15);
+    padding: 2px 6px;
+    border-radius: 999px;
+    text-transform: uppercase;
 }
 
 /* Global accessible text contrast */
@@ -976,6 +1203,163 @@ def _render_nav_item(
     )
 
 
+def render_sidebar(active_page: str = "Executive Overview") -> None:
+    """Render the IMMODESK/UnitStack-inspired dark navy sidebar navigation."""
+    with st.sidebar:
+        _render_html(
+            '<div class="saas-sidebar-brand">'
+            '<div class="saas-brand-icon">'
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'
+            '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>'
+            '<polyline points="9 22 9 12 15 12 15 22"></polyline>'
+            '</svg>'
+            '</div>'
+            '<div>'
+            '<div class="saas-brand-title">Property Intelligence</div>'
+            '<div class="saas-brand-subtitle">Enterprise SaaS · Databricks</div>'
+            '</div>'
+            '</div>'
+        )
+
+        for group in SIDEBAR_NAV_GROUPS:
+            _render_html(f'<div class="saas-nav-group-label">{_escape(group["group"])}</div>')
+            for label, path, icon in group["items"]:
+                if _page_exists(path):
+                    st.page_link(path, label=label, icon=icon)
+                else:
+                    _render_html(
+                        f'<div class="ai-nav-pill-planned" style="background:#1a2838;border-color:#2a3b4e;color:#8c9bae;margin-bottom:4px;">'
+                        f'<span>{_escape(label)}</span>'
+                        f'<span class="ai-nav-soon-tag" style="background:#243548;color:#94a3b8;">Planned</span>'
+                        f'</div>'
+                    )
+
+        _render_html(
+            '<div class="saas-sidebar-profile">'
+            '<div class="saas-profile-avatar">ES</div>'
+            '<div style="flex:1;min-width:0;">'
+            '<div class="saas-profile-name">Executive Studio</div>'
+            '<div class="saas-profile-role">Portfolio Lead · Databricks</div>'
+            '</div>'
+            '<span class="saas-profile-badge">Live</span>'
+            '</div>'
+        )
+
+
+def render_top_navigation(
+    breadcrumbs: Optional[List[str]] = None,
+    current_page: str = "Executive Overview",
+    status_text: Optional[str] = "Gold Layer · Live Sync",
+    status_tone: str = "success",
+) -> None:
+    """Render the crisp SaaS top navigation bar with breadcrumbs and utility controls."""
+    crumbs = breadcrumbs or ["Residential Property Intelligence", current_page]
+    crumbs_html = " <span style='color:#94A3B8;margin:0 6px;'>/</span> ".join(
+        f"<span style='color:#202B38;font-weight:700;'>{_escape(c)}</span>" if i == len(crumbs) - 1
+        else f"<span style='color:#758294;'>{_escape(c)}</span>"
+        for i, c in enumerate(crumbs)
+    )
+
+    home_svg = (
+        '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#64748B" '
+        'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" '
+        'style="margin-right:6px;vertical-align:-2px;">'
+        '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>'
+        '<polyline points="9 22 9 12 15 12 15 22"></polyline>'
+        '</svg>'
+    )
+
+    with st.container():
+        left_col, right_col = st.columns([2.5, 1.5])
+        with left_col:
+            _render_html(
+                f'<div style="display:flex;align-items:center;min-height:36px;font-size:0.84rem;">'
+                f'{home_svg} {crumbs_html}'
+                f'</div>'
+            )
+        with right_col:
+            r1, r2 = st.columns([1.5, 1.1])
+            with r1:
+                if status_text:
+                    _render_html(
+                        f'<div style="display:flex;align-items:center;justify-content:flex-end;min-height:36px;">'
+                        f'{status_badge_html(status_text, tone=status_tone)}'
+                        f'</div>'
+                    )
+            with r2:
+                safe_key = "".join(ch if ch.isalnum() else "_" for ch in current_page)
+                if st.button("Refresh", key=f"top_refresh_{safe_key}", icon=":material/refresh:", use_container_width=True):
+                    st.cache_data.clear()
+                    st.rerun()
+
+    _render_html('<div class="ai-hairline" style="margin:0.25rem 0 0.85rem 0;"></div>')
+
+
+def render_alert_panel(
+    alerts: List[Mapping[str, Any]],
+    title: str = "Requires Attention",
+    subtitle: str = "Operational and financial exceptions identified from Gold data",
+) -> None:
+    """Render IMMODESK-style actionable alert panel with severity tags and drill-downs."""
+    with st.container(border=True):
+        st.markdown(
+            f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+            f'<div>'
+            f'<strong style="font-size:0.95rem;color:#202B38;">{_escape(title)}</strong>'
+            f'<div style="font-size:0.78rem;color:#758294;">{_escape(subtitle)}</div>'
+            f'</div>'
+            f'{status_badge_html(f"{len(alerts)} Active", tone="danger" if alerts else "success")}'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+
+        if not alerts:
+            render_empty_state("All Systems Normal", "No portfolio thresholds or operational exceptions detected.", tone="success")
+            return
+
+        for alert in alerts:
+            severity = str(alert.get("severity", "WARNING")).upper()
+            tone = "danger" if severity == "CRITICAL" else ("warning" if severity == "WARNING" else "info")
+            badge = status_badge_html(severity, tone=tone)
+            page_target = str(alert.get("page_path", "app.py"))
+            page_label = str(alert.get("page_label", "View Details"))
+
+            st.markdown(
+                f'<div style="background:#ffffff;border:1px solid #E5EAF0;border-left:4px solid {_get_tone(tone)["accent"]};'
+                f'border-radius:8px;padding:0.75rem 0.9rem;margin-bottom:8px;">'
+                f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">'
+                f'<strong style="font-size:0.86rem;color:#202B38;">{_escape(alert.get("title", ""))}</strong>'
+                f'{badge}'
+                f'</div>'
+                f'<div style="font-size:0.78rem;color:#758294;margin-bottom:6px;">{_escape(alert.get("explanation", ""))}</div>'
+                f'<div style="font-size:0.74rem;color:#202B38;font-weight:600;">{_escape(alert.get("metric_info", ""))}</div>'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
+            if _page_exists(page_target):
+                st.page_link(page_target, label=page_label, icon=":material/arrow_forward:")
+
+
+def render_quick_actions(actions: List[Mapping[str, Any]]) -> None:
+    """Render IMMODESK/UnitStack-style quick action shortcuts."""
+    with st.container(border=True):
+        st.markdown(
+            '<div style="margin-bottom:8px;">'
+            '<strong style="font-size:0.92rem;color:#202B38;">Quick Actions</strong>'
+            '<div style="font-size:0.76rem;color:#758294;">Direct navigation to key operational workflows</div>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
+        cols = st.columns(len(actions))
+        for col, action in zip(cols, actions):
+            with col:
+                page_path = str(action.get("page_path", "app.py"))
+                label = str(action.get("label", "Action"))
+                icon = str(action.get("icon", ":material/arrow_forward:"))
+                if _page_exists(page_path):
+                    st.page_link(page_path, label=label, icon=icon)
+
+
 def render_header(
     active_page: str = "Portfolio",
     active_section: str = "Today",
@@ -983,96 +1367,12 @@ def render_header(
     user_role: str = "Portfolio Lead",
     user_initials: str = "ES",
 ) -> None:
-    """Render the AI Studio top navigation bar and inline data domain strip."""
-    with st.container():
-        _render_html('<span id="ai-topnav-anchor" class="ai-nav-anchor"></span>')
-
-        brand_col, nav1_col, nav2_col, nav3_col, spacer_col, profile_col = st.columns(
-            [2.05, 0.78, 1.05, 0.82, 1.45, 1.3]
-        )
-
-        with brand_col:
-            _render_html(
-                '<div class="ai-brand">'
-                '<div class="ai-brand-mark">◈</div>'
-                "<div>"
-                '<div class="ai-brand-title">Property Intelligence</div>'
-                '<div class="ai-brand-subtitle">AI Studio · on Databricks</div>'
-                "</div>"
-                "</div>"
-            )
-
-        nav_cols = [nav1_col, nav2_col, nav3_col]
-        for col, (label, path, icon) in zip(nav_cols, TOP_NAV_ITEMS):
-            with col:
-                _render_nav_item(label=label, page_path=path, icon=icon)
-
-        with spacer_col:
-            pass
-
-        with profile_col:
-            _render_html(
-                '<div class="ai-user-chip">'
-                '<div class="ai-user-meta">'
-                f'<span class="ai-user-name">{_escape(user_name)}</span>'
-                f'<span class="ai-user-role">{_escape(user_role)}</span>'
-                "</div>"
-                f'<div class="ai-user-avatar">{_escape(user_initials)}</div>'
-                "</div>"
-            )
-
-    top_idx_map = {label: idx + 2 for idx, (label, _, _) in enumerate(TOP_NAV_ITEMS)}
-    active_top_col_idx = top_idx_map.get(active_section, 2)
-    _render_html(
-        f"""
-<style>
-div[data-testid="stVerticalBlock"]:has(#ai-topnav-anchor) div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a {{
-    background-color: #eceff4 !important;
-    border-color: #dde2ea !important;
-}}
-div[data-testid="stVerticalBlock"]:has(#ai-topnav-anchor) div[data-testid="stHorizontalBlock"] > div:nth-child({active_top_col_idx}) div[data-testid="stPageLink"] a p {{
-    color: #111827 !important;
-    font-weight: 700 !important;
-}}
-</style>
-        """
+    """Render the enterprise SaaS shell: Dark Navy Sidebar + Top Navigation."""
+    render_sidebar(active_page=active_page)
+    render_top_navigation(
+        breadcrumbs=["Residential Property Intelligence", active_page],
+        current_page=active_page,
     )
-
-    _render_html('<div class="ai-hairline"></div>')
-
-    with st.container():
-        _render_html('<span id="ai-domain-anchor" class="ai-nav-anchor"></span>')
-        label_col, *domain_cols, tail_col = st.columns([0.85, 0.9, 0.9, 0.95, 1.05, 0.85, 1.95])
-        with label_col:
-            _render_html('<div class="ai-domain-inline-label">Data domain</div>')
-
-        for col, (label, path, icon) in zip(domain_cols, DOMAIN_NAV_ITEMS):
-            with col:
-                _render_nav_item(label=label, page_path=path, icon=icon)
-
-        with tail_col:
-            pass
-
-    domain_idx_map = {label: idx + 2 for idx, (label, _, _) in enumerate(DOMAIN_NAV_ITEMS)}
-    if active_page in domain_idx_map:
-        dom_col_idx = domain_idx_map[active_page]
-        _render_html(
-            f"""
-<style>
-div[data-testid="stVerticalBlock"]:has(#ai-domain-anchor) div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a {{
-    background-color: #ffffff !important;
-    border: 1px solid #d1d5db !important;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.07) !important;
-}}
-div[data-testid="stVerticalBlock"]:has(#ai-domain-anchor) div[data-testid="stHorizontalBlock"] > div:nth-child({dom_col_idx}) div[data-testid="stPageLink"] a p {{
-    color: #0c6b53 !important;
-    font-weight: 700 !important;
-}}
-</style>
-            """
-        )
-
-    _render_html('<div class="ai-hairline"></div>')
 
 
 def render_page_header(
