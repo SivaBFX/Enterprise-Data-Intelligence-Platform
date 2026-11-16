@@ -11,6 +11,7 @@ from databricks.sdk import WorkspaceClient
 import pandas as pd
 import streamlit as st
 
+from utils.database import _get_config_value
 from utils.monitoring import record_event
 from utils.ui import status_badge_html
 
@@ -64,13 +65,7 @@ def _get_genie_space_id(explicit_id: Optional[str] = None) -> str:
     """Resolve Genie space ID from parameter, environment, or Streamlit secrets."""
     if explicit_id:
         return explicit_id.strip()
-    val = os.getenv("GENIE_SPACE_ID", "").strip()
-    if not val:
-        try:
-            val = str(st.secrets.get("GENIE_SPACE_ID", "")).strip()
-        except Exception:
-            val = ""
-    return val
+    return _get_config_value("GENIE_SPACE_ID")
 
 
 def is_genie_configured(space_id: Optional[str] = None) -> bool:

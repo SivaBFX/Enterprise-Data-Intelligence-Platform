@@ -117,6 +117,12 @@ class TestDatabaseAndSQLValidation(unittest.TestCase):
             res = db.get_table_freshness("workspace.gold.gold_portfolio_kpis")
         self.assertEqual(res["status"], "unavailable")
 
+    def test_get_config_value_without_secrets_file(self) -> None:
+        """Verify _get_config_value never raises even if Streamlit secrets are absent."""
+        db._SECRETS_AVAILABLE = False
+        val = db._get_config_value("NONEXISTENT_KEY", default="safe_fallback")
+        self.assertEqual(val, "safe_fallback")
+
 
 if __name__ == "__main__":
     unittest.main()

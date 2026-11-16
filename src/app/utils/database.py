@@ -44,15 +44,48 @@ def validate_read_only_sql(sql_query: str) -> str:
     return cleaned
 
 
+_SECRETS_AVAILABLE: Optional[bool] = None
+
+
+def _has_secrets_file() -> bool:
+    """Return True if a secrets.toml file exists on disk, probing without raising."""
+    global _SECRETS_AVAILABLE
+    if _SECRETS_AVAILABLE is not None:
+        return _SECRETS_AVAILABLE
+
+    try:
+        from pathlib import Path
+        import streamlit as st
+
+        if hasattr(st, "secrets") and hasattr(st.secrets, "load_if_toml_exists"):
+            _SECRETS_AVAILABLE = bool(st.secrets.load_if_toml_exists())
+            return _SECRETS_AVAILABLE
+
+        candidates = [
+            Path.home() / ".streamlit" / "secrets.toml",
+            Path.cwd() / ".streamlit" / "secrets.toml",
+            Path(__file__).resolve().parent.parent / ".streamlit" / "secrets.toml",
+        ]
+        _SECRETS_AVAILABLE = any(p.is_file() for p in candidates)
+        return _SECRETS_AVAILABLE
+    except BaseException:
+        _SECRETS_AVAILABLE = False
+        return False
+
+
 def _get_config_value(key: str, default: str = "") -> str:
-    """Read configuration value from OS environment or Streamlit secrets."""
+    """Read configuration value from OS environment or Streamlit secrets if present."""
     val = os.getenv(key, "").strip()
-    if not val:
+    if val:
+        return val
+
+    if _has_secrets_file():
         try:
             import streamlit as st
             val = str(st.secrets.get(key, "")).strip()
-        except Exception:
+        except BaseException:
             val = ""
+
     return val or default
 
 
