@@ -861,7 +861,7 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
 }
 
 .ai-section-title {
-    font-size: 0.92rem !important;
+    font-size: 0.90rem !important;
     font-weight: 650 !important;
     color: #0F172A !important;
     letter-spacing: -0.01em;
@@ -903,8 +903,8 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    min-height: 112px !important;
-    height: 100% !important;
+    min-height: 114px !important;
+    height: 114px !important;
     box-sizing: border-box !important;
     transition: all 0.15s ease;
 }
@@ -1234,9 +1234,8 @@ div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] > div[data-te
     height: 100% !important;
 }
 
-/* Style action page links inside columns and containers to look like cohesive minimal secondary buttons */
-div[data-testid="stColumn"] div[data-testid="stPageLink"] a,
-div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPageLink"] a {
+/* Style action page links inside columns to look like cohesive minimal secondary buttons */
+div[data-testid="stColumn"] > div[data-testid="stPageLink"] a {
     background-color: #FFFFFF !important;
     border: 1px solid #EAECF0 !important;
     border-radius: 6px !important;
@@ -1252,19 +1251,12 @@ div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPageLink"] a 
     box-shadow: none !important;
     text-decoration: none !important;
     transition: all 0.15s ease;
-    margin-top: auto !important;
 }
 
-div[data-testid="stColumn"] div[data-testid="stPageLink"] a:hover,
-div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPageLink"] a:hover {
+div[data-testid="stColumn"] > div[data-testid="stPageLink"] a:hover {
     background-color: #F8FAFC !important;
     border-color: #CBD5E1 !important;
     color: #0F172A !important;
-}
-
-div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPageLink"] {
-    margin-top: auto !important;
-    padding-top: 6px !important;
 }
 
 /* Crisp minimal bordered containers */
@@ -1340,17 +1332,6 @@ button[data-testid="stBaseButton-primary"]:hover,
 div[data-testid="stFormSubmitButton"] button[kind="primary"]:hover {
     background-color: #0C806A !important;
     border-color: #0C806A !important;
-}
-
-/* Genie interaction row: align 38px height across input, Ask Genie, New Topic, and Full AI Assistant */
-div[data-testid="stHorizontalBlock"]:has(input[aria-label="Ask a business question"]) .stButton > button,
-div[data-testid="stHorizontalBlock"]:has(input[aria-label="Ask a business question"]) div[data-testid="stPageLink"] a,
-div.stButton > button[key="home_clear_topic_btn"] {
-    min-height: 38px !important;
-    height: 38px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
 }
 
 /* Suggested question buttons: ultra-compact subtle mint pills */
@@ -1459,54 +1440,23 @@ div.stButton > button[key*="persona_btn_"][kind="primary"] span {
 /* Selectboxes, Inputs, Textareas, and Dropdown Popovers */
 div[data-baseweb="select"] > div,
 div[data-baseweb="input"],
-div[data-baseweb="input"] > div {
-    background-color: #FFFFFF !important;
-    border-color: #E2E8F0 !important;
-    border-radius: 6px !important;
-    color: #0F172A !important;
-    min-height: 38px !important;
-    height: 38px !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 10px !important;
-    box-sizing: border-box !important;
-}
-
+div[data-baseweb="input"] > div,
 div[data-baseweb="textarea"] > div {
     background-color: #FFFFFF !important;
     border-color: #E2E8F0 !important;
     border-radius: 6px !important;
     color: #0F172A !important;
-    min-height: 72px !important;
-    padding: 8px 10px !important;
-}
-
-div[data-baseweb="select"] div[role="combobox"],
-div[data-baseweb="select"] [data-testid="stSelectboxValue"] {
-    display: flex !important;
-    align-items: center !important;
-    line-height: normal !important;
-    font-size: 0.82rem !important;
-    color: #0F172A !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    min-height: 30px !important;
+    height: 30px !important;
 }
 
 div[data-baseweb="select"] span,
 div[data-baseweb="select"] div,
 div[data-baseweb="select"] input,
-div[data-baseweb="input"] input {
-    color: var(--ai-navy) !important;
-    -webkit-text-fill-color: var(--ai-navy) !important;
-    font-size: 0.82rem !important;
-    line-height: normal !important;
-}
-
+div[data-baseweb="input"] input,
 div[data-baseweb="textarea"] textarea {
     color: var(--ai-navy) !important;
     -webkit-text-fill-color: var(--ai-navy) !important;
-    font-size: 0.82rem !important;
-    line-height: 1.4 !important;
 }
 
 div[data-baseweb="input"] input::placeholder,
