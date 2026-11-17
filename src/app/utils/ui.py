@@ -1472,60 +1472,179 @@ div.stButton > button[key*="persona_btn_"][kind="primary"] div {
     color: #065F46 !important;
 }
 
-/* Selectboxes, Inputs, Textareas, and Dropdown Popovers */
-div[data-baseweb="select"] > div,
-div[data-baseweb="input"],
-div[data-baseweb="input"] > div,
-div[data-baseweb="textarea"] > div {
+/* Selectboxes, Dropdown Buttons, Inputs, Textareas, and Popovers */
+div[data-baseweb="select"] > div {
     background-color: #FFFFFF !important;
-    border-color: #E2E8F0 !important;
-    border-radius: 6px !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
     color: #0F172A !important;
-    min-height: 30px !important;
-    height: 30px !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    padding: 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+    transition: all 0.15s ease !important;
+}
+
+div[data-baseweb="select"] > div:hover {
+    border-color: #CBD5E1 !important;
+}
+
+div[data-baseweb="select"] > div:focus-within {
+    border-color: #0F9D83 !important;
+    box-shadow: 0 0 0 1px #0F9D83 !important;
+}
+
+/* Ensure inner select value container is vertically centered and does not clip text */
+div[data-baseweb="select"] [data-testid="stSelectboxValue"],
+div[data-baseweb="select"] div[role="combobox"],
+div[data-baseweb="select"] > div > div:first-child {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: normal !important;
+    font-size: 0.82rem !important;
+    color: #0F172A !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    height: 100% !important;
+    max-height: 36px !important;
 }
 
 div[data-baseweb="select"] span,
-div[data-baseweb="select"] div,
-div[data-baseweb="select"] input,
-div[data-baseweb="input"] input,
-div[data-baseweb="textarea"] textarea {
-    color: var(--ai-navy) !important;
-    -webkit-text-fill-color: var(--ai-navy) !important;
+div[data-baseweb="select"] p,
+div[data-baseweb="select"] div[role="combobox"] span,
+div[data-baseweb="select"] input {
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-div[data-baseweb="input"] input::placeholder,
-div[data-baseweb="textarea"] textarea::placeholder {
-    color: #6b7280 !important;
-    -webkit-text-fill-color: #6b7280 !important;
-}
-
+/* Dropdown arrow icon styling and centering */
 div[data-baseweb="select"] svg {
-    fill: var(--ai-muted) !important;
-    color: var(--ai-muted) !important;
+    fill: #64748B !important;
+    color: #64748B !important;
+    width: 18px !important;
+    height: 18px !important;
 }
 
+div[data-baseweb="select"] > div > div:last-child {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Single-line text inputs */
+div[data-baseweb="input"],
+div[data-baseweb="input"] > div {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    color: #0F172A !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+    transition: all 0.15s ease !important;
+}
+
+div[data-baseweb="input"] input {
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
+    font-size: 0.82rem !important;
+    line-height: normal !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+div[data-baseweb="input"] input::placeholder {
+    color: #94A3B8 !important;
+    -webkit-text-fill-color: #94A3B8 !important;
+    font-size: 0.82rem !important;
+}
+
+/* Multiline text areas */
+div[data-baseweb="textarea"],
+div[data-baseweb="textarea"] > div {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    color: #0F172A !important;
+    min-height: 72px !important;
+    padding: 8px 10px !important;
+    box-sizing: border-box !important;
+}
+
+div[data-baseweb="textarea"] textarea {
+    color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
+}
+
+div[data-baseweb="textarea"] textarea::placeholder {
+    color: #94A3B8 !important;
+    -webkit-text-fill-color: #94A3B8 !important;
+    font-size: 0.82rem !important;
+}
+
+/* Form submit buttons aligned with 38px inputs and dropdowns */
+div[data-testid="stFormSubmitButton"] button {
+    min-height: 38px !important;
+    height: 38px !important;
+    border-radius: 8px !important;
+    font-size: 0.80rem !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 1rem !important;
+}
+
+/* Dropdown popovers and option lists */
 div[data-baseweb="popover"],
 div[data-baseweb="popover"] > div,
 ul[data-testid="stSelectboxVirtualDropdown"],
 ul[role="listbox"] {
-    background-color: var(--ai-surface) !important;
-    border: 1px solid var(--ai-border) !important;
-    color: var(--ai-text) !important;
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08) !important;
+    color: #0F172A !important;
+    padding: 4px 0 !important;
 }
 
 ul[role="listbox"] li,
 li[role="option"],
 li[role="option"] span,
 li[role="option"] div {
-    color: var(--ai-text) !important;
-    background-color: var(--ai-surface) !important;
+    color: #1E293B !important;
+    background-color: #FFFFFF !important;
+    font-size: 0.82rem !important;
+    padding: 0.45rem 0.85rem !important;
+    display: flex !important;
+    align-items: center !important;
+    line-height: normal !important;
 }
 
 li[role="option"]:hover,
 li[role="option"][aria-selected="true"] {
-    background-color: var(--ai-green-soft) !important;
-    color: var(--ai-green-hover) !important;
+    background-color: #F0FDF4 !important;
+    color: #065F46 !important;
+    font-weight: 600 !important;
 }
 
 /* Expanders */
