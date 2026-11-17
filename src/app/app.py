@@ -641,7 +641,7 @@ def render_genie_bar() -> None:
         sq_label_col, sq_1, sq_2, sq_3, sq_4 = st.columns([1.3, 1.85, 1.85, 1.95, 1.95])
         with sq_label_col:
             st.markdown(
-                '<div style="font-size:0.78rem;font-weight:600;color:#64748B;line-height:36px;">'
+                '<div style="font-size:0.72rem;font-weight:600;color:#64748B;line-height:26px;">'
                 'Suggested Questions:</div>',
                 unsafe_allow_html=True,
             )

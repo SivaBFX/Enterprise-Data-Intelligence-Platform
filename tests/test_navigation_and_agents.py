@@ -159,6 +159,12 @@ class TestNavigationAndAgents(unittest.TestCase):
         self.assertIn("font-size: 1.35rem", full_css)
         self.assertIn(".ai-section-title", full_css)
         self.assertIn("font-size: 0.92rem", full_css)
+        # Left-aligned sidebar navigation tabs
+        self.assertIn("justify-content: flex-start !important", full_css)
+        self.assertIn("text-align: left !important", full_css)
+        # Compact, minimal button sizing
+        self.assertIn("min-height: 30px !important", full_css)
+        self.assertIn("min-height: 25px !important", full_css)
 
 
 if __name__ == "__main__":

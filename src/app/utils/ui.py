@@ -233,7 +233,7 @@ div[data-testid="stMainBlockContainer"],
     padding-right: 1.75rem !important;
 }
 
-/* Minimal Light Enterprise SaaS Sidebar (~250px width) */
+/* Minimal Light Enterprise SaaS Sidebar (~265px width) */
 section[data-testid="stSidebar"] {
     background-color: #FFFFFF !important;
     border-right: 1px solid #EAECF0 !important;
@@ -241,8 +241,8 @@ section[data-testid="stSidebar"] {
 
 section[data-testid="stSidebar"]:not([aria-expanded="false"]) {
     min-width: 250px !important;
-    max-width: 260px !important;
-    width: 250px !important;
+    max-width: 280px !important;
+    width: 268px !important;
 }
 
 /* Eliminate the empty gap at the top of the sidebar */
@@ -318,37 +318,70 @@ section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] butt
     margin-top: 1px;
 }
 
-/* Nav group labels */
+/* Nav group labels: strictly left-aligned */
 .saas-nav-group-label {
     color: #94A3B8;
-    font-size: 0.65rem;
+    font-size: 0.64rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 0.65rem 0.5rem 0.2rem 0.5rem;
+    padding: 0.65rem 0.65rem 0.2rem 0.65rem;
     margin-top: 0.15rem;
+    text-align: left !important;
 }
 
-/* Sidebar navigation links */
+/* Sidebar navigation links: strictly left-aligned */
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] {
+    width: 100% !important;
+    text-align: left !important;
+}
+
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
     background-color: transparent !important;
     border: 1px solid transparent !important;
-    border-radius: 8px !important;
-    padding: 0.38rem 0.65rem !important;
-    min-height: 34px !important;
+    border-radius: 6px !important;
+    padding: 0.32rem 0.65rem !important;
+    min-height: 32px !important;
+    height: 32px !important;
     color: #475569 !important;
     text-decoration: none !important;
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    gap: 9px !important;
+    width: 100% !important;
+    box-shadow: none !important;
     transition: all 0.15s ease !important;
+}
+
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a * {
+    text-align: left !important;
+    justify-content: flex-start !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a p,
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a span {
     color: #475569 !important;
     font-weight: 500 !important;
-    font-size: 0.81rem !important;
+    font-size: 0.80rem !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+}
+
+/* Fixed icon alignment column */
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a span:first-child,
+section[data-testid="stSidebar"] div[data-testid="stPageLink"] a svg {
+    flex-shrink: 0 !important;
+    width: 18px !important;
+    min-width: 18px !important;
+    text-align: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-right: 2px !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
@@ -366,12 +399,25 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
     background-color: #D1FAE5 !important;
     border: 1px solid #A7F3D0 !important;
     box-shadow: none !important;
+    justify-content: flex-start !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] p,
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] span {
     color: #065F46 !important;
     font-weight: 650 !important;
+    text-align: left !important;
+}
+
+/* Sidebar planned pills: left aligned */
+section[data-testid="stSidebar"] .ai-nav-pill-planned {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding-left: 0.65rem !important;
+    min-height: 32px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    font-size: 0.80rem !important;
 }
 
 /* Sidebar bottom graphic and tagline */
@@ -394,12 +440,12 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
 
 /* Top bar avatar badge and live sync button */
 .top-nav-avatar {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border-radius: 999px;
     background: #0F172A;
     color: #FFFFFF;
-    font-size: 0.70rem;
+    font-size: 0.68rem;
     font-weight: 650;
     display: inline-flex;
     align-items: center;
@@ -410,7 +456,7 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
 }
 
 .top-nav-avatar-chevron {
-    font-size: 0.52rem;
+    font-size: 0.50rem;
     color: #94A3B8;
     margin-left: 2px;
 }
@@ -418,17 +464,17 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
 div.stButton > button[key*="top_sync_"] {
     background-color: #FFFFFF !important;
     color: #059669 !important;
-    border: 1px solid #E2E8F0 !important;
+    border: 1px solid #EAECF0 !important;
     border-radius: 999px !important;
-    font-size: 0.74rem !important;
+    font-size: 0.72rem !important;
     font-weight: 600 !important;
-    height: 32px !important;
-    min-height: 32px !important;
-    padding: 0.2rem 0.75rem !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0.15rem 0.65rem !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+    box-shadow: none !important;
 }
 
 div.stButton > button[key*="top_sync_"]:hover {
@@ -625,53 +671,65 @@ div[data-testid="stVerticalBlock"]:has(#ai-topnav-anchor) div[data-testid="stHor
 }
 
 /* Domain navigation & general page links: clean borderless pills with elevated active pill */
-div[data-testid="stPageLink"] a {
+div[data-testid="stMain"] div[data-testid="stPageLink"] a,
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a {
     width: 100% !important;
-    min-height: 34px;
+    min-height: 30px;
+    height: 30px;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 6px;
-    padding: 0.3rem 0.72rem !important;
+    padding: 0.18rem 0.65rem !important;
     background-color: transparent !important;
     border: 1px solid transparent !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     color: var(--ai-body) !important;
     text-decoration: none !important;
     box-shadow: none !important;
     transition: all 0.15s ease;
 }
 
-div[data-testid="stPageLink"] a p,
-div[data-testid="stPageLink"] a span,
-div[data-testid="stPageLink"] a div {
+div[data-testid="stMain"] div[data-testid="stPageLink"] a p,
+div[data-testid="stMain"] div[data-testid="stPageLink"] a span,
+div[data-testid="stMain"] div[data-testid="stPageLink"] a div,
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a p,
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a span,
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a div {
     color: var(--ai-body) !important;
-    font-weight: 600 !important;
-    font-size: 0.84rem !important;
+    font-weight: 550 !important;
+    font-size: 0.78rem !important;
     white-space: nowrap !important;
 }
 
-div[data-testid="stPageLink"] a:hover {
+div[data-testid="stMain"] div[data-testid="stPageLink"] a:hover,
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a:hover {
     background-color: #eceff4 !important;
     border-color: transparent !important;
 }
 
-div[data-testid="stPageLink"] a:hover p,
-div[data-testid="stPageLink"] a:hover span {
+div[data-testid="stMain"] div[data-testid="stPageLink"] a:hover p,
+div[data-testid="stMain"] div[data-testid="stPageLink"] a:hover span,
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a:hover p,
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a:hover span {
     color: var(--ai-navy) !important;
 }
 
-div[data-testid="stPageLink"] a[aria-current="page"] {
+div[data-testid="stMain"] div[data-testid="stPageLink"] a[aria-current="page"],
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-current="page"] {
     background-color: var(--ai-surface) !important;
     border: 1px solid var(--ai-border) !important;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06) !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
 }
 
-div[data-testid="stPageLink"] a[aria-current="page"] p,
-div[data-testid="stPageLink"] a[aria-current="page"] span,
-div[data-testid="stPageLink"] a[aria-current="page"] div {
+div[data-testid="stMain"] div[data-testid="stPageLink"] a[aria-current="page"] p,
+div[data-testid="stMain"] div[data-testid="stPageLink"] a[aria-current="page"] span,
+div[data-testid="stMain"] div[data-testid="stPageLink"] a[aria-current="page"] div,
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-current="page"] p,
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-current="page"] span,
+div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-current="page"] div {
     color: var(--ai-navy) !important;
-    font-weight: 700 !important;
+    font-weight: 650 !important;
 }
 
 /* Planned navigation pills fallback */
@@ -1196,47 +1254,51 @@ div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] > div[data-te
     height: 100% !important;
 }
 
-/* Style action page links inside columns to look like cohesive secondary action buttons */
+/* Style action page links inside columns to look like cohesive minimal secondary buttons */
 div[data-testid="stColumn"] > div[data-testid="stPageLink"] a {
-    background-color: var(--ai-surface) !important;
-    border: 1px solid var(--ai-border-strong) !important;
-    border-radius: 10px !important;
-    min-height: 38px !important;
+    background-color: #FFFFFF !important;
+    border: 1px solid #EAECF0 !important;
+    border-radius: 6px !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    padding: 0.15rem 0.65rem !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    color: var(--ai-navy) !important;
-    font-weight: 600 !important;
-    font-size: 0.84rem !important;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+    color: #1E293B !important;
+    font-weight: 550 !important;
+    font-size: 0.76rem !important;
+    box-shadow: none !important;
     text-decoration: none !important;
     transition: all 0.15s ease;
 }
 
 div[data-testid="stColumn"] > div[data-testid="stPageLink"] a:hover {
-    background-color: #f3f6f9 !important;
-    border-color: #9ca3af !important;
-    color: var(--ai-navy) !important;
+    background-color: #F8FAFC !important;
+    border-color: #CBD5E1 !important;
+    color: #0F172A !important;
 }
 
-/* Only round explicit bordered containers without forcing borders onto every column */
+/* Crisp minimal bordered containers */
 div[data-testid="stVerticalBlockBorderWrapper"] {
-    border-radius: 14px;
+    border-radius: 10px !important;
+    border-color: #EAECF0 !important;
 }
 
-/* Buttons: polished pill/rounded styling with crisp contrast */
+/* Buttons: compact, minimal, professional styling */
 .stButton > button,
 button[data-testid="stBaseButton-secondary"],
 div[data-testid="stDownloadButton"] > button {
-    background-color: var(--ai-surface) !important;
-    border: 1px solid var(--ai-border-strong) !important;
-    border-radius: 10px !important;
-    color: var(--ai-navy) !important;
-    font-weight: 600 !important;
-    font-size: 0.84rem !important;
-    min-height: 38px !important;
-    padding: 0.35rem 0.9rem !important;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 6px !important;
+    color: #1E293B !important;
+    font-weight: 550 !important;
+    font-size: 0.76rem !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    padding: 0.15rem 0.65rem !important;
+    box-shadow: none !important;
     transition: all 0.15s ease;
 }
 
@@ -1246,27 +1308,32 @@ button[data-testid="stBaseButton-secondary"] p,
 button[data-testid="stBaseButton-secondary"] span,
 div[data-testid="stDownloadButton"] > button p,
 div[data-testid="stDownloadButton"] > button span {
-    color: var(--ai-navy) !important;
+    color: #1E293B !important;
+    font-size: 0.76rem !important;
+    font-weight: 550 !important;
 }
 
 .stButton > button:hover,
 button[data-testid="stBaseButton-secondary"]:hover,
 div[data-testid="stDownloadButton"] > button:hover {
-    background-color: #f3f6f9 !important;
-    border-color: #9ca3af !important;
-    color: var(--ai-navy) !important;
+    background-color: #F8FAFC !important;
+    border-color: #CBD5E1 !important;
+    color: #0F172A !important;
 }
 
 .stButton > button[kind="primary"],
 button[data-testid="stBaseButton-primary"],
 div[data-testid="stFormSubmitButton"] button[kind="primary"] {
-    background-color: var(--ai-green) !important;
-    border: 1px solid var(--ai-green) !important;
-    border-radius: 10px !important;
+    background-color: #0F9D83 !important;
+    border: 1px solid #0F9D83 !important;
+    border-radius: 6px !important;
     color: #ffffff !important;
-    font-weight: 650 !important;
-    min-height: 38px !important;
-    box-shadow: 0 1px 3px rgba(12, 107, 83, 0.2);
+    font-weight: 600 !important;
+    font-size: 0.76rem !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    padding: 0.15rem 0.75rem !important;
+    box-shadow: none !important;
 }
 
 .stButton > button[kind="primary"] p,
@@ -1276,71 +1343,96 @@ button[data-testid="stBaseButton-primary"] span,
 div[data-testid="stFormSubmitButton"] button[kind="primary"] p,
 div[data-testid="stFormSubmitButton"] button[kind="primary"] span {
     color: #ffffff !important;
+    font-size: 0.76rem !important;
+    font-weight: 600 !important;
 }
 
 .stButton > button[kind="primary"]:hover,
 button[data-testid="stBaseButton-primary"]:hover,
 div[data-testid="stFormSubmitButton"] button[kind="primary"]:hover {
-    background-color: var(--ai-green-hover) !important;
-    border-color: var(--ai-green-hover) !important;
+    background-color: #0C806A !important;
+    border-color: #0C806A !important;
 }
 
-/* Suggested question buttons: capsule pills matching reference image */
+/* Suggested question buttons: ultra-compact subtle mint pills */
 div.stButton > button[key*="suggest"],
 div.stButton > button[key*="genie_suggest"],
 div.stButton > button[key*="genie_btn_"],
 div.stButton > button[key*="followup_"] {
-    background-color: #ECFDF5 !important;
+    background-color: #F0FDF4 !important;
     color: #065F46 !important;
-    border: 1px solid #A7F3D0 !important;
+    border: 1px solid #DCFCE7 !important;
     border-radius: 999px !important;
-    min-height: 30px !important;
-    height: 30px !important;
-    font-size: 0.74rem !important;
-    font-weight: 600 !important;
-    line-height: 1.25 !important;
+    min-height: 25px !important;
+    height: 25px !important;
+    font-size: 0.70rem !important;
+    font-weight: 550 !important;
+    line-height: 1.15 !important;
     text-align: center !important;
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 0.2rem 0.7rem !important;
+    padding: 0.1rem 0.55rem !important;
     white-space: nowrap !important;
     transition: all 0.15s ease !important;
     box-shadow: none !important;
+}
+
+div.stButton > button[key*="suggest"] p,
+div.stButton > button[key*="genie_suggest"] p,
+div.stButton > button[key*="genie_btn_"] p,
+div.stButton > button[key*="followup_"] p,
+div.stButton > button[key*="suggest"] span,
+div.stButton > button[key*="genie_suggest"] span,
+div.stButton > button[key*="genie_btn_"] span,
+div.stButton > button[key*="followup_"] span {
+    color: #065F46 !important;
+    font-size: 0.70rem !important;
+    font-weight: 550 !important;
 }
 
 div.stButton > button[key*="suggest"]:hover,
 div.stButton > button[key*="genie_suggest"]:hover,
 div.stButton > button[key*="genie_btn_"]:hover,
 div.stButton > button[key*="followup_"]:hover {
-    background-color: #D1FAE5 !important;
-    border-color: #6EE7B7 !important;
-    color: #064E3B !important;
+    background-color: #DCFCE7 !important;
+    border-color: #BBF7D0 !important;
+    color: #047857 !important;
 }
 
-/* Perspective toggle buttons on Executive Overview */
+/* Perspective toggle buttons on Executive Overview: compact minimal segmented pill */
 div.stButton > button[key*="persona_btn_"] {
-    min-height: 38px !important;
-    height: 38px !important;
-    border-radius: 8px !important;
-    padding: 0.25rem 0.65rem !important;
-    font-size: 0.78rem !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    border-radius: 6px !important;
+    padding: 0.15rem 0.55rem !important;
+    font-size: 0.73rem !important;
     font-weight: 600 !important;
-    line-height: 1.25 !important;
+    line-height: 1.2 !important;
     white-space: nowrap !important;
     text-align: center !important;
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     transition: all 0.15s ease !important;
+    box-shadow: none !important;
 }
 
 div.stButton > button[key*="persona_btn_"][kind="secondary"],
 div.stButton > button[key*="persona_btn_"]:not([kind="primary"]) {
     background-color: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
-    color: #1E293B !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+    border: 1px solid #EAECF0 !important;
+    color: #475569 !important;
+    box-shadow: none !important;
+}
+
+div.stButton > button[key*="persona_btn_"][kind="secondary"] p,
+div.stButton > button[key*="persona_btn_"][kind="secondary"] span,
+div.stButton > button[key*="persona_btn_"]:not([kind="primary"]) p,
+div.stButton > button[key*="persona_btn_"]:not([kind="primary"]) span {
+    color: #475569 !important;
+    font-size: 0.73rem !important;
+    font-weight: 550 !important;
 }
 
 div.stButton > button[key*="persona_btn_"][kind="secondary"]:hover,
@@ -1358,14 +1450,24 @@ div.stButton > button[key*="persona_btn_"][kind="primary"] {
     box-shadow: none !important;
 }
 
+div.stButton > button[key*="persona_btn_"][kind="primary"] p,
+div.stButton > button[key*="persona_btn_"][kind="primary"] span {
+    color: #065F46 !important;
+    font-size: 0.73rem !important;
+    font-weight: 650 !important;
+}
+
 /* Selectboxes, Inputs, Textareas, and Dropdown Popovers */
 div[data-baseweb="select"] > div,
+div[data-baseweb="input"],
 div[data-baseweb="input"] > div,
 div[data-baseweb="textarea"] > div {
-    background-color: var(--ai-surface) !important;
-    border-color: var(--ai-border-strong) !important;
-    border-radius: 10px !important;
-    color: var(--ai-navy) !important;
+    background-color: #FFFFFF !important;
+    border-color: #E2E8F0 !important;
+    border-radius: 6px !important;
+    color: #0F172A !important;
+    min-height: 30px !important;
+    height: 30px !important;
 }
 
 div[data-baseweb="select"] span,
