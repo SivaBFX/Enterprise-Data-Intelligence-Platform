@@ -136,6 +136,30 @@ class TestNavigationAndAgents(unittest.TestCase):
         self.assertIn("top-nav-avatar", top_html)
         self.assertIn("SM", top_html)
 
+    def test_minimal_light_theme_and_font_sizes(self) -> None:
+        """Verify minimal light theme, pastel KPI tints, and restrained font sizing rules."""
+        st_stub.captured_markdown.clear()
+        ui.apply_theme()
+        full_css = "\n".join(st_stub.captured_markdown)
+        # Light sidebar
+        self.assertIn('section[data-testid="stSidebar"]', full_css)
+        self.assertIn("background-color: #FFFFFF !important", full_css)
+        self.assertIn("border-right: 1px solid #EAECF0 !important", full_css)
+        # Soft mint active capsule
+        self.assertIn("#D1FAE5", full_css)
+        self.assertIn("#A7F3D0", full_css)
+        self.assertIn("#065F46", full_css)
+        # 4 Pastel KPI Card Tints
+        self.assertIn("#FAF5FF", full_css)  # Lavender
+        self.assertIn("#ECFDF5", full_css)  # Mint
+        self.assertIn("#EFF6FF", full_css)  # Soft Blue
+        self.assertIn("#FFF1F2", full_css)  # Coral
+        # Restrained font sizing hierarchy
+        self.assertIn(".ai-page-title", full_css)
+        self.assertIn("font-size: 1.35rem", full_css)
+        self.assertIn(".ai-section-title", full_css)
+        self.assertIn("font-size: 0.92rem", full_css)
+
 
 if __name__ == "__main__":
     unittest.main()

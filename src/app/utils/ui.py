@@ -233,10 +233,10 @@ div[data-testid="stMainBlockContainer"],
     padding-right: 1.75rem !important;
 }
 
-/* Dark Navy Enterprise SaaS Sidebar (~250px width) */
+/* Minimal Light Enterprise SaaS Sidebar (~250px width) */
 section[data-testid="stSidebar"] {
-    background-color: #172536 !important;
-    border-right: 1px solid #223348 !important;
+    background-color: #FFFFFF !important;
+    border-right: 1px solid #EAECF0 !important;
 }
 
 section[data-testid="stSidebar"]:not([aria-expanded="false"]) {
@@ -252,6 +252,7 @@ section[data-testid="stSidebar"] div[data-testid="stSidebarContent"],
 section[data-testid="stSidebar"] div[data-testid="stSidebarUserContent"] {
     padding-top: 0 !important;
     margin-top: 0 !important;
+    background-color: #FFFFFF !important;
 }
 
 header[data-testid="stSidebarHeader"],
@@ -259,7 +260,7 @@ div[data-testid="stSidebarHeader"] {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-end !important;
-    background-color: #172536 !important;
+    background-color: #FFFFFF !important;
     height: 1.75rem !important;
     min-height: 1.75rem !important;
     padding: 0.2rem 0.65rem 0 0.65rem !important;
@@ -268,13 +269,13 @@ div[data-testid="stSidebarHeader"] {
 
 section[data-testid="stSidebar"] > div:first-child,
 section[data-testid="stSidebar"] div[data-testid="stSidebarContent"] {
-    background-color: #172536 !important;
+    background-color: #FFFFFF !important;
     padding-left: 0.85rem !important;
     padding-right: 0.85rem !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] button {
-    color: #8C9BAE !important;
+    color: #64748B !important;
 }
 
 /* Sidebar branding header */
@@ -282,49 +283,49 @@ section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] butt
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 0.75rem 0.45rem 1rem 0.45rem;
-    border-bottom: 1px solid #223348;
-    margin-bottom: 0.75rem;
+    padding: 0.75rem 0.45rem 0.85rem 0.45rem;
+    border-bottom: 1px solid #EAECF0;
+    margin-bottom: 0.65rem;
 }
 
 .saas-brand-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
-    background: #0E7C66;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #0F9D83;
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 6px rgba(14, 124, 102, 0.35);
+    box-shadow: 0 1px 3px rgba(15, 157, 131, 0.2);
     flex-shrink: 0;
 }
 
 .saas-brand-title {
-    color: #FFFFFF;
-    font-size: 0.95rem;
+    color: #0F172A;
+    font-size: 0.90rem;
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.01em;
 }
 
 .saas-brand-subtitle {
-    color: #2DD4BF;
-    font-size: 0.65rem;
-    font-weight: 700;
+    color: #059669;
+    font-size: 0.63rem;
+    font-weight: 650;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     margin-top: 1px;
 }
 
 /* Nav group labels */
 .saas-nav-group-label {
-    color: #64748B;
-    font-size: 0.68rem;
-    font-weight: 750;
+    color: #94A3B8;
+    font-size: 0.65rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 0.75rem 0.5rem 0.25rem 0.5rem;
+    padding: 0.65rem 0.5rem 0.2rem 0.5rem;
     margin-top: 0.15rem;
 }
 
@@ -332,10 +333,10 @@ section[data-testid="stSidebar"] div[data-testid="stSidebarCollapseButton"] butt
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
     background-color: transparent !important;
     border: 1px solid transparent !important;
-    border-radius: 9px !important;
-    padding: 0.45rem 0.75rem !important;
-    min-height: 36px !important;
-    color: #94A3B8 !important;
+    border-radius: 8px !important;
+    padding: 0.38rem 0.65rem !important;
+    min-height: 34px !important;
+    color: #475569 !important;
     text-decoration: none !important;
     display: flex !important;
     align-items: center !important;
@@ -345,47 +346,47 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a {
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a p,
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a span {
-    color: #94A3B8 !important;
+    color: #475569 !important;
     font-weight: 500 !important;
-    font-size: 0.83rem !important;
+    font-size: 0.81rem !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover {
-    background-color: #1E2F42 !important;
-    border-color: #273B52 !important;
+    background-color: #F8FAFC !important;
+    border-color: #F1F5F9 !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover p,
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a:hover span {
-    color: #FFFFFF !important;
+    color: #0F172A !important;
 }
 
-/* Active page link in sidebar: emerald green highlight */
+/* Active page link in sidebar: soft mint capsule matching reference */
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] {
-    background-color: #0E7C66 !important;
-    border: 1px solid #0E7C66 !important;
-    box-shadow: 0 2px 6px rgba(14, 124, 102, 0.3) !important;
+    background-color: #D1FAE5 !important;
+    border: 1px solid #A7F3D0 !important;
+    box-shadow: none !important;
 }
 
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] p,
 section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="page"] span {
-    color: #FFFFFF !important;
-    font-weight: 700 !important;
+    color: #065F46 !important;
+    font-weight: 650 !important;
 }
 
 /* Sidebar bottom graphic and tagline */
 .saas-sidebar-footer {
-    padding: 1.25rem 0.5rem 0.5rem 0.5rem;
-    margin-top: 1.75rem;
-    border-top: 1px solid #1C2E46;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid #EAECF0;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
 .saas-sidebar-tagline {
-    color: #FFFFFF;
-    font-size: 0.82rem;
+    color: #475569;
+    font-size: 0.78rem;
     font-weight: 600;
     line-height: 1.35;
     letter-spacing: -0.01em;
@@ -393,46 +394,46 @@ section[data-testid="stSidebar"] div[data-testid="stPageLink"] a[aria-current="p
 
 /* Top bar avatar badge and live sync button */
 .top-nav-avatar {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 999px;
-    background: #172536;
+    background: #0F172A;
     color: #FFFFFF;
-    font-size: 0.74rem;
-    font-weight: 700;
+    font-size: 0.70rem;
+    font-weight: 650;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #2B3D52;
+    border: 1px solid #E2E8F0;
     cursor: default;
     gap: 2px;
 }
 
 .top-nav-avatar-chevron {
-    font-size: 0.55rem;
+    font-size: 0.52rem;
     color: #94A3B8;
     margin-left: 2px;
 }
 
 div.stButton > button[key*="top_sync_"] {
     background-color: #FFFFFF !important;
-    color: #0E7C66 !important;
-    border: 1px solid #D1D5DB !important;
+    color: #059669 !important;
+    border: 1px solid #E2E8F0 !important;
     border-radius: 999px !important;
-    font-size: 0.76rem !important;
+    font-size: 0.74rem !important;
     font-weight: 600 !important;
-    height: 34px !important;
-    min-height: 34px !important;
-    padding: 0.25rem 0.85rem !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    padding: 0.2rem 0.75rem !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
 }
 
 div.stButton > button[key*="top_sync_"]:hover {
-    border-color: #0E7C66 !important;
-    background-color: #F0FDF4 !important;
+    border-color: #A7F3D0 !important;
+    background-color: #ECFDF5 !important;
 }
 
 /* Global accessible text contrast */
@@ -728,19 +729,19 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
 }
 
 .ai-page-title {
-    font-size: 1.75rem;
-    font-weight: 750;
-    color: var(--ai-navy);
-    letter-spacing: -0.03em;
-    line-height: 1.15;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0F172A;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
     margin: 0;
 }
 
 .ai-page-desc {
-    font-size: 0.9rem;
-    color: var(--ai-muted);
-    margin: 0.32rem 0 0 0;
-    line-height: 1.45;
+    font-size: 0.82rem;
+    color: #64748B;
+    margin: 0.25rem 0 0 0;
+    line-height: 1.4;
 }
 
 .ai-page-meta {
@@ -756,13 +757,13 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 0.25rem 0.65rem;
+    padding: 0.22rem 0.6rem;
     border-radius: 999px;
-    background: var(--ai-surface);
-    border: 1px solid var(--ai-border);
-    color: var(--ai-body);
-    font-size: 0.75rem;
-    font-weight: 600;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    color: #475569;
+    font-size: 0.73rem;
+    font-weight: 550;
 }
 
 /* Status badges */
@@ -770,10 +771,10 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 0.22rem 0.58rem;
+    padding: 0.2rem 0.55rem;
     border-radius: 999px;
-    font-size: 0.73rem;
-    font-weight: 650;
+    font-size: 0.72rem;
+    font-weight: 600;
     line-height: 1.2;
     border: 1px solid transparent;
     white-space: nowrap;
@@ -792,78 +793,149 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
-    margin: 1rem 0 0.6rem 0;
+    margin: 0.85rem 0 0.5rem 0;
     flex-wrap: wrap;
 }
 
 .ai-section-header.compact {
-    margin: 0 0 0.6rem 0;
+    margin: 0 0 0.5rem 0;
 }
 
 .ai-section-title {
-    font-size: 0.96rem;
-    font-weight: 700;
-    color: var(--ai-navy);
+    font-size: 0.92rem;
+    font-weight: 650;
+    color: #0F172A;
     letter-spacing: -0.01em;
     line-height: 1.25;
 }
 
 .ai-section-subtitle {
-    font-size: 0.8rem;
-    color: var(--ai-muted);
+    font-size: 0.78rem;
+    color: #64748B;
     margin-top: 2px;
-    line-height: 1.38;
+    line-height: 1.35;
 }
 
 .ai-micro-label {
-    font-size: 0.71rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ai-muted);
+    color: #94A3B8;
     padding-left: 2px;
 }
 
-/* Reusable KPI Cards (Enterprise SaaS style) */
+/* Reusable Minimal Pastel KPI Cards (Matching reference) */
 .ai-kpi-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.25rem;
+    gap: 0.85rem;
+    margin-bottom: 1.15rem;
     align-items: stretch;
 }
 
 .ai-kpi-card {
-    background: var(--ai-surface);
-    border: 1px solid var(--ai-border);
-    border-radius: 12px;
-    padding: 1rem 1.15rem;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    background: #FFFFFF;
+    border: 1px solid #EAECF0;
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 124px;
+    min-height: 96px;
     height: 100%;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition: all 0.15s ease;
 }
 
 .ai-kpi-card:hover {
-    border-color: var(--ai-border-strong);
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+/* 4 Pastel Tints matching reference */
+.ai-kpi-grid > .ai-kpi-card:nth-child(4n+1) {
+    background-color: #FAF5FF !important;
+    border-color: #E9D5FF !important;
+}
+.ai-kpi-grid > .ai-kpi-card:nth-child(4n+1) .ai-kpi-circle-icon {
+    background-color: #F3E8FF !important;
+    color: #7C3AED !important;
+}
+
+.ai-kpi-grid > .ai-kpi-card:nth-child(4n+2) {
+    background-color: #ECFDF5 !important;
+    border-color: #A7F3D0 !important;
+}
+.ai-kpi-grid > .ai-kpi-card:nth-child(4n+2) .ai-kpi-circle-icon {
+    background-color: #D1FAE5 !important;
+    color: #059669 !important;
+}
+
+.ai-kpi-grid > .ai-kpi-card:nth-child(4n+3) {
+    background-color: #EFF6FF !important;
+    border-color: #BFDBFE !important;
+}
+.ai-kpi-grid > .ai-kpi-card:nth-child(4n+3) .ai-kpi-circle-icon {
+    background-color: #DBEAFE !important;
+    color: #2563EB !important;
+}
+
+.ai-kpi-grid > .ai-kpi-card:nth-child(4n+4) {
+    background-color: #FFF1F2 !important;
+    border-color: #FECDD3 !important;
+}
+.ai-kpi-grid > .ai-kpi-card:nth-child(4n+4) .ai-kpi-circle-icon {
+    background-color: #FFE4E6 !important;
+    color: #E11D48 !important;
+}
+
+.ai-kpi-body-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+
+.ai-kpi-icon-box {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.ai-kpi-circle-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #E6F7F5;
+    color: #0E7C66;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.ai-kpi-content-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .ai-kpi-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .ai-kpi-label {
-    font-size: 0.81rem;
-    font-weight: 600;
-    color: var(--ai-muted);
+    font-size: 0.74rem;
+    font-weight: 550;
+    color: #64748B;
     letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ai-kpi-icon {
@@ -872,13 +944,13 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
 }
 
 .ai-kpi-value {
-    font-size: clamp(1.35rem, 2vw, 1.72rem);
+    font-size: 1.30rem;
     font-weight: 700;
-    color: var(--ai-navy);
-    letter-spacing: -0.03em;
+    color: #0F172A;
+    letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
-    margin: 0.35rem 0 0.3rem 0;
-    line-height: 1.15;
+    margin: 0.15rem 0 0.15rem 0;
+    line-height: 1.2;
     white-space: nowrap;
     overflow: visible;
 }
@@ -888,96 +960,82 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
     align-items: center;
     justify-content: space-between;
     gap: 0.4rem;
-    flex-wrap: nowrap;
-    margin-top: auto;
+    margin-top: 0.1rem;
 }
 
 .ai-kpi-caption {
-    font-size: 0.76rem;
-    color: var(--ai-muted);
-    line-height: 1.35;
-    flex: 1;
-    min-width: 0;
-}
-
-.ai-kpi-circle-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 999px;
-    background: #E6F7F5;
-    color: #0E7C66;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.92rem;
-    flex-shrink: 0;
-    margin-left: 8px;
+    font-size: 0.70rem;
+    color: #94A3B8;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ai-kpi-source {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.68rem;
-    color: var(--ai-muted);
-    margin-top: 0.35rem;
-    padding-top: 0.3rem;
-    border-top: 1px solid #f1f3f6;
+    font-size: 0.65rem;
+    color: #94A3B8;
+    margin-top: 0.3rem;
+    padding-top: 0.25rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 /* Three-column Decision Brief cards */
 .ai-decision-card {
     background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 12px;
-    padding: 1.15rem 1.25rem;
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    border: 1px solid #EAECF0;
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 136px;
+    min-height: 110px;
     height: 100%;
     position: relative;
     border-left-width: 4px !important;
 }
 
 .ai-decision-card.tone-emerald {
-    border-left-color: #0E7C66 !important;
+    border-left-color: #10B981 !important;
 }
 
 .ai-decision-card.tone-orange {
-    border-left-color: #E58A13 !important;
+    border-left-color: #F59E0B !important;
 }
 
 .ai-decision-card.tone-blue {
-    border-left-color: #2563EB !important;
+    border-left-color: #3B82F6 !important;
 }
 
 .ai-decision-header {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
+    gap: 7px;
+    margin-bottom: 4px;
 }
 
 .ai-decision-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #172B4D;
+    font-size: 0.88rem;
+    font-weight: 650;
+    color: #0F172A;
 }
 
 .ai-decision-desc {
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: #64748B;
-    margin-bottom: 12px;
-    line-height: 1.4;
+    margin-bottom: 10px;
+    line-height: 1.38;
 }
 
 .ai-decision-pill {
-    background-color: #E6F7F5;
-    color: #0E7C66 !important;
-    border: 1px solid #C8F0E9;
+    background-color: #ECFDF5;
+    color: #065F46 !important;
+    border: 1px solid #A7F3D0;
     border-radius: 999px;
-    padding: 0.35rem 0.85rem;
-    font-size: 0.78rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.74rem;
     font-weight: 600;
     text-decoration: none !important;
     display: inline-flex;
@@ -988,9 +1046,9 @@ div[data-testid="stPageLink"] a[aria-current="page"] div {
 }
 
 .ai-decision-pill:hover {
-    background-color: #D3F3EE;
-    color: #0A5C4C !important;
-    border-color: #0E7C66;
+    background-color: #D1FAE5;
+    color: #064E3B !important;
+    border-color: #6EE7B7;
 }
 
 /* Decision Queue & Sub-tiles */
@@ -1232,20 +1290,20 @@ div.stButton > button[key*="suggest"],
 div.stButton > button[key*="genie_suggest"],
 div.stButton > button[key*="genie_btn_"],
 div.stButton > button[key*="followup_"] {
-    background-color: #E6F7F5 !important;
-    color: #0E7C66 !important;
-    border: 1px solid #C8F0E9 !important;
+    background-color: #ECFDF5 !important;
+    color: #065F46 !important;
+    border: 1px solid #A7F3D0 !important;
     border-radius: 999px !important;
-    min-height: 36px !important;
-    height: 36px !important;
-    font-size: 0.77rem !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    font-size: 0.74rem !important;
     font-weight: 600 !important;
     line-height: 1.25 !important;
     text-align: center !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 0.25rem 0.75rem !important;
+    padding: 0.2rem 0.7rem !important;
     white-space: nowrap !important;
     transition: all 0.15s ease !important;
     box-shadow: none !important;
@@ -1255,24 +1313,23 @@ div.stButton > button[key*="suggest"]:hover,
 div.stButton > button[key*="genie_suggest"]:hover,
 div.stButton > button[key*="genie_btn_"]:hover,
 div.stButton > button[key*="followup_"]:hover {
-    background-color: #D3F3EE !important;
-    border-color: #0E7C66 !important;
-    color: #0A5C4C !important;
+    background-color: #D1FAE5 !important;
+    border-color: #6EE7B7 !important;
+    color: #064E3B !important;
 }
 
-/* Perspective toggle cards on Executive Overview */
+/* Perspective toggle buttons on Executive Overview */
 div.stButton > button[key*="persona_btn_"] {
-    min-height: 72px !important;
-    height: 72px !important;
-    border-radius: 10px !important;
-    padding: 0.45rem 0.25rem !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    border-radius: 8px !important;
+    padding: 0.25rem 0.65rem !important;
     font-size: 0.78rem !important;
     font-weight: 600 !important;
     line-height: 1.25 !important;
-    white-space: pre-line !important;
+    white-space: nowrap !important;
     text-align: center !important;
     display: flex !important;
-    flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
     transition: all 0.15s ease !important;
@@ -1282,22 +1339,23 @@ div.stButton > button[key*="persona_btn_"][kind="secondary"],
 div.stButton > button[key*="persona_btn_"]:not([kind="primary"]) {
     background-color: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
-    color: #172B4D !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+    color: #1E293B !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
 }
 
 div.stButton > button[key*="persona_btn_"][kind="secondary"]:hover,
 div.stButton > button[key*="persona_btn_"]:not([kind="primary"]):hover {
-    border-color: #0E7C66 !important;
-    color: #0E7C66 !important;
+    border-color: #CBD5E1 !important;
+    color: #0F172A !important;
     background-color: #F8FAFC !important;
 }
 
 div.stButton > button[key*="persona_btn_"][kind="primary"] {
-    background-color: #0E7C66 !important;
-    border: 1px solid #0E7C66 !important;
-    color: #FFFFFF !important;
-    box-shadow: 0 2px 6px rgba(14, 124, 102, 0.25) !important;
+    background-color: #D1FAE5 !important;
+    border: 1px solid #A7F3D0 !important;
+    color: #065F46 !important;
+    font-weight: 650 !important;
+    box-shadow: none !important;
 }
 
 /* Selectboxes, Inputs, Textareas, and Dropdown Popovers */
@@ -1484,12 +1542,12 @@ def _render_nav_item(
 
 
 def render_sidebar(active_page: str = "Executive Overview") -> None:
-    """Render the IMMODESK/UnitStack-inspired dark navy sidebar navigation."""
+    """Render the minimal light enterprise sidebar navigation."""
     with st.sidebar:
         _render_html(
             '<div class="saas-sidebar-brand">'
             '<div class="saas-brand-icon">'
-            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'
+            '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'
             '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>'
             '<polyline points="9 22 9 12 15 12 15 22"></polyline>'
             '</svg>'
@@ -1508,42 +1566,36 @@ def render_sidebar(active_page: str = "Executive Overview") -> None:
                     st.page_link(path, label=label, icon=icon)
                 else:
                     _render_html(
-                        f'<div class="ai-nav-pill-planned" style="background:#1a2838;border-color:#2a3b4e;color:#8c9bae;margin-bottom:4px;">'
+                        f'<div class="ai-nav-pill-planned" style="background:#F8FAFC;border-color:#EAECF0;color:#64748B;margin-bottom:4px;">'
                         f'<span>{_escape(label)}</span>'
-                        f'<span class="ai-nav-soon-tag" style="background:#243548;color:#94a3b8;">Planned</span>'
+                        f'<span class="ai-nav-soon-tag" style="background:#E2E8F0;color:#475569;">Planned</span>'
                         f'</div>'
                     )
 
         _render_html(
             '<div class="saas-sidebar-footer">'
-            '<svg width="100%" height="48" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">'
-            '<defs>'
-            '<linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="48" gradientUnits="userSpaceOnUse">'
-            '<stop offset="0%" stop-color="#0E7C66" stop-opacity="0.5"/>'
-            '<stop offset="100%" stop-color="#172536" stop-opacity="0.05"/>'
-            '</linearGradient>'
-            '</defs>'
-            '<rect x="8" y="22" width="14" height="26" rx="1" fill="#0E7C66" fill-opacity="0.3" stroke="#2DD4BF" stroke-opacity="0.4" stroke-width="1"/>'
-            '<rect x="26" y="12" width="20" height="36" rx="1" fill="#0E7C66" fill-opacity="0.4" stroke="#2DD4BF" stroke-opacity="0.5" stroke-width="1"/>'
-            '<rect x="50" y="18" width="16" height="30" rx="1" fill="#0E7C66" fill-opacity="0.3" stroke="#2DD4BF" stroke-opacity="0.35" stroke-width="1"/>'
-            '<rect x="70" y="6" width="24" height="42" rx="1.5" fill="#0E7C66" fill-opacity="0.5" stroke="#2DD4BF" stroke-opacity="0.6" stroke-width="1"/>'
-            '<path d="M82 2 L82 6" stroke="#2DD4BF" stroke-width="1.5"/>'
-            '<rect x="98" y="16" width="18" height="32" rx="1" fill="#0E7C66" fill-opacity="0.35" stroke="#2DD4BF" stroke-opacity="0.45" stroke-width="1"/>'
-            '<rect x="120" y="10" width="22" height="38" rx="1" fill="#0E7C66" fill-opacity="0.45" stroke="#2DD4BF" stroke-opacity="0.55" stroke-width="1"/>'
-            '<rect x="146" y="20" width="16" height="28" rx="1" fill="#0E7C66" fill-opacity="0.3" stroke="#2DD4BF" stroke-opacity="0.4" stroke-width="1"/>'
-            '<circle cx="36" cy="18" r="1.2" fill="#5EEAD4" fill-opacity="0.8"/>'
-            '<circle cx="36" cy="25" r="1.2" fill="#5EEAD4" fill-opacity="0.8"/>'
-            '<circle cx="36" cy="32" r="1.2" fill="#5EEAD4" fill-opacity="0.8"/>'
-            '<circle cx="78" cy="14" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
-            '<circle cx="86" cy="14" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
-            '<circle cx="78" cy="22" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
-            '<circle cx="86" cy="22" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
-            '<circle cx="78" cy="30" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
-            '<circle cx="86" cy="30" r="1.2" fill="#5EEAD4" fill-opacity="0.9"/>'
-            '<circle cx="127" cy="18" r="1.2" fill="#5EEAD4" fill-opacity="0.85"/>'
-            '<circle cx="135" cy="18" r="1.2" fill="#5EEAD4" fill-opacity="0.85"/>'
-            '<circle cx="127" cy="26" r="1.2" fill="#5EEAD4" fill-opacity="0.85"/>'
-            '<circle cx="135" cy="26" r="1.2" fill="#5EEAD4" fill-opacity="0.85"/>'
+            '<svg width="100%" height="40" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">'
+            '<rect x="8" y="18" width="14" height="22" rx="1" fill="#ECFDF5" stroke="#10B981" stroke-opacity="0.5" stroke-width="1"/>'
+            '<rect x="26" y="9" width="20" height="31" rx="1" fill="#ECFDF5" stroke="#10B981" stroke-opacity="0.6" stroke-width="1"/>'
+            '<rect x="50" y="14" width="16" height="26" rx="1" fill="#ECFDF5" stroke="#10B981" stroke-opacity="0.45" stroke-width="1"/>'
+            '<rect x="70" y="5" width="24" height="35" rx="1.5" fill="#D1FAE5" stroke="#059669" stroke-opacity="0.7" stroke-width="1"/>'
+            '<path d="M82 2 L82 5" stroke="#059669" stroke-width="1.5"/>'
+            '<rect x="98" y="13" width="18" height="27" rx="1" fill="#ECFDF5" stroke="#10B981" stroke-opacity="0.5" stroke-width="1"/>'
+            '<rect x="120" y="8" width="22" height="32" rx="1" fill="#ECFDF5" stroke="#10B981" stroke-opacity="0.6" stroke-width="1"/>'
+            '<rect x="146" y="16" width="16" height="24" rx="1" fill="#ECFDF5" stroke="#10B981" stroke-opacity="0.45" stroke-width="1"/>'
+            '<circle cx="36" cy="15" r="1.1" fill="#059669" fill-opacity="0.75"/>'
+            '<circle cx="36" cy="21" r="1.1" fill="#059669" fill-opacity="0.75"/>'
+            '<circle cx="36" cy="27" r="1.1" fill="#059669" fill-opacity="0.75"/>'
+            '<circle cx="78" cy="12" r="1.1" fill="#059669" fill-opacity="0.85"/>'
+            '<circle cx="86" cy="12" r="1.1" fill="#059669" fill-opacity="0.85"/>'
+            '<circle cx="78" cy="18" r="1.1" fill="#059669" fill-opacity="0.85"/>'
+            '<circle cx="86" cy="18" r="1.1" fill="#059669" fill-opacity="0.85"/>'
+            '<circle cx="78" cy="24" r="1.1" fill="#059669" fill-opacity="0.85"/>'
+            '<circle cx="86" cy="24" r="1.1" fill="#059669" fill-opacity="0.85"/>'
+            '<circle cx="127" cy="14" r="1.1" fill="#059669" fill-opacity="0.8"/>'
+            '<circle cx="135" cy="14" r="1.1" fill="#059669" fill-opacity="0.8"/>'
+            '<circle cx="127" cy="20" r="1.1" fill="#059669" fill-opacity="0.8"/>'
+            '<circle cx="135" cy="20" r="1.1" fill="#059669" fill-opacity="0.8"/>'
             '</svg>'
             '<div class="saas-sidebar-tagline">'
             '<div>Smarter Insights.</div>'
@@ -1559,20 +1611,20 @@ def render_top_navigation(
     status_text: Optional[str] = "Gold Layer · Live Sync",
     status_tone: str = "success",
 ) -> None:
-    """Render the crisp SaaS top navigation bar with breadcrumbs and utility controls."""
+    """Render the crisp minimal SaaS top navigation bar with breadcrumbs and utility controls."""
     crumbs = breadcrumbs or ["Residential Property Intelligence", current_page]
-    crumbs_html = " <span style='color:#94A3B8;margin:0 7px;font-size:0.85rem;'>›</span> ".join(
-        f"<span style='color:#172B4D;font-weight:700;'>{_escape(c)}</span>" if i == len(crumbs) - 1
-        else f"<span style='color:#64748B;font-weight:500;'>{_escape(c)}</span>"
+    crumbs_html = " <span style='color:#CBD5E1;margin:0 6px;font-size:0.80rem;'>/</span> ".join(
+        f"<span style='color:#0F172A;font-weight:650;'>{_escape(c)}</span>" if i == len(crumbs) - 1
+        else f"<span style='color:#64748B;font-weight:450;'>{_escape(c)}</span>"
         for i, c in enumerate(crumbs)
     )
 
     home_svg = (
-        '<svg width="15" height="15" viewBox="0 0 24 24" fill="#3B82F6" stroke="#3B82F6" '
-        'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" '
-        'style="margin-right:7px;vertical-align:-2px;">'
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" '
+        'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" '
+        'style="margin-right:6px;vertical-align:-2px;">'
         '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>'
-        '<polyline points="9 22 9 12 15 12 15 22" fill="#FFFFFF" stroke="#3B82F6"></polyline>'
+        '<polyline points="9 22 9 12 15 12 15 22"></polyline>'
         '</svg>'
     )
 
@@ -1580,7 +1632,7 @@ def render_top_navigation(
         left_col, right_col = st.columns([2.55, 1.45])
         with left_col:
             _render_html(
-                f'<div style="display:flex;align-items:center;min-height:36px;font-size:0.84rem;">'
+                f'<div style="display:flex;align-items:center;min-height:32px;font-size:0.80rem;">'
                 f'{home_svg} {crumbs_html}'
                 f'</div>'
             )
@@ -1595,7 +1647,7 @@ def render_top_navigation(
                     st.rerun()
             with r2:
                 _render_html(
-                    '<div style="display:flex;align-items:center;justify-content:flex-end;height:36px;">'
+                    '<div style="display:flex;align-items:center;justify-content:flex-end;height:32px;">'
                     '<div class="top-nav-avatar">SM <span class="top-nav-avatar-chevron">▼</span></div>'
                     '</div>'
                 )
@@ -1765,9 +1817,13 @@ def kpi_card_html(
     icon: Optional[str] = None,
     source_table: Optional[str] = None,
 ) -> str:
-    """Build HTML for a single enterprise KPI card styled after AI Studio."""
+    """Build HTML for a single enterprise KPI card styled after the minimal light reference."""
     delta_html = status_badge_html(delta, tone=delta_tone) if delta else ""
-    icon_chip = f'<span class="ai-kpi-circle-icon">{_escape(icon)}</span>' if icon else ""
+    icon_chip = (
+        f'<div class="ai-kpi-icon-box"><span class="ai-kpi-circle-icon">{_escape(icon)}</span></div>'
+        if icon
+        else ""
+    )
     caption_text = f'<span class="ai-kpi-caption">{_escape(caption)}</span>' if caption else ""
     source_html = (
         f'<div class="ai-kpi-source">{_escape(source_table)}</div>'
@@ -1775,18 +1831,21 @@ def kpi_card_html(
         else ""
     )
 
-    footer_content = ""
-    if caption_text or icon_chip:
-        footer_content = f'<div class="ai-kpi-footer">{caption_text}{icon_chip}</div>'
+    footer_content = f'<div class="ai-kpi-footer">{caption_text}</div>' if caption_text else '<div class="ai-kpi-footer"></div>'
 
     return (
         '<div class="ai-kpi-card">'
+        '<div class="ai-kpi-body-wrap">'
+        f"{icon_chip}"
+        '<div class="ai-kpi-content-col">'
         '<div class="ai-kpi-top">'
         f'<span class="ai-kpi-label">{_escape(label)}</span>'
         f"{delta_html}"
         "</div>"
         f'<div class="ai-kpi-value">{_escape(value)}</div>'
         f"{footer_content}"
+        "</div>"
+        "</div>"
         f"{source_html}"
         "</div>"
     )

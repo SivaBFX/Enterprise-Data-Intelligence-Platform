@@ -549,15 +549,15 @@ def _build_decision_items(
 
 
 PERSONA_CARDS = [
-    ("Portfolio Exec", "📊\nPortfolio\nExec"),
-    ("Market Ops", "⏱️\nMarket\nOps"),
-    ("Asset Manager", "👥\nAsset\nManager"),
-    ("Maint & CapEx", "🔧\nMaint &\nCapEx"),
+    ("Portfolio Exec", "📊 Portfolio Exec"),
+    ("Market Ops", "⏱️ Market Ops"),
+    ("Asset Manager", "👥 Asset Manager"),
+    ("Maint & CapEx", "🔧 Maint & CapEx"),
 ]
 
 
 def _render_hero_and_personas(decision_count: int, summary: Dict[str, Any]) -> str:
-    """Render AI Studio hero headline on the left and role focus pills on the right."""
+    """Render minimal SaaS hero headline on the left and role focus pills on the right."""
     st.session_state.setdefault("ai_active_persona", "Portfolio Exec")
     active_role = st.session_state["ai_active_persona"]
 
@@ -569,17 +569,17 @@ def _render_hero_and_personas(decision_count: int, summary: Dict[str, Any]) -> s
             else "All portfolio metrics within baseline"
         )
         pill_html = (
-            '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px;">'
-            '<span style="font-size:0.75rem;font-weight:750;letter-spacing:0.06em;'
-            'text-transform:uppercase;color:#0E7C66;">PORTFOLIO · EXECUTIVE</span>'
-            '<span style="color:#94A3B8;margin:0 2px;">•</span>'
-            f'<span style="font-size:0.72rem;color:#64748B;font-weight:600;">● Gold Layer - {summary["latest_month"]} - {summary["history_months"]}M</span>'
+            '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">'
+            '<span style="font-size:0.72rem;font-weight:700;letter-spacing:0.06em;'
+            'text-transform:uppercase;color:#059669;">PORTFOLIO · EXECUTIVE</span>'
+            '<span style="color:#CBD5E1;margin:0 2px;">•</span>'
+            f'<span style="font-size:0.72rem;color:#64748B;font-weight:500;">● Gold Layer - {summary["latest_month"]} - {summary["history_months"]}M</span>'
             "</div>"
         )
         st.markdown(pill_html, unsafe_allow_html=True)
         st.markdown(
-            f'<h1 style="font-size:1.85rem;font-weight:750;color:#172B4D;'
-            f'letter-spacing:-0.03em;margin:0 0 6px 0;line-height:1.2;">{headline}</h1>',
+            f'<h1 style="font-size:1.35rem;font-weight:700;color:#0F172A;'
+            f'letter-spacing:-0.02em;margin:0 0 4px 0;line-height:1.25;">{headline}</h1>',
             unsafe_allow_html=True,
         )
         st.caption(
