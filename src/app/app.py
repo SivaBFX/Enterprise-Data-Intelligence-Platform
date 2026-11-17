@@ -549,10 +549,10 @@ def _build_decision_items(
 
 
 PERSONA_CARDS = [
-    ("Portfolio Exec", "📊 Portfolio Exec"),
-    ("Market Ops", "⏱️ Market Ops"),
-    ("Asset Manager", "👥 Asset Manager"),
-    ("Maint & CapEx", "🔧 Maint & CapEx"),
+    ("Portfolio Exec", "Portfolio Exec", "📊"),
+    ("Market Ops", "Market Ops", "⏱️"),
+    ("Asset Manager", "Asset Manager", "👥"),
+    ("Maint & CapEx", "Maint & CapEx", "🔧"),
 ]
 
 
@@ -561,7 +561,7 @@ def _render_hero_and_personas(decision_count: int, summary: Dict[str, Any]) -> s
     st.session_state.setdefault("ai_active_persona", "Portfolio Exec")
     active_role = st.session_state["ai_active_persona"]
 
-    left_col, right_col = st.columns([1.28, 1.22])
+    left_col, right_col = st.columns([1.0, 1.5])
     with left_col:
         headline = (
             f"{decision_count} decisions need you today"
@@ -590,12 +590,14 @@ def _render_hero_and_personas(decision_count: int, summary: Dict[str, Any]) -> s
     with right_col:
         st.caption("View as · focus perspectives mapped to Portfolio")
         p_cols = st.columns(4)
-        for col, (role_name, display_label) in zip(p_cols, PERSONA_CARDS):
+        for col, (role_name, display_label, icon_char) in zip(p_cols, PERSONA_CARDS):
             with col:
                 is_selected = active_role == role_name
+                role_slug = role_name.lower().replace(" ", "_").replace("&", "and")
                 if st.button(
                     display_label,
-                    key=f"persona_btn_{role_name}",
+                    icon=icon_char,
+                    key=f"persona_btn_{role_slug}",
                     type="primary" if is_selected else "secondary",
                     use_container_width=True,
                 ):

@@ -861,7 +861,7 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
 }
 
 .ai-section-title {
-    font-size: 0.90rem !important;
+    font-size: 0.92rem !important;
     font-weight: 650 !important;
     color: #0F172A !important;
     letter-spacing: -0.01em;
@@ -1380,41 +1380,64 @@ div.stButton > button[key*="followup_"]:hover {
     color: #047857 !important;
 }
 
-/* Perspective toggle buttons on Executive Overview: compact minimal segmented pill */
+/* Perspective toggle buttons on Executive Overview: sleek executive segmented pills */
+div[class*="st-key-persona_btn_"] button,
 div.stButton > button[key*="persona_btn_"] {
-    min-height: 30px !important;
-    height: 30px !important;
-    border-radius: 6px !important;
-    padding: 0.15rem 0.55rem !important;
-    font-size: 0.73rem !important;
+    min-height: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+    padding: 0 0.55rem !important;
+    font-size: 0.74rem !important;
     font-weight: 600 !important;
-    line-height: 1.2 !important;
-    white-space: nowrap !important;
-    text-align: center !important;
+    line-height: normal !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transition: all 0.15s ease !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
     box-shadow: none !important;
+    transition: all 0.15s ease !important;
 }
 
+div[class*="st-key-persona_btn_"] button p,
+div[class*="st-key-persona_btn_"] button span,
+div[class*="st-key-persona_btn_"] button div,
+div.stButton > button[key*="persona_btn_"] p,
+div.stButton > button[key*="persona_btn_"] span,
+div.stButton > button[key*="persona_btn_"] div {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: normal !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+div[class*="st-key-persona_btn_"] button[kind="secondary"],
+div[class*="st-key-persona_btn_"] button:not([kind="primary"]),
 div.stButton > button[key*="persona_btn_"][kind="secondary"],
 div.stButton > button[key*="persona_btn_"]:not([kind="primary"]) {
     background-color: #FFFFFF !important;
-    border: 1px solid #EAECF0 !important;
+    border: 1px solid #E2E8F0 !important;
     color: #475569 !important;
     box-shadow: none !important;
 }
 
+div[class*="st-key-persona_btn_"] button[kind="secondary"] p,
+div[class*="st-key-persona_btn_"] button[kind="secondary"] span,
+div[class*="st-key-persona_btn_"] button:not([kind="primary"]) p,
+div[class*="st-key-persona_btn_"] button:not([kind="primary"]) span,
 div.stButton > button[key*="persona_btn_"][kind="secondary"] p,
 div.stButton > button[key*="persona_btn_"][kind="secondary"] span,
 div.stButton > button[key*="persona_btn_"]:not([kind="primary"]) p,
 div.stButton > button[key*="persona_btn_"]:not([kind="primary"]) span {
     color: #475569 !important;
-    font-size: 0.73rem !important;
+    font-size: 0.74rem !important;
     font-weight: 550 !important;
 }
 
+div[class*="st-key-persona_btn_"] button[kind="secondary"]:hover,
+div[class*="st-key-persona_btn_"] button:not([kind="primary"]):hover,
 div.stButton > button[key*="persona_btn_"][kind="secondary"]:hover,
 div.stButton > button[key*="persona_btn_"]:not([kind="primary"]):hover {
     border-color: #CBD5E1 !important;
@@ -1422,19 +1445,31 @@ div.stButton > button[key*="persona_btn_"]:not([kind="primary"]):hover {
     background-color: #F8FAFC !important;
 }
 
+div[class*="st-key-persona_btn_"] button[kind="primary"],
 div.stButton > button[key*="persona_btn_"][kind="primary"] {
+    background-color: #0F9D83 !important;
+    border: 1px solid #0F9D83 !important;
+    color: #FFFFFF !important;
+    font-weight: 650 !important;
+    box-shadow: 0 1px 3px rgba(15, 157, 131, 0.25) !important;
+}
+
+div[class*="st-key-persona_btn_"] button[kind="primary"] p,
+div[class*="st-key-persona_btn_"] button[kind="primary"] span,
+div[class*="st-key-persona_btn_"] button[kind="primary"] div,
+div.stButton > button[key*="persona_btn_"][kind="primary"] p,
+div.stButton > button[key*="persona_btn_"][kind="primary"] span,
+div.stButton > button[key*="persona_btn_"][kind="primary"] div {
+    color: #FFFFFF !important;
+    font-size: 0.74rem !important;
+    font-weight: 650 !important;
+}
+
+/* Soft mint active capsule token compatibility */
+.ai-persona-mint-token {
     background-color: #D1FAE5 !important;
     border: 1px solid #A7F3D0 !important;
     color: #065F46 !important;
-    font-weight: 650 !important;
-    box-shadow: none !important;
-}
-
-div.stButton > button[key*="persona_btn_"][kind="primary"] p,
-div.stButton > button[key*="persona_btn_"][kind="primary"] span {
-    color: #065F46 !important;
-    font-size: 0.73rem !important;
-    font-weight: 650 !important;
 }
 
 /* Selectboxes, Inputs, Textareas, and Dropdown Popovers */
