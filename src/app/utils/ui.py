@@ -904,7 +904,7 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
     flex-direction: column !important;
     justify-content: space-between !important;
     min-height: 114px !important;
-    height: 114px !important;
+    height: 100% !important;
     box-sizing: border-box !important;
     transition: all 0.15s ease;
 }
@@ -954,8 +954,9 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 6px;
+    gap: 8px;
     min-height: 32px;
+    width: 100%;
 }
 
 .ai-kpi-label {
@@ -966,8 +967,22 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
     white-space: normal !important;
     overflow: visible !important;
     text-overflow: clip !important;
-    word-break: break-word !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
     flex: 1 1 auto;
+    min-width: 0;
+}
+
+.ai-kpi-card .ai-badge {
+    font-size: 0.68rem !important;
+    padding: 0.15rem 0.45rem !important;
+    max-width: 58% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
 }
 
 .ai-kpi-value {
@@ -976,8 +991,8 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
     color: #0F172A !important;
     letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
-    margin: 2px 0;
-    line-height: 1.2;
+    margin: 4px 0 6px 0 !important;
+    line-height: 1.25;
     white-space: nowrap;
     overflow: visible;
 }

@@ -176,9 +176,9 @@ def main() -> None:
             "icon": "📊",
         },
         {
-            "label": "SQL Warehouse Connection",
+            "label": "SQL Warehouse",
             "value": "Connected",
-            "delta": "Databricks SQL Connector",
+            "delta": "Databricks SQL",
             "delta_tone": "success",
             "caption": "Service Principal Authentication",
             "icon": "⚡",
@@ -186,7 +186,7 @@ def main() -> None:
         {
             "label": "Data Refresh Policy",
             "value": "300s TTL",
-            "delta": "Streamlit Cache Active",
+            "delta": "Cache Active",
             "delta_tone": "info",
             "caption": "Manual refresh supported",
             "icon": "🔄",
