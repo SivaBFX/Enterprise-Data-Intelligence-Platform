@@ -1473,112 +1473,133 @@ div.stButton > button[key*="persona_btn_"][kind="primary"] div {
 }
 
 /* Selectboxes, Dropdown Buttons, Inputs, Textareas, and Popovers */
+div[data-testid="stSelectbox"] > div:nth-child(2),
+div[data-testid="stSelectbox"] div[data-baseweb="select"] > div,
 div[data-baseweb="select"] > div {
     background-color: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
     border-radius: 8px !important;
-    color: #0F172A !important;
     min-height: 38px !important;
     height: 38px !important;
-    padding: 0 10px !important;
-    display: flex !important;
-    align-items: center !important;
     box-sizing: border-box !important;
     box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
     transition: all 0.15s ease !important;
+    padding: 0 !important;
+    overflow: hidden !important;
 }
 
+div[data-testid="stSelectbox"] > div:nth-child(2):hover,
 div[data-baseweb="select"] > div:hover {
     border-color: #CBD5E1 !important;
 }
 
+div[data-testid="stSelectbox"] > div:nth-child(2):focus-within,
 div[data-baseweb="select"] > div:focus-within {
     border-color: #0F9D83 !important;
     box-shadow: 0 0 0 1px #0F9D83 !important;
 }
 
-/* Ensure inner select value container is vertically centered and does not clip text */
-div[data-baseweb="select"] [data-testid="stSelectboxValue"],
-div[data-baseweb="select"] div[role="combobox"],
-div[data-baseweb="select"] > div > div:first-child {
+/* Ensure inner select input & value text are vertically centered */
+div[data-testid="stSelectbox"] input,
+div[data-testid="stSelectbox"] [data-testid="stSelectboxValue"],
+div[data-baseweb="select"] input,
+div[data-baseweb="select"] span,
+div[data-baseweb="select"] div[role="combobox"] {
     display: flex !important;
     align-items: center !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    line-height: normal !important;
-    font-size: 0.82rem !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    line-height: 36px !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
     color: #0F172A !important;
+    -webkit-text-fill-color: #0F172A !important;
+    padding: 0 10px !important;
+    margin: 0 !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
     overflow: hidden !important;
     white-space: nowrap !important;
     text-overflow: ellipsis !important;
-    height: 100% !important;
-    max-height: 36px !important;
-}
-
-div[data-baseweb="select"] span,
-div[data-baseweb="select"] p,
-div[data-baseweb="select"] div[role="combobox"] span,
-div[data-baseweb="select"] input {
-    color: #0F172A !important;
-    -webkit-text-fill-color: #0F172A !important;
-    font-size: 0.82rem !important;
-    font-weight: 500 !important;
-    line-height: normal !important;
-    margin: 0 !important;
-    padding: 0 !important;
 }
 
 /* Dropdown arrow icon styling and centering */
+div[data-testid="stSelectbox"] svg,
 div[data-baseweb="select"] svg {
     fill: #64748B !important;
     color: #64748B !important;
-    width: 18px !important;
-    height: 18px !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 8px !important;
+    flex-shrink: 0 !important;
 }
 
-div[data-baseweb="select"] > div > div:last-child {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-/* Single-line text inputs */
+/* Single-line text and search inputs: match 38px height and vertical alignment */
+div[data-testid="stTextInput"] > div:nth-child(2),
+div[data-testid="stTextInputRootElement"],
 div[data-baseweb="input"],
 div[data-baseweb="input"] > div {
     background-color: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
     border-radius: 8px !important;
-    color: #0F172A !important;
     min-height: 38px !important;
     height: 38px !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 10px !important;
     box-sizing: border-box !important;
     box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
     transition: all 0.15s ease !important;
+    padding: 0 !important;
+    overflow: hidden !important;
 }
 
+div[data-testid="stTextInputRootElement"]:hover,
+div[data-baseweb="input"]:hover {
+    border-color: #CBD5E1 !important;
+}
+
+div[data-testid="stTextInputRootElement"]:focus-within,
+div[data-baseweb="input"]:focus-within {
+    border-color: #0F9D83 !important;
+    box-shadow: 0 0 0 1px #0F9D83 !important;
+}
+
+div[data-testid="stTextInput"] input,
+div[data-testid="stTextInputField"],
 div[data-baseweb="input"] input {
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    line-height: 36px !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
     color: #0F172A !important;
     -webkit-text-fill-color: #0F172A !important;
-    font-size: 0.82rem !important;
-    line-height: normal !important;
-    padding: 0 !important;
+    padding: 0 10px !important;
     margin: 0 !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
 }
 
+div[data-testid="stTextInput"] input::placeholder,
 div[data-baseweb="input"] input::placeholder {
     color: #94A3B8 !important;
     -webkit-text-fill-color: #94A3B8 !important;
-    font-size: 0.82rem !important;
+    font-size: 0.8125rem !important;
+    line-height: 36px !important;
 }
 
 /* Multiline text areas */
 div[data-baseweb="textarea"],
-div[data-baseweb="textarea"] > div {
+div[data-baseweb="textarea"] > div,
+div[data-testid="stTextArea"] > div:nth-child(2) {
     background-color: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
     border-radius: 8px !important;
@@ -1588,17 +1609,19 @@ div[data-baseweb="textarea"] > div {
     box-sizing: border-box !important;
 }
 
-div[data-baseweb="textarea"] textarea {
+div[data-baseweb="textarea"] textarea,
+div[data-testid="stTextArea"] textarea {
     color: #0F172A !important;
     -webkit-text-fill-color: #0F172A !important;
-    font-size: 0.82rem !important;
+    font-size: 0.8125rem !important;
     line-height: 1.4 !important;
 }
 
-div[data-baseweb="textarea"] textarea::placeholder {
+div[data-baseweb="textarea"] textarea::placeholder,
+div[data-testid="stTextArea"] textarea::placeholder {
     color: #94A3B8 !important;
     -webkit-text-fill-color: #94A3B8 !important;
-    font-size: 0.82rem !important;
+    font-size: 0.8125rem !important;
 }
 
 /* Form submit buttons aligned with 38px inputs and dropdowns */
@@ -1606,15 +1629,19 @@ div[data-testid="stFormSubmitButton"] button {
     min-height: 38px !important;
     height: 38px !important;
     border-radius: 8px !important;
-    font-size: 0.80rem !important;
+    font-size: 0.8125rem !important;
     font-weight: 600 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 0 1rem !important;
+    background-color: #0F9D83 !important;
+    border: 1px solid #0F9D83 !important;
+    color: #FFFFFF !important;
 }
 
-/* Dropdown popovers and option lists */
+/* Dropdown popover list container */
+div[data-testid="stSelectboxVirtualDropdown"],
 div[data-baseweb="popover"],
 div[data-baseweb="popover"] > div,
 ul[data-testid="stSelectboxVirtualDropdown"],
@@ -1624,25 +1651,57 @@ ul[role="listbox"] {
     border-radius: 8px !important;
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08) !important;
     color: #0F172A !important;
-    padding: 4px 0 !important;
+    padding: 4px !important;
 }
 
+/* Dropdown list option items */
+div[data-testid="stSelectboxVirtualDropdown"] li,
+div[data-testid="stSelectboxVirtualDropdown"] div[role="option"],
 ul[role="listbox"] li,
-li[role="option"],
-li[role="option"] span,
-li[role="option"] div {
+li[role="option"] {
     color: #1E293B !important;
     background-color: #FFFFFF !important;
-    font-size: 0.82rem !important;
-    padding: 0.45rem 0.85rem !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    padding: 0.4rem 0.75rem !important;
+    border-radius: 6px !important;
     display: flex !important;
     align-items: center !important;
-    line-height: normal !important;
+    cursor: pointer !important;
+    transition: background-color 0.1s ease !important;
 }
 
-li[role="option"]:hover,
+div[data-testid="stSelectboxVirtualDropdown"] li span,
+div[data-testid="stSelectboxVirtualDropdown"] div[role="option"] span,
+ul[role="listbox"] li span,
+li[role="option"] span {
+    color: #1E293B !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+}
+
+div[data-testid="stSelectboxVirtualDropdown"] li:hover,
+div[data-testid="stSelectboxVirtualDropdown"] div[role="option"]:hover,
+ul[role="listbox"] li:hover,
+li[role="option"]:hover {
+    background-color: #F8FAFC !important;
+    color: #0F172A !important;
+}
+
+div[data-testid="stSelectboxVirtualDropdown"] li[aria-selected="true"],
+div[data-testid="stSelectboxVirtualDropdown"] div[role="option"][aria-selected="true"],
+ul[role="listbox"] li[aria-selected="true"],
 li[role="option"][aria-selected="true"] {
-    background-color: #F0FDF4 !important;
+    background-color: #ECFDF5 !important;
+    color: #065F46 !important;
+    font-weight: 600 !important;
+}
+
+div[data-testid="stSelectboxVirtualDropdown"] li[aria-selected="true"] span,
+div[data-testid="stSelectboxVirtualDropdown"] div[role="option"][aria-selected="true"] span,
+ul[role="listbox"] li[aria-selected="true"] span,
+li[role="option"][aria-selected="true"] span {
     color: #065F46 !important;
     font-weight: 600 !important;
 }
