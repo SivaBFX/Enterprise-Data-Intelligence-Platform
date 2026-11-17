@@ -851,26 +851,27 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
-    margin: 0.85rem 0 0.5rem 0;
+    margin: 1.35rem 0 0.65rem 0 !important;
+    clear: both !important;
     flex-wrap: wrap;
 }
 
 .ai-section-header.compact {
-    margin: 0 0 0.5rem 0;
+    margin: 0.35rem 0 0.45rem 0 !important;
 }
 
 .ai-section-title {
-    font-size: 0.92rem;
-    font-weight: 650;
-    color: #0F172A;
+    font-size: 0.92rem !important;
+    font-weight: 650 !important;
+    color: #0F172A !important;
     letter-spacing: -0.01em;
     line-height: 1.25;
 }
 
 .ai-section-subtitle {
-    font-size: 0.78rem;
-    color: #64748B;
-    margin-top: 2px;
+    font-size: 0.75rem !important;
+    color: #64748B !important;
+    margin-top: 3px;
     line-height: 1.35;
 }
 
@@ -883,26 +884,28 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
     padding-left: 2px;
 }
 
-/* Reusable Minimal Pastel KPI Cards (Matching reference) */
+/* Reusable Minimal Pastel KPI Cards (Equal height, no clipping, restrained font) */
 .ai-kpi-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     gap: 0.85rem;
-    margin-bottom: 1.15rem;
+    margin-top: 0.45rem !important;
+    margin-bottom: 1.25rem !important;
     align-items: stretch;
 }
 
 .ai-kpi-card {
     background: #FFFFFF;
     border: 1px solid #EAECF0;
-    border-radius: 10px;
-    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    padding: 0.75rem 0.85rem;
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 96px;
-    height: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    min-height: 112px !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
     transition: all 0.15s ease;
 }
 
@@ -947,67 +950,33 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
     color: #E11D48 !important;
 }
 
-.ai-kpi-body-wrap {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
-}
-
-.ai-kpi-icon-box {
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-
-.ai-kpi-circle-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: #E6F7F5;
-    color: #0E7C66;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.88rem;
-    font-weight: 600;
-}
-
-.ai-kpi-content-col {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-}
-
 .ai-kpi-top {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 0.4rem;
+    gap: 6px;
+    min-height: 32px;
 }
 
 .ai-kpi-label {
     font-size: 0.74rem;
-    font-weight: 550;
-    color: #64748B;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.ai-kpi-icon {
-    font-size: 0.95rem;
-    line-height: 1;
+    font-weight: 600;
+    color: #475569;
+    line-height: 1.25;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    word-break: break-word !important;
+    flex: 1 1 auto;
 }
 
 .ai-kpi-value {
-    font-size: 1.30rem;
-    font-weight: 700;
-    color: #0F172A;
+    font-size: 1.22rem !important;
+    font-weight: 700 !important;
+    color: #0F172A !important;
     letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
-    margin: 0.15rem 0 0.15rem 0;
+    margin: 2px 0;
     line-height: 1.2;
     white-space: nowrap;
     overflow: visible;
@@ -1017,26 +986,37 @@ div[data-testid="stMainBlockContainer"] div[data-testid="stPageLink"] a[aria-cur
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.4rem;
-    margin-top: 0.1rem;
+    gap: 4px;
+    margin-top: auto;
 }
 
 .ai-kpi-caption {
-    font-size: 0.70rem;
+    font-size: 0.68rem;
     color: #94A3B8;
-    line-height: 1.3;
+    line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex: 1;
+}
+
+.ai-kpi-circle-icon {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 999px;
+    background: #E6F7F5;
+    color: #0E7C66;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.76rem;
+    flex-shrink: 0;
+    margin-left: auto;
 }
 
 .ai-kpi-source {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.65rem;
-    color: #94A3B8;
-    margin-top: 0.3rem;
-    padding-top: 0.25rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: none;
 }
 
 /* Three-column Decision Brief cards */
@@ -1254,8 +1234,9 @@ div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] > div[data-te
     height: 100% !important;
 }
 
-/* Style action page links inside columns to look like cohesive minimal secondary buttons */
-div[data-testid="stColumn"] > div[data-testid="stPageLink"] a {
+/* Style action page links inside columns and containers to look like cohesive minimal secondary buttons */
+div[data-testid="stColumn"] div[data-testid="stPageLink"] a,
+div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPageLink"] a {
     background-color: #FFFFFF !important;
     border: 1px solid #EAECF0 !important;
     border-radius: 6px !important;
@@ -1271,12 +1252,19 @@ div[data-testid="stColumn"] > div[data-testid="stPageLink"] a {
     box-shadow: none !important;
     text-decoration: none !important;
     transition: all 0.15s ease;
+    margin-top: auto !important;
 }
 
-div[data-testid="stColumn"] > div[data-testid="stPageLink"] a:hover {
+div[data-testid="stColumn"] div[data-testid="stPageLink"] a:hover,
+div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPageLink"] a:hover {
     background-color: #F8FAFC !important;
     border-color: #CBD5E1 !important;
     color: #0F172A !important;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"] div[data-testid="stPageLink"] {
+    margin-top: auto !important;
+    padding-top: 6px !important;
 }
 
 /* Crisp minimal bordered containers */
@@ -1352,6 +1340,17 @@ button[data-testid="stBaseButton-primary"]:hover,
 div[data-testid="stFormSubmitButton"] button[kind="primary"]:hover {
     background-color: #0C806A !important;
     border-color: #0C806A !important;
+}
+
+/* Genie interaction row: align 38px height across input, Ask Genie, New Topic, and Full AI Assistant */
+div[data-testid="stHorizontalBlock"]:has(input[aria-label="Ask a business question"]) .stButton > button,
+div[data-testid="stHorizontalBlock"]:has(input[aria-label="Ask a business question"]) div[data-testid="stPageLink"] a,
+div.stButton > button[key="home_clear_topic_btn"] {
+    min-height: 38px !important;
+    height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 /* Suggested question buttons: ultra-compact subtle mint pills */
@@ -1460,23 +1459,54 @@ div.stButton > button[key*="persona_btn_"][kind="primary"] span {
 /* Selectboxes, Inputs, Textareas, and Dropdown Popovers */
 div[data-baseweb="select"] > div,
 div[data-baseweb="input"],
-div[data-baseweb="input"] > div,
+div[data-baseweb="input"] > div {
+    background-color: #FFFFFF !important;
+    border-color: #E2E8F0 !important;
+    border-radius: 6px !important;
+    color: #0F172A !important;
+    min-height: 38px !important;
+    height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
+}
+
 div[data-baseweb="textarea"] > div {
     background-color: #FFFFFF !important;
     border-color: #E2E8F0 !important;
     border-radius: 6px !important;
     color: #0F172A !important;
-    min-height: 30px !important;
-    height: 30px !important;
+    min-height: 72px !important;
+    padding: 8px 10px !important;
+}
+
+div[data-baseweb="select"] div[role="combobox"],
+div[data-baseweb="select"] [data-testid="stSelectboxValue"] {
+    display: flex !important;
+    align-items: center !important;
+    line-height: normal !important;
+    font-size: 0.82rem !important;
+    color: #0F172A !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 div[data-baseweb="select"] span,
 div[data-baseweb="select"] div,
 div[data-baseweb="select"] input,
-div[data-baseweb="input"] input,
+div[data-baseweb="input"] input {
+    color: var(--ai-navy) !important;
+    -webkit-text-fill-color: var(--ai-navy) !important;
+    font-size: 0.82rem !important;
+    line-height: normal !important;
+}
+
 div[data-baseweb="textarea"] textarea {
     color: var(--ai-navy) !important;
     -webkit-text-fill-color: var(--ai-navy) !important;
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
 }
 
 div[data-baseweb="input"] input::placeholder,
@@ -1922,33 +1952,21 @@ def kpi_card_html(
     """Build HTML for a single enterprise KPI card styled after the minimal light reference."""
     delta_html = status_badge_html(delta, tone=delta_tone) if delta else ""
     icon_chip = (
-        f'<div class="ai-kpi-icon-box"><span class="ai-kpi-circle-icon">{_escape(icon)}</span></div>'
+        f'<span class="ai-kpi-circle-icon">{_escape(icon)}</span>'
         if icon
         else ""
     )
     caption_text = f'<span class="ai-kpi-caption">{_escape(caption)}</span>' if caption else ""
-    source_html = (
-        f'<div class="ai-kpi-source">{_escape(source_table)}</div>'
-        if source_table
-        else ""
-    )
-
-    footer_content = f'<div class="ai-kpi-footer">{caption_text}</div>' if caption_text else '<div class="ai-kpi-footer"></div>'
+    footer_content = f'<div class="ai-kpi-footer">{caption_text}{icon_chip}</div>'
 
     return (
         '<div class="ai-kpi-card">'
-        '<div class="ai-kpi-body-wrap">'
-        f"{icon_chip}"
-        '<div class="ai-kpi-content-col">'
         '<div class="ai-kpi-top">'
-        f'<span class="ai-kpi-label">{_escape(label)}</span>'
+        f'<div class="ai-kpi-label">{_escape(label)}</div>'
         f"{delta_html}"
         "</div>"
         f'<div class="ai-kpi-value">{_escape(value)}</div>'
         f"{footer_content}"
-        "</div>"
-        "</div>"
-        f"{source_html}"
         "</div>"
     )
 

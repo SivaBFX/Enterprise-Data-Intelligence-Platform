@@ -855,12 +855,12 @@ def _render_decision_orchestration_center(
                 f'<strong style="font-size:0.86rem;color:#172B4D;">Gold Layer Sync</strong>'
                 f'{status_badge_html(sync_label, tone="success")}'
                 f"</div>"
-                f'<div style="font-size:0.77rem;color:#64748B;margin:4px 0 6px 0;">'
+                f'<div style="font-size:0.75rem;color:#64748B;line-height:1.35;min-height:34px;margin-top:4px;">'
                 f'Latest period {summary["latest_month"]} across 6 Unity Catalog tables</div>'
-                f'<div style="font-size:0.72rem;color:#0F9D83;font-weight:600;">SQL Warehouse · Connected</div>',
+                f'<div style="font-size:0.70rem;color:#059669;font-weight:600;margin:6px 0 8px 0;">● SQL Warehouse · Connected</div>',
                 unsafe_allow_html=True,
             )
-            st.page_link("pages/08_Data_Platform_Health.py", label="View Table Catalog")
+            st.page_link("pages/08_Data_Platform_Health.py", label="View Table Catalog →")
 
     with orch_c2:
         with st.container(border=True):
@@ -871,11 +871,12 @@ def _render_decision_orchestration_center(
                 f'<strong style="font-size:0.86rem;color:#172B4D;">Genie & Specialist Agents</strong>'
                 f'{status_badge_html(genie_badge, tone=genie_tone)}'
                 f"</div>"
-                f'<div style="font-size:0.77rem;color:#64748B;margin:4px 0 6px 0;">'
-                f'Natural-language Q&A + 4 traceable Gold analysts</div>',
+                f'<div style="font-size:0.75rem;color:#64748B;line-height:1.35;min-height:34px;margin-top:4px;">'
+                f'Natural-language Q&A + 4 traceable Gold analysts</div>'
+                f'<div style="font-size:0.70rem;color:#2563EB;font-weight:600;margin:6px 0 8px 0;">● Databricks Genie · Active</div>',
                 unsafe_allow_html=True,
             )
-            st.page_link("pages/07_AI_Business_Assistant.py", label="Open Specialist Agents")
+            st.page_link("pages/07_AI_Business_Assistant.py", label="Open Specialist Agents →")
 
     with orch_c3:
         with st.container(border=True):
@@ -884,11 +885,12 @@ def _render_decision_orchestration_center(
                 f'<strong style="font-size:0.86rem;color:#172B4D;">Data & Platform Health</strong>'
                 f'{status_badge_html("Platform Active", tone="neutral")}'
                 f"</div>"
-                f'<div style="font-size:0.77rem;color:#64748B;margin:4px 0 6px 0;">'
-                f'Schemas, row counts, freshness checks, and telemetry</div>',
+                f'<div style="font-size:0.75rem;color:#64748B;line-height:1.35;min-height:34px;margin-top:4px;">'
+                f'Schemas, row counts, freshness checks, and telemetry</div>'
+                f'<div style="font-size:0.70rem;color:#64748B;font-weight:600;margin:6px 0 8px 0;">● Unity Catalog · Synced</div>',
                 unsafe_allow_html=True,
             )
-            st.page_link("pages/08_Data_Platform_Health.py", label="Inspect Platform Health")
+            st.page_link("pages/08_Data_Platform_Health.py", label="Inspect Platform Health →")
 
 
 def render_performance_section(
