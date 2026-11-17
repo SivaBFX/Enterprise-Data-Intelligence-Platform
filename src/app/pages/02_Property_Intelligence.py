@@ -25,6 +25,7 @@ from utils.ui import (
     render_kpi_row,
     render_page_header,
     render_section_header,
+    status_badge_html,
 )
 
 LOW_OCCUPANCY_THRESHOLD_PCT = 85.0
