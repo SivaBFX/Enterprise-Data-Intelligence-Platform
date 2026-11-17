@@ -120,6 +120,7 @@ def _compute_capex_kpis(filtered: pd.DataFrame) -> List[Dict[str, Any]]:
             "delta": f"{total_projects:,} projects",
             "delta_tone": "neutral",
             "caption": "Cumulative capital expenditure",
+            "icon": "$",
         },
         {
             "label": "Investment Projects",
@@ -127,6 +128,7 @@ def _compute_capex_kpis(filtered: pd.DataFrame) -> List[Dict[str, Any]]:
             "delta": f"{properties_invested:,} properties",
             "delta_tone": "info",
             "caption": "Capital work authorizations",
+            "icon": "🏗️",
         },
         {
             "label": "Avg Project Size",
@@ -134,6 +136,7 @@ def _compute_capex_kpis(filtered: pd.DataFrame) -> List[Dict[str, Any]]:
             "delta": "Capitalized Spend",
             "delta_tone": "neutral",
             "caption": "Mean investment per project",
+            "icon": "📊",
         },
         {
             "label": "Active Markets",
@@ -141,6 +144,7 @@ def _compute_capex_kpis(filtered: pd.DataFrame) -> List[Dict[str, Any]]:
             "delta": "Multi-Market",
             "delta_tone": "success",
             "caption": "Markets receiving CapEx",
+            "icon": "🌐",
         },
     ]
 

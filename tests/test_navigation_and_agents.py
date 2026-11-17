@@ -101,6 +101,40 @@ class TestNavigationAndAgents(unittest.TestCase):
         self.assertIn("--saas-border: #E2E8F0", full_css)
         self.assertIn("min-width: 250px !important", full_css)
         self.assertIn("key*=\"genie_suggest\"", full_css)
+        self.assertIn("key*=\"persona_btn_\"", full_css)
+        self.assertIn("key*=\"top_sync_\"", full_css)
+        self.assertIn(".ai-decision-card", full_css)
+        self.assertIn(".ai-kpi-circle-icon", full_css)
+
+    def test_kpi_card_circle_icon_and_footer(self) -> None:
+        """Verify KPI card renders circular teal icon chip in footer."""
+        html = ui.kpi_card_html(
+            label="Rental Revenue",
+            value="$595,612",
+            delta="+0.0% MoM",
+            delta_tone="success",
+            caption="12M cumulative: $7,124,000",
+            icon="$",
+        )
+        self.assertIn("ai-kpi-circle-icon", html)
+        self.assertIn("$", html)
+        self.assertIn("ai-kpi-footer", html)
+        self.assertIn("$595,612", html)
+
+    def test_sidebar_tagline_and_top_nav_avatar(self) -> None:
+        """Verify sidebar skyline tagline and top navigation avatar badge."""
+        st_stub.captured_markdown.clear()
+        ui.render_sidebar("Executive Overview")
+        sidebar_html = "\n".join(st_stub.captured_markdown)
+        self.assertIn("saas-sidebar-footer", sidebar_html)
+        self.assertIn("Smarter Insights.", sidebar_html)
+        self.assertIn("Greater Impact.", sidebar_html)
+
+        st_stub.captured_markdown.clear()
+        ui.render_top_navigation(current_page="Executive Overview")
+        top_html = "\n".join(st_stub.captured_markdown)
+        self.assertIn("top-nav-avatar", top_html)
+        self.assertIn("SM", top_html)
 
 
 if __name__ == "__main__":

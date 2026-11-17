@@ -117,6 +117,7 @@ def _build_performance_kpi_cards(port_df: pd.DataFrame) -> List[Dict[str, Any]]:
             "delta": f"{len(port_df):,} Reporting Months",
             "delta_tone": "info",
             "caption": "Aggregate rental income across cohort",
+            "icon": "$",
         },
         {
             "label": "Cumulative Net Operating Income",
@@ -124,6 +125,7 @@ def _build_performance_kpi_cards(port_df: pd.DataFrame) -> List[Dict[str, Any]]:
             "delta": f"{overall_margin:.1f}% Margin",
             "delta_tone": "success" if overall_margin >= 60 else "neutral",
             "caption": "Gross revenue minus operating expenses",
+            "icon": "📈",
         },
         {
             "label": "Cohort Weighted Occupancy",
@@ -131,6 +133,7 @@ def _build_performance_kpi_cards(port_df: pd.DataFrame) -> List[Dict[str, Any]]:
             "delta": "Above Target" if weighted_occ >= 90 else "Monitor",
             "delta_tone": "success" if weighted_occ >= 90 else "warning",
             "caption": f"{int(total_occ_days):,} occupied / {int(total_svc_days):,} service days",
+            "icon": "👥",
         },
         {
             "label": "Active Portfolio Assets",
@@ -138,6 +141,7 @@ def _build_performance_kpi_cards(port_df: pd.DataFrame) -> List[Dict[str, Any]]:
             "delta": "Stabilized Base",
             "delta_tone": "neutral",
             "caption": "Residential units under active management",
+            "icon": "⌂",
         },
     ]
 

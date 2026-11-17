@@ -101,6 +101,7 @@ def _build_maintenance_kpi_cards(summary: Dict[str, Any]) -> List[Dict[str, Any]
             "delta": f"{summary['total_properties']:,} properties",
             "delta_tone": "neutral",
             "caption": "All recorded work orders",
+            "icon": "🔧",
         },
         {
             "label": "Open Work Orders",
@@ -108,6 +109,7 @@ def _build_maintenance_kpi_cards(summary: Dict[str, Any]) -> List[Dict[str, Any]
             "delta": "Awaiting Triage" if summary['open_orders'] > 0 else "Clear",
             "delta_tone": "warning" if summary['open_orders'] > 0 else "success",
             "caption": "Unassigned or pending review",
+            "icon": "⏱️",
         },
         {
             "label": "In-Progress Orders",
@@ -115,6 +117,7 @@ def _build_maintenance_kpi_cards(summary: Dict[str, Any]) -> List[Dict[str, Any]
             "delta": f"{summary['active_backlog']:,} active backlog",
             "delta_tone": "info",
             "caption": "Currently under repair",
+            "icon": "🔄",
         },
         {
             "label": "Completed Orders",
@@ -122,6 +125,7 @@ def _build_maintenance_kpi_cards(summary: Dict[str, Any]) -> List[Dict[str, Any]
             "delta": f"{summary['completion_rate_pct']:.1f}% resolution",
             "delta_tone": "success",
             "caption": "Successfully resolved",
+            "icon": "✅",
         },
         {
             "label": "Cancelled Orders",
@@ -129,6 +133,7 @@ def _build_maintenance_kpi_cards(summary: Dict[str, Any]) -> List[Dict[str, Any]
             "delta": "Voided / Duplicate",
             "delta_tone": "neutral",
             "caption": "Withdrawn work orders",
+            "icon": "🚫",
         },
         {
             "label": "Total Maintenance Cost",
@@ -136,6 +141,7 @@ def _build_maintenance_kpi_cards(summary: Dict[str, Any]) -> List[Dict[str, Any]
             "delta": f"${(summary['total_cost'] / summary['total_properties'] if summary['total_properties'] else 0):,.0f} / asset",
             "delta_tone": "neutral",
             "caption": "Cumulative repair spend",
+            "icon": "$",
         },
         {
             "label": "Avg Work Order Cost",
@@ -143,6 +149,7 @@ def _build_maintenance_kpi_cards(summary: Dict[str, Any]) -> List[Dict[str, Any]
             "delta": "Per work order",
             "delta_tone": "neutral",
             "caption": "Mean expenditure per ticket",
+            "icon": "📊",
         },
         {
             "label": "Avg Completion Days",
@@ -150,6 +157,7 @@ def _build_maintenance_kpi_cards(summary: Dict[str, Any]) -> List[Dict[str, Any]
             "delta": "SLA Benchmark",
             "delta_tone": "success" if summary['weighted_completion_days'] <= 7 else "warning",
             "caption": "Weighted resolution time",
+            "icon": "📅",
         },
     ]
 

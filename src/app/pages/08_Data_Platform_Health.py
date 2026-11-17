@@ -165,6 +165,7 @@ def main() -> None:
             "delta": f"{available_count} / {len(tables)} Operational",
             "delta_tone": "success" if available_count == len(tables) else "warning",
             "caption": "Unity Catalog Gold Tier",
+            "icon": "🛡️",
         },
         {
             "label": "Total Tracked Records",
@@ -172,6 +173,7 @@ def main() -> None:
             "delta": "Delta Lake Storage",
             "delta_tone": "neutral",
             "caption": "Across 5 business domains",
+            "icon": "📊",
         },
         {
             "label": "SQL Warehouse Connection",
@@ -179,6 +181,7 @@ def main() -> None:
             "delta": "Databricks SQL Connector",
             "delta_tone": "success",
             "caption": "Service Principal Authentication",
+            "icon": "⚡",
         },
         {
             "label": "Data Refresh Policy",
@@ -186,6 +189,7 @@ def main() -> None:
             "delta": "Streamlit Cache Active",
             "delta_tone": "info",
             "caption": "Manual refresh supported",
+            "icon": "🔄",
         },
     ]
     render_kpi_row(kpi_cards)

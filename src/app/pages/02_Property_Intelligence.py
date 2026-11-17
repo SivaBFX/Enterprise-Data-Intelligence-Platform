@@ -125,6 +125,7 @@ def _compute_property_kpis(filtered: pd.DataFrame, total_portfolio_count: int) -
             "delta": f"{share_pct:.1f}% of portfolio",
             "delta_tone": "neutral",
             "caption": f"{total_portfolio_count:,} total portfolio assets",
+            "icon": "⌂",
         },
         {
             "label": "Weighted Occupancy",
@@ -132,6 +133,7 @@ def _compute_property_kpis(filtered: pd.DataFrame, total_portfolio_count: int) -
             "delta": "Healthy" if occupancy >= 90 else "Monitor",
             "delta_tone": "success" if occupancy >= 90 else "warning",
             "caption": f"{int(occupied_days):,} / {int(service_days):,} service days",
+            "icon": "👥",
         },
         {
             "label": "Total Rental Revenue",
@@ -139,6 +141,7 @@ def _compute_property_kpis(filtered: pd.DataFrame, total_portfolio_count: int) -
             "delta": f"${(total_revenue / total_properties if total_properties else 0):,.0f} / prop",
             "delta_tone": "info",
             "caption": "Cumulative rental revenue",
+            "icon": "$",
         },
         {
             "label": "Total NOI",
@@ -146,6 +149,7 @@ def _compute_property_kpis(filtered: pd.DataFrame, total_portfolio_count: int) -
             "delta": f"{noi_margin:.1f}% margin",
             "delta_tone": "success" if total_noi > 0 else "danger",
             "caption": "Net operating income",
+            "icon": "📈",
         },
         {
             "label": "Avg Monthly NOI",
@@ -153,6 +157,7 @@ def _compute_property_kpis(filtered: pd.DataFrame, total_portfolio_count: int) -
             "delta": f"{avg_exp_ratio:.1f}% avg OpEx ratio",
             "delta_tone": "neutral",
             "caption": "Mean monthly NOI per asset",
+            "icon": "📊",
         },
         {
             "label": "Attention Watchlist",
@@ -160,6 +165,7 @@ def _compute_property_kpis(filtered: pd.DataFrame, total_portfolio_count: int) -
             "delta": f"{low_occ_count} low occ · {neg_noi_count} <=$0 NOI",
             "delta_tone": "warning" if watchlist_count > 0 else "success",
             "caption": f"Occupancy < {LOW_OCCUPANCY_THRESHOLD_PCT:.0f}% or NOI <= $0",
+            "icon": "⚠️",
         },
     ]
 

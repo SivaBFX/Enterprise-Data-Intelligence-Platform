@@ -165,6 +165,7 @@ def _build_kpi_cards(
             "delta": f"{scope_label}",
             "delta_tone": "neutral",
             "caption": f"Assets in {period_label}",
+            "icon": "⌂",
         },
         {
             "label": "Weighted Occupancy",
@@ -178,6 +179,7 @@ def _build_kpi_cards(
                 else ("danger" if (occ_diff or 0) < -1 else "warning")
             ),
             "caption": f"{current['total_occupied_days']:,} / {current['total_service_days']:,} days",
+            "icon": "👥",
         },
         {
             "label": "Total Rental Revenue",
@@ -191,6 +193,7 @@ def _build_kpi_cards(
                 else ("danger" if (rev_delta or 0) < -5 else "warning")
             ),
             "caption": "Gross rental income",
+            "icon": "$",
         },
         {
             "label": "Total OpEx",
@@ -198,6 +201,7 @@ def _build_kpi_cards(
             "delta": f"{current['opex_ratio_pct']:.1f}% of revenue",
             "delta_tone": "neutral",
             "caption": "Operating expenditures",
+            "icon": "📊",
         },
         {
             "label": "Net Operating Income",
@@ -207,6 +211,7 @@ def _build_kpi_cards(
             ),
             "delta_tone": "success" if (noi_delta or 0) >= 0 else "danger",
             "caption": "Rental revenue minus OpEx",
+            "icon": "📈",
         },
         {
             "label": "NOI Margin",
@@ -216,6 +221,7 @@ def _build_kpi_cards(
             ),
             "delta_tone": "success" if (margin_diff or 0) >= 0 else "warning",
             "caption": "NOI / Rental Revenue",
+            "icon": "🎯",
         },
     ]
 
